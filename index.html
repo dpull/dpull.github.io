@@ -1,0 +1,17 @@
+---
+layout: default
+title: dpull
+---
+
+<article>
+    <h1 class="module">目录</h1>
+    <ul class="posts">
+        {% for post in paginator.posts %}
+        <li>
+            {{ post.date | date: "%Y/%m/%d" }} &raquo; <a href="{{ post.url }}">{{ post.title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</article>
+
+{% include home-pagination.html %}

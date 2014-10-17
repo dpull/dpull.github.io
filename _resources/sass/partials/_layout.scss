@@ -1,0 +1,36 @@
+.site-header {
+    float: left;
+    color: $header-text;
+    background: $header;
+    position: fixed;
+    width: $header-width;
+    height: 100%;
+    padding: 32px;
+    padding: 3.2rem;
+
+    @media only screen and (max-width: $nav-layout-maxwidth) {
+        float: none;
+        text-align: center;
+        height: auto;
+        width: 100%;
+        position: static;
+    }
+}
+
+.wrapper {
+    margin-left: $header-width;
+    padding: 32px;
+    padding: 3.2rem;
+    overflow: auto;
+
+    @media only screen and (max-width: $nav-layout-maxwidth) {
+        margin-left: 0;
+        overflow: inherit;
+    }
+}
+
+.content, footer {
+    margin: 0;
+    padding: 0;
+    max-width: 800px;
+}

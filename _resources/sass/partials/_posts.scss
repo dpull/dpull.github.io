@@ -1,0 +1,121 @@
+.post h1 {
+    @extend .module;
+}
+
+figure {
+    margin: 16px 0;
+    margin: 1.6rem 0;
+    padding: 16px;
+    padding: 1.6rem;
+    background: $header;
+    color: $header-text;
+    border-radius: 4px;
+    border-radius: 0.4rem;
+
+    img {
+        display: block;
+        margin: 0 auto;
+        width: 100%;
+        max-width: 500px;
+        max-width: 50rem;
+    }
+
+    figcaption {
+        @extend %text-center;
+        font-size: 18px;
+        font-size: 1.8rem;
+        padding-top: 16px;
+        padding-top: 1.6rem;
+    }
+}
+
+blockquote {
+    padding-left: 10px;
+    padding-left: 1rem;
+    border-left: 6px solid $header;
+    font-size: 18px;
+    font-size: 1.8rem;
+    margin-bottom: 16px;
+    margin-bottom: 1.6rem;
+}
+
+#disqus_thread {
+    margin-top: 60px;
+    margin-top: 6rem;
+}
+
+.spotify {
+    margin: 30px 0;
+    margin: 3rem 0;
+    text-align: center;
+}
+
+.codepen {
+    margin-bottom: 16px;
+    margin-bottom: 1.6rem;
+}
+
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 30px;
+    padding-top: 3rem;
+    margin-bottom: 16px;
+    margin-bottom: 1.6rem;
+    height: 0;
+    overflow: hidden;
+
+    iframe, object, embed {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.addthis_toolbox {
+    width: 216px;
+    margin: 16px auto;
+    margin: 1rem auto;
+
+    a:hover {
+        background: none;
+    }
+}
+
+.top {
+    display: none;
+    position: fixed;
+    bottom: 16px;
+    bottom: 1.6rem;
+    right: 16px;
+    right: 1.6rem;
+    background: rgba($header, 0.5);
+    color: $header-text;
+    text-decoration: none;
+    font-size: 16px;
+    font-size: 1.6rem;
+    padding: 8px;
+    padding: 0.8rem;
+    border-radius: 4px;
+    border-radius: 0.4rem;
+
+    &:hover {
+        background: rgba($header, 1);
+    }
+}
+
+table {
+    width: 100%;
+    border-collapse:collapse;
+}
+
+table, th, td {
+    border: 1px solid $header;
+}
+
+thead {
+    background-color:$header;
+    color:white;
+}

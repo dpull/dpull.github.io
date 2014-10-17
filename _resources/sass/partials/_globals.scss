@@ -1,0 +1,49 @@
+﻿*, *:before, *:after {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+html, body {
+    height: 100%;
+}
+
+html {
+    font-size: 62.5%;
+    font-family: "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+    font-weight: 400;
+    line-height: 1.6875;
+    color: $body-text;
+    background: $body;
+}
+
+body {
+    font-size: 20px;
+    font-size: 2rem;
+    margin: 0 0 100px 0;
+    margin: 0 0 10rem 0;
+}
+
+.module {
+    background: $header;
+    color: $header-text;
+    margin-bottom: 16px;
+    margin-bottom: 1.6rem;
+    padding: 32px;
+    padding: 3.2rem;
+    border-radius: 4px;
+    border-radius: 0.4rem;
+
+    p {
+        margin: 0;
+    }
+
+    a {
+        color: $header-text;
+        text-decoration: underline;
+    }
+}
+
+img, canvas, iframe, video, svg {
+    max-width: 100%;
+}

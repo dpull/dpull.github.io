@@ -1,0 +1,27 @@
+.pagination {
+    text-align: center;
+    margin: 16px 0;
+    margin: 1.6rem 0;
+
+    .disabled {
+        pointer-events: none;
+        opacity: 0.4;
+    }
+
+    .previous, .next {
+        text-decoration: none;
+        color: $header;
+        font-size: 45px;
+        font-size: 4.5rem;
+    }
+
+    .previous {
+        margin-right: 32px;
+        margin-right: 3.2rem;
+    }
+
+    .next {
+        margin-left: 32px;
+        margin-left: 3.2rem;
+    }
+}

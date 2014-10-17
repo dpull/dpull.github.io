@@ -1,0 +1,13 @@
+<a href="#" class="top smooth-scroll">Back to Top</a>
+
+<header class="module">
+    <h1 class="post-title">{{ page.title }}</h1>
+    <p class="post-date">Published on {{ page.date | date: "%Y/%m/%d" }}{% if page.comments %} with <a href="#disqus_thread" class="smooth-scroll"></a>{% endif %}.</p>
+</header>
+
+{% if page.toc %}
+<div class="module">
+    <h1>Table of Contents</h1>
+    <div class="toc"></div>
+</div>
+{% endif %}

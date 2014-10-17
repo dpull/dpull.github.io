@@ -1,0 +1,16 @@
+footer.module {
+    margin: 50px 0 0 0;
+    margin: 5rem 0 0 0;
+    width: 100%;
+    @extend %text-center;
+}
+
+footer p {
+    margin: 0;
+    font-size: 18px;
+    font-size: 1.8rem;
+}
+
+footer a {
+    text-decoration: underline;
+}

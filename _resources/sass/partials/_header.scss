@@ -1,0 +1,161 @@
+.me {
+    margin-bottom: 20px;
+    margin-bottom: 2rem;
+}
+
+.site-header {
+    ul {
+        margin-left: 0;
+    }
+
+    a {
+        color: $header-text;
+    }
+
+    a:hover {
+        text-decoration: none;
+    }
+}
+
+.site-title {
+    font-size: 46px;
+    font-size: 4.6rem;
+    font-family: 'Helvetica Neue', sans-serif;
+    padding: 0;
+}
+
+.social {
+    list-style: none;
+    padding: 0;
+
+    li {
+        display: inline-block;
+        padding-right: 10px;
+        padding-right: 1rem;
+
+        &:last-child {
+            padding-right: 0;
+        }
+    }
+
+    i {
+        font-size: 30px;
+        font-size: 3rem;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .fa-facebook {
+        &:hover {
+            color: #47639E;
+        }
+    }
+
+    .fa-twitter {
+        &:hover {
+            color: #55ACEE;
+        }
+    }
+
+    .fa-google-plus {
+        &:hover {
+            color: #db4437;
+        }
+    }
+
+    .fa-envelope {
+        &:hover {
+            color: #db4437;
+        }
+    }
+}
+
+.about {
+    margin: 0;
+    font-size: 16px;
+    font-size: 1.6rem;
+}
+
+.site-nav {
+    ul {
+        list-style: none;
+        margin: 0;
+
+        @media only screen and (max-width: $nav-layout-maxwidth) {
+            text-align: center;
+        }
+    }
+
+    li {
+        margin-bottom: 5px;
+        margin-bottom: 0.5rem;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        @media only screen and (max-width: $nav-layout-maxwidth) {
+            display: inline-block;
+            margin: 0 10px 0 0;
+            margin: 0 1rem 0 0;
+        }
+
+        @media only screen and (max-width: $nav-layout-minwidth) {
+            display: block;
+            margin-right: 0;
+            margin-bottom: 10px;
+            margin-bottom: 1rem;
+        }
+    }
+
+    .search {
+        @media only screen and (max-width: $nav-layout-maxwidth) {
+            display: block;
+            margin-right: 0;
+            margin-top: 5px;
+            margin-top: 0.5rem;
+        }
+    }
+}
+
+.search-form .fa-search {
+    font-size: 20px;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.search-form .search-container {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.search-field {
+    display: none;
+    width: 80%;
+    padding: 5px 15px;
+    padding: 0.5rem 1.5rem;
+    margin-bottom: 16px;
+    margin-bottom: 1.6rem;
+    font-size: 20px;
+    font-size: 2rem;
+    border: 1px solid white;
+    border-radius: 4px;
+    border-radius: 0.4rem;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+.search-results ol {
+    margin-bottom: 0;
+    margin-left: 32px;
+    margin-left: 3.2rem;
+    @media only screen and (max-width: $nav-layout-maxwidth) {
+        list-style-position: inside !important;
+        margin-left: 0;
+    }
+}
+
+.search-results a {
+    color: $header-text;
+}

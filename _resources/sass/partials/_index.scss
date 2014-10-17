@@ -1,0 +1,13 @@
+.posts {
+    margin: 0;
+    list-style: none;
+}
+
+.posts li {
+    padding: 16px 0;
+    padding: 1.6rem 0;
+}
+
+.posts li a {
+    color: $body-text;
+}

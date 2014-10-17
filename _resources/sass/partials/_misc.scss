@@ -1,0 +1,9 @@
+::selection {
+    background: $header;
+    color: $header-text;
+}
+
+::-moz-selection {
+    background: $header;
+    color: $header-text;
+}

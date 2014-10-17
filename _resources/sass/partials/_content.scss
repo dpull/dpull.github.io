@@ -1,0 +1,57 @@
+﻿h1, h2, h3, h4, h5, h6 {
+    font-weight: 300;
+    margin-bottom: 16px;
+    margin-bottom: 1.6rem;
+}
+
+h1 {
+    font-size: 36px;
+    font-size: 3.6rem;
+}
+
+h2 {
+    font-size: 32px;
+    font-size: 3.2rem;
+}
+
+h3 {
+    font-size: 26px;
+    font-size: 2.6rem;
+}
+
+h4 {
+    font-size: 24px;
+    font-size: 2.4rem;
+}
+
+a {
+    text-decoration: none;
+    color: $header;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.button {
+    text-decoration: none;
+    display: inline-block;
+    background: $header;
+    color: $header-text;
+    padding: 10px 16px;
+    padding: 1rem 1.6rem;
+    border-radius: 4px;
+    border-radius: 0.4rem;
+}
+
+p {
+    margin-bottom: 16px;
+    margin-bottom: 1.6rem;
+}
+
+ul, ol {
+    margin-bottom: 16px;
+    margin-bottom: 1.6rem;
+    margin-left: 40px;
+    margin-left: 4rem;
+}
