@@ -43,7 +43,7 @@ tags: []
 ## 结论 ##
 猜测原因是UnityEngine.Object是重写了内存分配器的。
 
-如过想一个类继承自UnityEngine.Object应继承自ScriptableObject或SerializedObject，然后使用Object.Destory销毁，注意不要用垃圾回收。
+自定义类不要直接继承自UnityEngine.Object，应继承自ScriptableObject或SerializedObject，注意要使用Object.Destory释放，不走垃圾回收的。
 
 ## 参考 ##
 
