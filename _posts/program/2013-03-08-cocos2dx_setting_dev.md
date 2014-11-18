@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Cocos2dx开发环境设置及常用操作
+title: cocos2dx开发环境设置及常用操作
 categories: [general, cocos2dx]
 tags: [cocos2dx]
 ---
