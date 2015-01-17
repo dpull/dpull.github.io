@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Linux kernel coding style
-categories: [general, hero]
+categories: [general]
 tags: []
 ---
 
