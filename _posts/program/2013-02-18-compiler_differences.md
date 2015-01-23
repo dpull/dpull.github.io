@@ -47,3 +47,10 @@ tags: []
 		end
 		return _nGMTSec;
 	end
+
+## printf ##
+
+	printf("%2dX\n", (char)-13);
+	// Xcode6  FFFFFFF3
+	// VS2013  -13X
+	
