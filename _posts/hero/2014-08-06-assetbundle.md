@@ -16,3 +16,9 @@ tags: []
 
 ## 差异更新asset bundle ##
 Github上有asset bundle的[解包工具](https://github.com/ata4/disunity)，可以参考这个工具格式，将其改为支持包的差异更新。
+
+## 参考 ##
+### 白猫行动 ###
+按功能分成几个包，模型，特效
+### 炉石传说 ###
+按功能分成几个包，卡牌，配置

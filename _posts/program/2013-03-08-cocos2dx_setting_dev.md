@@ -106,7 +106,8 @@ Android的调试比较复杂，如果不使用C++代码的调试，可采用如�
     export LSCOLORS=gxfxaxdxcxegedabagacad
     alias ll="ls -l"
     alias la="ls -a"
-    
+    alias unity='open -a Unity -n'
+
     export ANDROID_SDK_ROOT=/Applications/ADT/sdk
     export ANDROID_NDK_ROOT=/Applications/android-ndk-r8d
     export NDK_ROOT=/Applications/android-ndk-r8d
