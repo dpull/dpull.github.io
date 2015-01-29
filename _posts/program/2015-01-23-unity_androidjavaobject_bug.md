@@ -1,6 +1,6 @@
 ---
 layout: post
-title: AndroidJavaObject.Call bug
+title: Unity函数AndroidJavaObject.Call的bug
 categories: [general]
 tags: []
 ---
