@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 基于AssetBundle的客户端资源更新及OneBuild插件开发
+title: Hero开发笔记-客户端资源更新
 categories: [general]
 tags: []
 ---
