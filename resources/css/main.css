@@ -163,7 +163,8 @@ body {
   font-size: 20px;
   font-size: 2rem;
   margin: 0 0 100px 0;
-  margin: 0 0 10rem 0; }
+  margin: 0 0 10rem 0; 
+  word-break:break-all; }
 
 .module, .post h1 {
   background: #86c543;
