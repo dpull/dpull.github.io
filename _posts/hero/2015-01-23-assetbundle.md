@@ -35,6 +35,21 @@ tags: []
 资源冗余，如果是UI资源变更，可能会引发大量资源打包。
 进而可以再优化一下，比如将Resource按依赖打成小包，但我不想接受assetbundle解压带来的性能损失和处理依赖的复杂，当然如果这一版更新包实在大，只好按照这个思路做第四版了。
 
+### 第四版 ###
+第三版提出了第四版的思路，但真正的第四版并不是按照这个思路走的。
+按照我们的打包思路，Resource已经被打入客户端了，只是因为依赖问题，导致了更新包会大，假设依赖的资源，比如说UI的底图，字体，音效等都没变，那么这些资源是可以在客户端的资源中找到的，但是如果某个资源有文件依赖，则其差异会很大，比如说GameObject资源依赖Component资源，则其无法更新，因为是两种打包思路，文件的FileID和PathID都变了。
+
+    TypeId       | Type        | Remark
+    ---  		 | --- 		   | --- 	
+    128          | Font        | 依赖Material，考虑局部替换
+	83           | AudioClip   | 理论支持
+	49           | TextAsset   | 理论支持
+	48           | Shader      | 理论支持
+	43           | Mesh        | 理论支持
+	28           | Texture2D   | 理论支持
+
+明天的工作就从为何部分TextAsset会产生差异做起。
+
 ## OneBuild插件开发 ##
 经过一周的摸索及开发，unity assetbundle的差异合并工具 `AssetBundleParser` 已经开发完成了，计划基于 `AssetBundleParser` 开发 unity资源更新插件： `OneBuild` 。
 
