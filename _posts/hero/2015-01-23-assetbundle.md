@@ -43,12 +43,12 @@ tags: []
     ---  		 | --- 		   | --- 	
     128          | Font        | 依赖Material，考虑局部替换
 	83           | AudioClip   | 理论支持
-	49           | TextAsset   | 理论支持
+	49           | TextAsset   | 支持
 	48           | Shader      | 理论支持
 	43           | Mesh        | 理论支持
 	28           | Texture2D   | 理论支持
 
-明天的工作就从为何部分TextAsset会产生差异做起。
+明天的工作就从为何部分AudioClip会产生差异做起。
 
 ## OneBuild插件开发 ##
 经过一周的摸索及开发，unity assetbundle的差异合并工具 `AssetBundleParser` 已经开发完成了，计划基于 `AssetBundleParser` 开发 unity资源更新插件： `OneBuild` 。
