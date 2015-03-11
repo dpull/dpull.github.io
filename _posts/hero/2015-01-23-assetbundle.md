@@ -19,7 +19,7 @@ tags: []
 1. 压缩的AssetBundle不能太大，解压速度慢。
 
 ### 第二版 ###
-针对更新包大的问题，开发了一个对AssetBundle包差异比较合并工具（仅支持非压缩的AssetBundle），可以将老包通过比较小的更新量变为新包，
+针对更新包大的问题，开发了一个对AssetBundle包差异比较合并工具[`AssetBundleParser`](https://bitbucket.org/beings/assetbundleparser)，可以将老包通过比较小的更新量变为新包，
 打包策略为 场景打包，Resource打包，然后将其压缩后，放StreamingAsset
 这样的坏处是：
 
@@ -50,24 +50,3 @@ tags: []
 	28           | Texture2D   | 支持
 
 目前还有两个理论支持的文件还存在diff，明天继续研究
-
-
-----------
-
-# OneBuild插件开发 #
-经过一周的摸索及开发，unity assetbundle的差异合并工具 `AssetBundleParser` 已经开发完成了，计划基于 `AssetBundleParser` 开发 unity资源更新插件： `OneBuild` 。
-
-### AssetBundleParser ###
-
-[点击浏览代码](https://bitbucket.org/beings/assetbundleparser)。
-
-`AssetBundleParser` 是 Unity assetbundle文件的差异比较及合并工具。
-
-`AssetBundleParser` 的代码并不健壮，如果拿错误格式的文件传入会造成程序崩溃，原因有二：
-
-1. assetbundle的格式是非公开的，保持代码简单，可以方便和 `disunity` 对照代码查找问题，正确格式解析有问题可以快速暴露。
-1. 文件的正确性可以通过验证md5等方式来保证， 没必要太增加代码复杂度. 合并差异前，会检查文件diff文件，旧assetbundle文件的md5是否一致，合并后也会检查新assetbundle文件的md5是否一致
-
-目前只支持非压缩的 `assetbundle` 的包，因为Lzma压缩速度很慢，差异合并后再压缩整个过程就太久了，所以做包时需要增加：`BuildOptions.UncompressedAssetBundle` 或 `BuildAssetBundleOptions.UncompressedAssetBundle`。
-
-目前只支持移动端，因为TypeTree相关的数据在移动端上没有，故而也并没有解析。对于非移动端可以考虑加上 `BuildAssetBundleOptions.DisableWriteTypeTree` ，这对我当前的项目支持是足够的， 在下一个版本可能会加上这个支持。
