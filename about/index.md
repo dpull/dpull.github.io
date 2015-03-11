@@ -26,7 +26,7 @@ title: Resume
 于是，将一些知识整理下来，方便回顾和分享。
 本来将这些写成文档放在网盘中，发现分享不方便。
 不如做成blog，
-查找的时候使用用：关键字 [site:dpull.com]。
+查找的时候使用用：关键字 [site:dpull.com]，国内请访问[site:dpull.com GFW]。
 
 > 代码能借用就借用 
 > 
@@ -53,7 +53,7 @@ title: Resume
 
 ## 历史 ##
 ### 2005.05.18 ###
-在csdn blog开博
+在[CSDN blog]开博
 
 ### 2009.03.28 ###
 使用Wordpress将blog迁移到自己的空间
@@ -64,6 +64,8 @@ title: Resume
 ### 2014.01.20 ###
 使用Markdown将blog迁移到[Github]
 
+[CSDN blog]: http://blog.csdn.net/
 [Google App Engine]: https://appengine.google.com
 [Github]: https://github.com/
 [site:dpull.com]: http://www.google.com/search?q=site%3Adpull.com
+[site:dpull.com GFW]: http://84.15.64.35/#q=site:dpull.com
