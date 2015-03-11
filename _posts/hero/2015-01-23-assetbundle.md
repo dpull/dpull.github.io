@@ -51,7 +51,10 @@ tags: []
 
 目前还有两个理论支持的文件还存在diff，明天继续研究
 
-## OneBuild插件开发 ##
+
+----------
+
+# OneBuild插件开发 #
 经过一周的摸索及开发，unity assetbundle的差异合并工具 `AssetBundleParser` 已经开发完成了，计划基于 `AssetBundleParser` 开发 unity资源更新插件： `OneBuild` 。
 
 ### AssetBundleParser ###
