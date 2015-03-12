@@ -45,19 +45,17 @@ tags: []
 
     Id           | Type        | Remark
     ---  		 | --- 		   | --- 	
-    128          | Font        | Font1,  sniglet
+    128          | Font        | 需特殊处理
 	83           | AudioClip   | 支持
 	49           | TextAsset   | 支持
-	48           | Shader      | DissolveToon-Basic 
-	43           | Mesh        | Sb007body 
+	48           | Shader      | 理论支持 
+	43           | Mesh        | 理论支持 
 	28           | Texture2D   | 支持
 
 这项工作就告一段落了，因为手头上有优先级更高的事情，过一段再折腾吧。
 目前存在差异的四个可优化文件：
 字体2个文件，需单独处理资源件引用，
-Shader只剩一个文件，待细查，
-Mesh只剩一个文件，待细查。
-
-
+Shader部分支持，待细查，
+Mesh部分支持，待细查。
 
 [`AssetBundleParser`]: https://bitbucket.org/beings/assetbundleparser
