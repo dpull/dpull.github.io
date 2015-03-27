@@ -1,4 +1,6 @@
 name: dpull  
+description: 面包屑小道.
+url: http://www.dpull.com
 paginate: 10 # pagination based on number of posts
 paginate_path: "/page/:num"
 permalink: "/blog/:title"
