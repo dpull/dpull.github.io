@@ -58,4 +58,4 @@ tags: []
 Shader部分支持，待细查，
 Mesh部分支持，待细查。
 
-[`AssetBundleParser`]: https://bitbucket.org/beings/assetbundleparser
+[`AssetBundleParser`]: http://www.dpull.com/blog/assetbundle/
