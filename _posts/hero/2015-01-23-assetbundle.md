@@ -19,7 +19,7 @@ tags: []
 1. 压缩的 `AssetBundle` 不能太大，解压速度慢。
 
 ### 第二版 ###
-针对更新包大的问题，开发了一个对 `AssetBundle` 包差异比较合并工具[`AssetBundleParser`]，可以将老包通过比较小的更新量变为新包，
+针对更新包大的问题，开发了一个对 `AssetBundle` 包差异比较合并工具[`AssetBundlePatch`]，可以将老包通过比较小的更新量变为新包，
 打包策略为 场景打包，Resource打包，然后将其压缩后，放StreamingAsset
 这样的坏处是：
 
@@ -30,7 +30,7 @@ tags: []
 
 ### 第三版 ###
 第二版是一个完整更新策略，支持全部资源的更新，可以减少需求只支持Resource资源的更新，
-打包策略：默认不打 `AssetBundle` 包，只是将修改过的文件和其依赖打成 `AssetBundle` ，利用 [`AssetBundleParser`] 进行差异更新。
+打包策略：默认不打 `AssetBundle` 包，只是将修改过的文件和其依赖打成 `AssetBundle` ，利用 [`AssetBundlePatch`] 进行差异更新。
 这样的坏处是：
 
 资源冗余，如果是UI资源变更，可能会引发大量资源打包。
@@ -44,7 +44,7 @@ tags: []
 为何`依赖其他资源的资源`不支持呢？因为是两种打包过程，会导致资源的FileID和PathID不同，比如说GameObject资源依赖Component资源，依赖的FileID和PathID都变了，需要对其做特殊处理，未必值得，例如Font资源，它依赖了Material，但因为数据文件大，需要做特殊处理。
 
     Id           | Type        | Remark
-    ---  		 | --- 		   | --- 	
+    ---          | ---         | --- 	
     128          | Font        | 需特殊处理
 	83           | AudioClip   | 支持
 	49           | TextAsset   | 支持
@@ -58,4 +58,9 @@ tags: []
 Shader部分支持，待细查，
 Mesh部分支持，待细查。
 
-[`AssetBundleParser`]: http://www.dpull.com/blog/assetbundle/
+** 2015.3.30 **
+
+重新设计了diff文件，插件代码已经放github [`AssetBundlePatch`], 需要特殊处理和理论支持的部分还有待开发。
+
+
+[`AssetBundlePatch`]: https://github.com/dpull/AssetBundlePatch
