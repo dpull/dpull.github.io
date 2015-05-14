@@ -64,3 +64,4 @@ Mesh部分支持，待细查。
 
 
 [`AssetBundlePatch`]: https://github.com/dpull/AssetBundlePatch
+[`Serialized file format`]: https://github.com/ata4/disunity/wiki/Serialized-file-format
