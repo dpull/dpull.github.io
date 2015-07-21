@@ -11,6 +11,8 @@ tags: [csharp]
 ## 如何实现继承自YieldInstruction的协程类 ##
 无法实现，因为其逻辑写在了Coroutine.cpp中，仅拿YieldInstruction做了缓存数据的功能。
 
+## Unity资源管理 ##
+### Assetbundle ###
 
 <!--  
 ------------------------------------------------------
