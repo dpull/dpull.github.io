@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Hero开发笔记-Skynet交流
+title: Skynet交流
 categories: [general, hero]
 tags: []
 ---

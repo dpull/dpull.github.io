@@ -37,9 +37,11 @@ tags: []
 来源于 Unite China：2015《The Matrix：全新的Unity移动游戏优化解决方案》
 
 **CPU**
+
 每帧耗时超过33ms的占比10%以下。
 
 **内存**
+
 内存主要因素：资源内存，代码堆内存，WebStream
 
 * 总体内存控制在150MB以下。
@@ -51,34 +53,46 @@ tags: []
 * 平均每帧堆内存分配不能超过20B
 
 **DrawCall 统计**
+
 建议：
+
 * 峰值<250
 * 主体范围（5%-95%）应在（0，200）之内
 
 **渲染Triangle数量** 
+
 建议：< 100000/帧
 
 **VBO 上传量**
+
 建议：
+
 * 峰值<5MB
 * 频繁加载的资源使用缓存池
 
 **Skinned Mesh数量**
+
 建议：
+
 * 峰值<50
 * 对应 MeshSkinning.Update 和 Animator.Update
 
 **Rigidbody数量**
+
 建议：
+
 	* 峰值<50/帧
 	* 对应 Physics.Simulate
 
 
 **碰撞体数量**
+
 建议：
+
 * 峰值<100/帧
 * 对应 Physics.Simulate
 
 **RenderTexture 使用情况** 
+
 性能高，在GPU，建议：数量 < 10
 

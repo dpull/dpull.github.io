@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Hero开发笔记-NGUI
+title: Unity NGUI
 categories: [general, hero]
 tags: []
 ---
@@ -20,9 +20,11 @@ UIPanel会根据UIWidget.depth进行排序后创建UIDrawCall，临近depth相�
 > UIRoot constrained / flexible size is meant for 2D UIs, not 3D. 3D UIs have perspective, which adds a 3rd dimension to it. Moving the camera forward or back will change how big your UI is. That's how you should be doing zoom with 3D UIs (or just by changing its field of view). Don't do anything with UIRoot. In fact 3D UIs don't even need a UIRoot.
 
 ### 2d ui ###
-我们现在换回2d ui了， 主要是为了分辨率适配好做点，先说结论，暂时采用了960*640，两个fit都勾选。
+*我们现在换回2d ui了， 主要是为了分辨率适配好做点，先说结论，暂时采用了960*640，两个fit都勾选。
 
-写了一个[编辑器扩展](https://github.com/dpull/unity3d-tools/blob/master/UIAdapterEditor.cs)，来研究这个数值的选择。
+写了一个[编辑器扩展](https://github.com/dpull/unity3d-tools/blob/master/UIAdapterEditor.cs)，来研究这个数值的选择。*
+
+又全部换回了3d ui
 
 ### NGUI糊的问题 ###
 texture type设置为advanced，去掉generate mip maps的勾。
@@ -36,7 +38,9 @@ texture type设置为advanced，去掉generate mip maps的勾。
 小米遥控器的中键是KeyCode(10)，缺少这个枚举。
 
 ## 粒子系统 ##
-unity自带的粒子系统和NGUI的渲染优先级默认相同，需要用UIPanel调整render q来解决遮挡问题，十分复杂，参考cocos2d的代码，实现了一套简单的粒子系统，够用就好。
+unity自带的粒子系统和NGUI的渲染优先级默认相同，需要用UIPanel调整render q来解决遮挡问题，十分复杂，参考cocos2d的代码，实现了一套简单的粒子系统[粒子系统](https://github.com/dpull/NGUIParticleSystem)，够用就好。
+
+
 
 ##辅助##
 Ray Camera.ScreenPointToRay(Vector3 position);

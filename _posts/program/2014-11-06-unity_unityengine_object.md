@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Hero开发笔记-UnityEngine.Object相关
+title: UnityEngine.Object相关
 categories: [general, hero]
 tags: []
 ---
