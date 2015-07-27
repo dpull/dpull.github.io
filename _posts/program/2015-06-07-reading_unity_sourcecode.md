@@ -13,6 +13,21 @@ tags: [csharp]
 
 ## Unity资源管理 ##
 ### Assetbundle ###
+只有文件索引相关的数据占用内存
+
+### Resources ###
+也是预存了索引数据
+
+### Resources.Load ###
+
+### Object.Instantiate ###
+
+## WWW性能问题 ##
+以前我向unity反馈过，WWW没有stream接口，没有设置超时接口，
+研究后发现，其是全读到内存中的，这。。。。。
+
+
+## ParticleSystem ##
 
 <!--  
 ------------------------------------------------------
