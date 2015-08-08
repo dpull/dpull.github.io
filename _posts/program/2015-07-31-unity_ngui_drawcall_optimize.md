@@ -28,7 +28,7 @@ A，C 共用材质1， B使用材质2，Depth顺序为ABC，这时候需要三�
 
 此外UI动画对其检查影响很大，第一个版本可以考虑做成一个非自动化的模式，只是修改当前UI，需要策划调整后，决定是否保存入库。
 
-我花了一天时间写了一个[简单版本](https://github.com/dpull/UIBatchSorting)。
+趁着制定新版本计划的空隙，我花了一天时间写了一个[简单版本](https://github.com/dpull/UIBatchSorting)。
 
 
 
