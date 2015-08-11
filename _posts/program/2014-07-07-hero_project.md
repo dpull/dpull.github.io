@@ -43,7 +43,7 @@ tags: []
     ---  			 	| --- 				| ---
     类名    	            | PascalCasing     	| class **Example**
     成员变量  		    | PascalCasing     	| int **Level**
-    属性           	    | PascalCasing     	| int **Level{get; set;}**
+    属性           	    | PascalCasing     	| int **Level** {get; set;}
     函数           	    | PascalCasing     	| void **SetLevel** (int level)
     函数参数         	| camelCasing      	| void SetLevel(int **level**)
 
