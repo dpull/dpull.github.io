@@ -81,8 +81,8 @@ tags: []
 
 建议：
 
-	* 峰值<50/帧
-	* 对应 Physics.Simulate
+* 峰值<50/帧
+* 对应 Physics.Simulate
 
 
 **碰撞体数量**
