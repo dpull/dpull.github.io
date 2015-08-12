@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Hero开发笔记-客户端优化
+title: Unity客户端优化
 categories: [general]
 tags: []
 ---
@@ -28,7 +28,7 @@ tags: []
 	1. 资源异步加载
 	1. Animator实例化优化
 		* 问题：当Animator实例化时（GameObject.Instantiate），会加载相关的动画文件，此时是阻塞加载，会造成游戏卡顿
-		* 核心点：要讲AnimatorController及依赖加载了，比如说`Resources.Load<RuntimeAnimatorController>(FileName)`后，再实例化Animator，就不会有卡顿了，但问题是，如果针对AnimatorController加载，改动量较大。
+		* 核心点：要将AnimatorController及依赖预加载了，比如说`Resources.Load<RuntimeAnimatorController>(FileName)`后，再实例化Animator，就不会有卡顿了，但问题是，如果针对AnimatorController加载，改动量较大。
 		* 解决思路：拿内存换效率，在场景加载进度条时，分析出当前场景可能动态载入的animator，实例化一次，然后销毁，使资源管理模块缓存相关的动画。
 1. 内存优化
 	1. NGUI UIGrid和UITable优化，只实例化可见部分
