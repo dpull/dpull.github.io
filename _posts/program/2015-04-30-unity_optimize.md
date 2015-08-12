@@ -1,11 +1,11 @@
 ---
 layout: post
-title: Unity客户端优化
+title: Unity游戏优化
 categories: [general]
 tags: []
 ---
 
-客户端优化的重点分为两部分，安装包大小优化以及性能优化。
+优化的重点分为两部分，安装包大小优化以及性能优化。
 
 ## 安装包大小优化 ##
 
@@ -38,7 +38,7 @@ tags: []
 	1. 减少光照图（美术制作流程规划，尽量一个场景只用一张光照图）
 1. Drawcall优化
 	1. 减少不必要的NGUI UIPanel
-	1. [UIPanel内调整depth顺序](../unity_ngui_drawcall_optimize)
+	1. [NGUI UIPanel内调整depth顺序](../unity_ngui_drawcall_optimize)
 
 
 
