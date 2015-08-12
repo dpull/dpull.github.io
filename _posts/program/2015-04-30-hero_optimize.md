@@ -35,6 +35,7 @@ tags: []
 	1. 场景切换清理GC
 	1. Texture，美术看效果，能接受的最高压缩
 	1. 禁用高面数mesh的静态批处理（暂定为100面以上的就算高面数）
+	1. 减少光照图（美术制作流程规划，尽量一个场景只用一张光照图）
 1. Drawcall优化
 	1. 减少不必要的NGUI UIPanel
 	1. [UIPanel内调整depth顺序](../unity_ngui_drawcall_optimize)
