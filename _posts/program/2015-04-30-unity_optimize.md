@@ -22,8 +22,9 @@ tags: []
 
 ### 优化方案 ###
 
-1. CPU 优化
+1. CPU/GPU 优化
 	1. GameObject缓存池
+	1. 降低场景的面数
 1. I/O 优化
 	1. 资源异步加载
 	1. Animator实例化优化
