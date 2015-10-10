@@ -43,21 +43,21 @@ public bool Connected {
 
 Mono 实现
 
-    {% highlight C# %}
+{% highlight C# %}
 
-	public bool Connected
+public bool Connected
+{
+	get
 	{
-		get
-		{
-			return this.connected;
-		}
-		internal set
-		{
-			this.connected = value;
-		}
+		return this.connected;
 	}
+	internal set
+	{
+		this.connected = value;
+	}
+}
 
-    {% endhighlight %}	
+{% endhighlight %}	
 
 ## 发送队列 ##
 以前Send其实是阻塞的，Send失败了，循环继续Send，这次增加了发送队列，虽然可能效率上降低了，但也算用对了吧。
