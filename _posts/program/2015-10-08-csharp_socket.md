@@ -23,8 +23,6 @@ tags: [csharp, socket]
 
 MS .Net实现
 
-    {% highlight C# %}
-
     public bool Connected {
         get {
             GlobalLog.Print("Socket#" + ValidationHelper.HashString(this) + "::Connected() m_IsConnected:"+m_IsConnected);
@@ -41,8 +39,6 @@ MS .Net实现
         }
     }
     
-    {% endhighlight %}
-
 Mono 实现
 
     {% highlight C# %}
