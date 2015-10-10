@@ -39,47 +39,47 @@ ADO.NET2.0 为各种ADO.NET类引入了一个提供程序工厂的模型以及�
 所以需要扩充DbProviderFactories类兼容mysql, 而且在ADO.net
 2.0中mysql和sqlserver的ParameterMarkerFormat都有bug，所以扩展类顺带解决这个bug
 
-    {% highlight C# %}
-    public static class DbProviderFactoryEx
+```C#
+public static class DbProviderFactoryEx
+{
+    public static DbProviderFactory GetFactory(string providerName)
     {
-        public static DbProviderFactory GetFactory(string providerName)
+        if (providerName == null)
+            throw new ArgumentNullException("providerName");
+
+        switch (providerName)
         {
-            if (providerName == null)
-                throw new ArgumentNullException("providerName");
-    
-            switch (providerName)
-            {
-                case "MySql.Data.MySqlClient":
-                    return new MySqlClientFactory();
-    
-                default:
-                    return DbProviderFactories.GetFactory(providerName);
-            }
+            case "MySql.Data.MySqlClient":
+                return new MySqlClientFactory();
+
+            default:
+                return DbProviderFactories.GetFactory(providerName);
         }
-    
-        public static string GetParameterMarkerFormat(DbConnection connect)
-        {
-            if (connect == null)
-                throw new ArgumentNullException("connect");
-    
-            Type type = connect.GetType();
-            if (type == typeof(MySql.Data.MySqlClient.MySqlConnection))
-                return MySqlParameterMarkerFormat;//mysql bug
-            else
-            if (type == typeof(System.Data.SqlClient.SqlConnection))
-                return SqlServerParameterMarkerFormat;//ms bug
-    
-            connect.Open();
-            string result = 
-                connect.GetSchema("DataSourceInformation").Rows[0]["ParameterMarkerFormat"].ToString();
-            connect.Close();
-            return result;
-        }
-    
-        public static readonly string SqlServerParameterMarkerFormat = "@{0}";
-        public static readonly string MySqlParameterMarkerFormat = "?{0}";
     }
-    {% endhighlight %}
+
+    public static string GetParameterMarkerFormat(DbConnection connect)
+    {
+        if (connect == null)
+            throw new ArgumentNullException("connect");
+
+        Type type = connect.GetType();
+        if (type == typeof(MySql.Data.MySqlClient.MySqlConnection))
+            return MySqlParameterMarkerFormat;//mysql bug
+        else
+        if (type == typeof(System.Data.SqlClient.SqlConnection))
+            return SqlServerParameterMarkerFormat;//ms bug
+
+        connect.Open();
+        string result = 
+            connect.GetSchema("DataSourceInformation").Rows[0]["ParameterMarkerFormat"].ToString();
+        connect.Close();
+        return result;
+    }
+
+    public static readonly string SqlServerParameterMarkerFormat = "@{0}";
+    public static readonly string MySqlParameterMarkerFormat = "?{0}";
+}
+```
 
 ## 开启sql2005远程连接功能 ##
 连接到SQL Server 2005时，在默认的设置下SQL
@@ -119,97 +119,96 @@ Server不允许进行远程连接，需要自己手工开启，详细步骤如�
 
 **实现：**
 
-    {% highlight C# %}
-    public static class DBHelper
-    {
-       public static T Get<T>(DbDataRecord record, string field)
+```C#
+public static class DBHelper
+{
+   public static T Get<T>(DbDataRecord record, string field)
+   {
+       int num = record.GetOrdinal(field);
+       if (record.IsDBNull(num))
+           return default(T);
+
+       return (T)record[num];
+   }
+
+   public static int? ToInt32(object value)
+   {
+       if (value == null)
+           return null;
+
+       return ((IConvertible)value).ToInt32(null);
+   }
+
+   public static void AddParameter(string name, object value, DbCommand cmd)
+   {
+       DbParameter para = cmd.CreateParameter();
+       para.ParameterName = string.Format(ParameterMarkerFormat, name);
+       if (value == null)
+           para.Value = DBNull.Value;
+       else
+       para.Value = value;
+       cmd.Parameters.Add(para);
+   }
+
+
+   public static String LatinToGBK(String str)
+   {
+       try
        {
-           int num = record.GetOrdinal(field);
-           if (record.IsDBNull(num))
-               return default(T);
-    
-           return (T)record[num];
+           byte[] bytesStr = Encoding.GetEncoding("latin1").GetBytes(str);
+           return Encoding.GetEncoding("GB2312").GetString(bytesStr);
        }
-    
-       public static int? ToInt32(object value)
+       catch
        {
-           if (value == null)
-               return null;
-    
-           return ((IConvertible)value).ToInt32(null);
+           return str;
        }
-    
-       public static void AddParameter(string name, object value, DbCommand cmd)
+   }
+
+   public static String GBKToLatin(String str)
+   {
+       try
        {
-           DbParameter para = cmd.CreateParameter();
-           para.ParameterName = string.Format(ParameterMarkerFormat, name);
-           if (value == null)
-               para.Value = DBNull.Value;
-           else
-           para.Value = value;
-           cmd.Parameters.Add(para);
+           byte[] bytesStr = Encoding.GetEncoding("GB2312").GetBytes(str);
+           return Encoding.GetEncoding("latin1").GetString(bytesStr);
        }
-    
-    
-       public static String LatinToGBK(String str)
+       catch
        {
-           try
-           {
-               byte[] bytesStr = Encoding.GetEncoding("latin1").GetBytes(str);
-               return Encoding.GetEncoding("GB2312").GetString(bytesStr);
-           }
-           catch
-           {
-               return str;
-           }
+           return str;
        }
-    
-       public static String GBKToLatin(String str)
-       {
-           try
-           {
-               byte[] bytesStr = Encoding.GetEncoding("GB2312").GetBytes(str);
-               return Encoding.GetEncoding("latin1").GetString(bytesStr);
-           }
-           catch
-           {
-               return str;
-           }
-       } 
-       public static string ParameterMarkerFormat = 
-           DbProviderFactoryEx.SqlServerParameterMarkerFormat;
-    }
-    {% endhighlight %}
+   } 
+   public static string ParameterMarkerFormat = 
+       DbProviderFactoryEx.SqlServerParameterMarkerFormat;
+}
+```
 
 
 **应用：**
 
-    {% highlight C# %} 
-    // 处理DbDataReader
-    using (DbDataReader reader = cmd.ExecuteReader())
+```C#
+// 处理DbDataReader
+using (DbDataReader reader = cmd.ExecuteReader())
+{
+    foreach (DbDataRecord record in reader)
     {
-        foreach (DbDataRecord record in reader)
-        {
-            role.ID = DBHelper.Get<uint>(record, "ID");
-            role.Name = DBHelper.LatinToGBK(DBHelper.Get<string>(record, "RoleName"));
-            role.Account = DBHelper.LatinToGBK(DBHelper.Get<string>(record, "Account"));
-            return true;
-        }
+        role.ID = DBHelper.Get<uint>(record, "ID");
+        role.Name = DBHelper.LatinToGBK(DBHelper.Get<string>(record, "RoleName"));
+        role.Account = DBHelper.LatinToGBK(DBHelper.Get<string>(record, "Account"));
+        return true;
     }
-    
-    // 处理DataTable
-    foreach (DataRow row in table.Rows)
-    {
-        row["OperationType"] = DBHelper.LatinToGBK(row["OperationType"].ToString());
-        row["OperationReason"] = DBHelper.LatinToGBK(row["OperationReason"].ToString());
-    }
-    
-    // 传入的SQL语句
-    DbCommand cmd = conn.CreateCommand();
-    cmd.CommandText = "select * from role where rolename=?rolename";
-    DBHelper.AddParameter("rolename", DBHelper.GBK2Latin(name), cmd);   
-    {% endhighlight %}         
-         
+}
+
+// 处理DataTable
+foreach (DataRow row in table.Rows)
+{
+    row["OperationType"] = DBHelper.LatinToGBK(row["OperationType"].ToString());
+    row["OperationReason"] = DBHelper.LatinToGBK(row["OperationReason"].ToString());
+}
+
+// 传入的SQL语句
+DbCommand cmd = conn.CreateCommand();
+cmd.CommandText = "select * from role where rolename=?rolename";
+DBHelper.AddParameter("rolename", DBHelper.GBK2Latin(name), cmd);   
+```
 
 ## 避免SQL注入和特殊字符的一种方法 ##
 
@@ -223,18 +222,20 @@ MySQL实现就很简单了，他会把字符串类型的参数value使用一个�
 使用PHP+MySQL做网站的同学也可以利用着类似的思想生成安全的SQL连接串，我看了PHPWind数据库处理函数，貌似并没有对所有的过滤字符进行处理，这就存在着一些安全隐患。
 源代码
 
-    {% highlight C# %}
-    private static string stringOfBackslashChars = "\u005c\u00a5\u0160\u20a9\u2216\ufe68\uff3c";        private static string stringOfQuoteChars =            "\\u0027\\u00b4\\u02b9\\u02ba\\u02bb\\u02bc\\u02c8\\u02ca\\u02cb\\u02d9\\u0300\\u0301\\u2018\\u2019\\u201a\\u2032\\u2035\\u275b\\u275c\\uff07";    
-    public static string EscapeString(string value)        
-    {            
-        StringBuilder sb = new StringBuilder();            
-        foreach (char c in value)            
-        {                
-            if (stringOfQuoteChars.IndexOf(c) >= 0 || stringOfBackslashChars.IndexOf(c) >= 0)    
-                sb.Append("\\");  
-    
-            sb.Append(c);            
-        }            
-        return sb.ToString();        
-    }
-    {% endhighlight %}
+```C#
+private static string stringOfBackslashChars = "\u005c\u00a5\u0160\u20a9\u2216\ufe68\uff3c";        
+private static string stringOfQuoteChars = "\\u0027\\u00b4\\u02b9\\u02ba\\u02bb\\u02bc\\u02c8\\u02ca\\u02cb\\u02d9\\u0300\\u0301\\u2018\\u2019\\u201a\\u2032\\u2035\\u275b\\u275c\\uff07";    
+
+public static string EscapeString(string value)        
+{            
+    StringBuilder sb = new StringBuilder();            
+    foreach (char c in value)            
+    {                
+        if (stringOfQuoteChars.IndexOf(c) >= 0 || stringOfBackslashChars.IndexOf(c) >= 0)    
+            sb.Append("\\");  
+
+        sb.Append(c);            
+    }            
+    return sb.ToString();        
+}
+```

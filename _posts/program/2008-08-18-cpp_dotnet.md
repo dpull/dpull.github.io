@@ -99,7 +99,7 @@ for each (byte b in data)
 
 ```C++
 public ref class PluginRunException : public Exception   
-	{    
+{    
 public:        
 	PluginRunException(){}        
 	PluginRunException(String^ message):Exception(message){}    
@@ -109,20 +109,20 @@ public:
 ## 重载 ##
 
 ```C++
-    virtual String^ ToString() override;
+virtual String^ ToString() override;
 ```
 
 ## .NET 异常 ##
 
 ```C++
-    throw gcnew ArgumentNullException("dllName");
+throw gcnew ArgumentNullException("dllName");
 ```
 
 ## 事件(event) ##
 
 ```C++
-    delegate void ClickEventHandler(int, double);
-    event ClickEventHandler^ OnClick;
+delegate void ClickEventHandler(int, double);
+event ClickEventHandler^ OnClick;
 ```
 
 ## 托管和非托管交互 ##
@@ -267,8 +267,6 @@ C#代码
 ```C#
 public class XWebView : XWebViewBase
 {
-    public void Navigate(string url)
-    {
-    }
+    public void Navigate(string url) { }
 }
 ```

@@ -66,52 +66,51 @@ Android的调试比较复杂，如果不使用C++代码的调试，可采用如�
 ## Android MK文件 ##
 1. 示例工程中的LOCAL\_SRC\_FILE是全部列出来的，其实是没必要的。
  		
-        {% highlight bash %}
-        CLASS_FILES := $(wildcard $(LOCAL_PATH)/../../Classes/*.cpp)
-        CLASS_FILES := $(CLASS_FILES:$(LOCAL_PATH)/%=%) 
-        
-        LOCAL_SRC_FILES := Client/main.cpp
-        LOCAL_SRC_FILES += $(CLASS_FILES)  
-        {% endhighlight %}       
+```Shell
+CLASS_FILES := $(wildcard $(LOCAL_PATH)/../../Classes/*.cpp)
+CLASS_FILES := $(CLASS_FILES:$(LOCAL_PATH)/%=%) 
+
+LOCAL_SRC_FILES := Client/main.cpp
+LOCAL_SRC_FILES += $(CLASS_FILES)  
+```
         
 
 1. 打开项目调试日志（可以看CCLOG的输出）
 
-        {% highlight bash %}
-        LOCAL_CFLAGS += -DCOCOS2D_DEBUG=1
-        {% endhighlight %}  
+```Shell
+LOCAL_CFLAGS += -DCOCOS2D_DEBUG=1
+```
 
 1. MK文件输出
 
-        {% highlight bash %}
-        $(error LOCAL_PATH)  #输出字符串LOCAL_PATH
-        $(warning $(LOCAL_PATH)) #输出变量$(LOCAL_PATH)的值
-        $(info LOCAL_PATH= $(LOCAL_PATH)) 
-        {% endhighlight %}  
-
+```Shell
+$(error LOCAL_PATH)  #输出字符串LOCAL_PATH
+$(warning $(LOCAL_PATH)) #输出变量$(LOCAL_PATH)的值
+$(info LOCAL_PATH= $(LOCAL_PATH)) 
+```
 
 ## 我的终端设置 ##
 
 打开终端
 
-    {% highlight bash %}
-    cd  
-    vim .bash_profile  (i 进入编辑模式 ESC退出编辑模式 :wq退出并保存 :q!退出不保存)	
-    {% endhighlight %}            
+```Shell
+cd  
+vim .bash_profile  (i 进入编辑模式 ESC退出编辑模式 :wq退出并保存 :q!退出不保存)	
+```
 
 编辑文件
 	
-    {% highlight bash %}
-    export CLICOLOR=1
-    export LSCOLORS=gxfxaxdxcxegedabagacad
-    alias ll="ls -l"
-    alias la="ls -a"
-    alias unity='open -a Unity -n'
+```Shell
+export CLICOLOR=1
+export LSCOLORS=gxfxaxdxcxegedabagacad
+alias ll="ls -l"
+alias la="ls -a"
+alias unity='open -a Unity -n'
 
-    export ANDROID_SDK_ROOT=/Applications/ADT/sdk
-    export ANDROID_NDK_ROOT=/Applications/android-ndk-r8d
-    export NDK_ROOT=/Applications/android-ndk-r8d
-    export PATH=$PATH:$ANDROID_SDK_ROOT
-    export PATH=$PATH:$ANDROID_NDK_ROOT 
-    {% endhighlight %}  
+export ANDROID_SDK_ROOT=/Applications/ADT/sdk
+export ANDROID_NDK_ROOT=/Applications/android-ndk-r8d
+export NDK_ROOT=/Applications/android-ndk-r8d
+export PATH=$PATH:$ANDROID_SDK_ROOT
+export PATH=$PATH:$ANDROID_NDK_ROOT 
+```
 

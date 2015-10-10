@@ -7,7 +7,7 @@ tags: [c]
 
 有一道思科的面试题
 		
-    {% highlight c %}
+```C
     const int x = 5; 
     int main() 
     { 
@@ -26,7 +26,7 @@ tags: [c]
         return 0; 
     } 
     // 该题输出为 5. 
-    {% endhighlight %}        
+```
         
 
 这道题主要考查的是C++标准，Point of declaration一节
