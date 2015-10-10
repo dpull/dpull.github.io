@@ -23,7 +23,7 @@ tags: [csharp, socket]
 
 MS .Net实现
     
-```
+```C#
 public bool Connected {
     get {
         GlobalLog.Print("Socket#" + ValidationHelper.HashString(this) + "::Connected() m_IsConnected:"+m_IsConnected);
