@@ -23,23 +23,23 @@ tags: [csharp, socket]
 
 MS .Net实现
     
-    ```
-    public bool Connected {
-        get {
-            GlobalLog.Print("Socket#" + ValidationHelper.HashString(this) + "::Connected() m_IsConnected:"+m_IsConnected);
+```
+public bool Connected {
+    get {
+        GlobalLog.Print("Socket#" + ValidationHelper.HashString(this) + "::Connected() m_IsConnected:"+m_IsConnected);
 
-            if (m_NonBlockingConnectInProgress && Poll(0, SelectMode.SelectWrite))
-            {
-                // update the state if we've become connected after a non-blocking connect
-                m_IsConnected = true;
-                m_RightEndPoint = m_NonBlockingConnectRightEndPoint;
-                m_NonBlockingConnectInProgress = false;
-            }
-
-            return m_IsConnected;
+        if (m_NonBlockingConnectInProgress && Poll(0, SelectMode.SelectWrite))
+        {
+            // update the state if we've become connected after a non-blocking connect
+            m_IsConnected = true;
+            m_RightEndPoint = m_NonBlockingConnectRightEndPoint;
+            m_NonBlockingConnectInProgress = false;
         }
+
+        return m_IsConnected;
     }
-    ```
+}
+```
 
 Mono 实现
 
