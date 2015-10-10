@@ -45,17 +45,17 @@ C++类型（本机类型）和.NET Framework类型对应，
 用来指向托管堆的对象句柄。
 运算符^和指针运算符\*很类似。
 
-	操作             	| 运算符^         	| 运算符*
-	--- 			    	| ---             	| --- 	
-	创建              	| gcnew           	| new
-	销毁              	| 无              	| delete
-	访问成员          	| ->              	| ->
-	判空              	| nullptr         	| NULL
+操作             	| 运算符^         	| 运算符*
+--- 			    | ---             	| --- 	
+创建              	| gcnew           	| new
+销毁              	| 无              	| delete
+访问成员          	| ->              	| ->
+判空              	| nullptr         	| NULL
  
-    {% highlight C++ %}
-    List^ result = gcnew List();
-    result->Add("www.dpull.com");   
-    {% endhighlight %}
+```C++
+List^ result = gcnew List();
+result->Add("www.dpull.com");   
+```
 
 ## 引用运算符 ##
 因为.NET Framework中只有out关键字，所以C++.NET的引用在C#中看来就是out
