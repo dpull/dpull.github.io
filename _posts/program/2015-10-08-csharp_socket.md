@@ -22,7 +22,8 @@ tags: [csharp, socket]
 非阻塞的Sokcet需要用Poll(0, SelectMode.SelectWrite)来判断Connect是否成功，Mono版本未实现该功能。
 
 MS .Net实现
-
+    
+    ```
     public bool Connected {
         get {
             GlobalLog.Print("Socket#" + ValidationHelper.HashString(this) + "::Connected() m_IsConnected:"+m_IsConnected);
@@ -38,7 +39,8 @@ MS .Net实现
             return m_IsConnected;
         }
     }
-    
+    ```
+
 Mono 实现
 
     {% highlight C# %}
