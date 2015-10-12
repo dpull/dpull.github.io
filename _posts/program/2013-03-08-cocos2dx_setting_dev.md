@@ -66,7 +66,7 @@ Android的调试比较复杂，如果不使用C++代码的调试，可采用如�
 ## Android MK文件 ##
 1. 示例工程中的LOCAL\_SRC\_FILE是全部列出来的，其实是没必要的。
  		
-```
+```bash
 CLASS_FILES := $(wildcard $(LOCAL_PATH)/../../Classes/*.cpp)
 CLASS_FILES := $(CLASS_FILES:$(LOCAL_PATH)/%=%) 
 
