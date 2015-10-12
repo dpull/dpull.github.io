@@ -69,7 +69,8 @@ public bool Connected
 
 对比以上代码可以得出，Mono版本没有针对非堵塞的Socket执行Poll进行再次判断，.Net的Poll只是对select的简单封装，
 于是尝试直接执行 Poll(0, SelectMode.SelectWrite) 来判断Connect是否成功，结果发现Poll(0, SelectMode.SelectWrite)
-在非堵塞Socket无法Connect的时候依旧返回true， 于是查看 [`Mono Socket的Poll函数`]( https://github.com/Unity-Technologies/mono/blob/unity-staging/mcs/class/System/System.Net.Sockets/Socket.cs)
+在非堵塞Socket无法Connect的时候依旧返回true， 于是查看
+[`Mono Socket的Poll函数`](https://github.com/Unity-Technologies/mono/blob/unity-staging/mcs/class/System/System.Net.Sockets/Socket.cs)
 
 ```C#
 public bool Poll (int time_us, SelectMode mode)
