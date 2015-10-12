@@ -12,14 +12,21 @@ tags: [csharp, socket]
 
 所以C模块的存在也就没有必要了，花了一天时间，用C#的Socket重写了一遍。（Unity版本 4.6.7）
 
+[`.Net源码`] 的 Socket
+
+[`Unity Mono源码`]  的 Socket
+
 ## 使用非阻塞的Socket，而非异步模型 ##
 
-简单看了一下.Net Socket的[`源码`] ，其异步接口的实现使用了完成端口和线程池，
-我没看Mono源码，不知道其是如何跨平台实现的，也应当使用了线程池吧，
-我希望的封装是对C API的简单封装，这样出了问题也好查。
+.Net Socket，其异步接口的实现使用了完成端口和线程池。
+Mono Socket，其异步接口实现只使用了线程池和阻塞的Sokcet。
+
+对比两种Sokcet封装，我比较喜欢非阻塞的，首先利用了系统的异步特性，而非应用层拿多线程模拟的，其次是对C API的简单封装，
+封装越简单，代码越稳定。
 
 ## Mono的 Socket.Connected 实现有问题 ##
-非阻塞的Sokcet需要用Poll(0, SelectMode.SelectWrite)来判断Connect是否成功，Mono版本未实现该功能。
+
+当发现这个问题时，首先我看的是.Net Socket，因为当时Mono代码还在下载中。
 
 MS .Net实现
     
@@ -57,6 +64,79 @@ public bool Connected
 }
 ```
 
+对比代码可以得出，Mono版本没有针对非阻塞的Socket执行Poll进行再次判断，.Net的Poll只是对select的简单封装，
+于是我直接执行了 Poll(0, SelectMode.SelectWrite) 来判断Connect是否成功，但Poll(0, SelectMode.SelectWrite)
+在非阻塞Socket无法Connect的时候依旧返回true， 于是察看[`Mono Socket的Poll函数`]
+
+```C#
+public bool Poll (int time_us, SelectMode mode)
+{
+	if (disposed && closed)
+		throw new ObjectDisposedException (GetType ().ToString ());
+
+	if (mode != SelectMode.SelectRead &&
+	    mode != SelectMode.SelectWrite &&
+	    mode != SelectMode.SelectError)
+		throw new NotSupportedException ("'mode' parameter is not valid.");
+
+	int error;
+	bool result = Poll_internal (socket, mode, time_us, out error);
+	if (error != 0)
+		throw new SocketException (error);
+
+	if (mode == SelectMode.SelectWrite && result && !connected) {
+		/* Update the connected state; for
+		 * non-blocking Connect()s this is
+		 * when we can find out that the
+		 * connect succeeded.
+		 */
+		if ((int)GetSocketOption (SocketOptionLevel.Socket, SocketOptionName.Error) == 0) {
+			connected = true;
+		}
+	}
+	
+	return result;
+}
+```
+
+对比.Net版本，Mono版本有几个不同点:
+
+1. Mono版本是在Poll函数中更新了connected的状态，也就是说，如果想查询非阻塞的Socket是否connected，
+.Net版本执行 Socket.Connected 即可，Mono版本每次执行前，要先执行 Socket.Poll(...)
+1. Poll函数返回值的含义不同，.Net Poll返回true时，即代表Connect成功，但Mono版本需要再判断GetSocketOption
+1. Poll的实现不同，.Net的Poll只是对select的简单封装，但是Mono的实现是poll或者select
+
+```C#
+#ifdef HAVE_POLL
+int
+mono_poll (mono_pollfd *ufds, unsigned int nfds, int timeout)
+{
+	return poll (ufds, nfds, timeout);
+}
+#else
+
+int
+mono_poll (mono_pollfd *ufds, unsigned int nfds, int timeout) 
+```
+
+这里应当是 [`Unity的Mono`](https://github.com/Unity-Technologies/mono/blob/unity-4.6-staging/mono/utils/mono-poll.c) 出现了bug，对照 [`Mono官方最新版`](https://github.com/mono/mono/blob/88d2b9da2a87b4e5c82abaea4e5110188d49601d/mono/utils/mono-poll.c)
+
+```C#
+#if defined(HAVE_POLL) && !defined(__APPLE__)
+int
+mono_poll (mono_pollfd *ufds, unsigned int nfds, int timeout)
+{
+	return poll (ufds, nfds, timeout);
+}
+#else
+
+int
+mono_poll (mono_pollfd *ufds, unsigned int nfds, int timeout)
+```
+
+
+
+
 ## 发送队列 ##
 以前Send其实是阻塞的，Send失败了，循环继续Send，这次增加了发送队列，虽然可能效率上降低了，但也算用对了吧。
 以前的问题记录：[`当send错误码为EAGAIN时`]
@@ -64,6 +144,8 @@ public bool Connected
 ## 功能性扩展 ##
 Socket存在断开但是应用层需要一段时间才能到的问题，以前都是放在逻辑层发Ping包来解决这个问题，想想还是放在这个类中扩展了吧。
 
-[`源码`]: http://referencesource.microsoft.com
+[`.Net源码`]: http://referencesource.microsoft.com
+[`Unity Mono源码`]: https://github.com/Unity-Technologies/mono
 [`当send错误码为EAGAIN时`]: ../epoll_socket/
+[`Mono Socket的Poll函数`] https://github.com/Unity-Technologies/mono/blob/unity-staging/mcs/class/System/System.Net.Sockets/Socket.cs
 
