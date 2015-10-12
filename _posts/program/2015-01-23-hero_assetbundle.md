@@ -43,14 +43,14 @@ tags: []
 也就是说，如果`没有依赖其他资源的资源`没有变更，我们可以从客户端的资源中把它拷贝出来。
 为何`依赖其他资源的资源`不支持呢？因为是两种打包过程，会导致资源的FileID和PathID不同，比如说GameObject资源依赖Component资源，依赖的FileID和PathID都变了，需要对其做特殊处理，未必值得，例如Font资源，它依赖了Material，但因为数据文件大，需要做特殊处理。
 
-    Id           | Type        | Remark
-    ---          | ---         | --- 	
-    128          | Font        | 需特殊处理
-	83           | AudioClip   | 支持
-	49           | TextAsset   | 支持
-	48           | Shader      | 理论支持 
-	43           | Mesh        | 理论支持 
-	28           | Texture2D   | 支持
+Id           | Type        | Remark
+---          | ---         | --- 	
+128          | Font        | 需特殊处理
+83           | AudioClip   | 支持
+49           | TextAsset   | 支持
+48           | Shader      | 理论支持 
+43           | Mesh        | 理论支持 
+28           | Texture2D   | 支持
 
 这项工作就告一段落了，因为手头上有优先级更高的事情，过一段再折腾吧。
 目前存在差异的四个可优化文件：

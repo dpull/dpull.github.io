@@ -39,20 +39,22 @@ tags: []
 1. 不使用C前缀
 
 ### C#示例 ###
-    标识符  				| 类型				| 例子
-    ---  			 	| --- 				| ---
-    类名    	            | PascalCasing     	| class **Example**
-    成员变量  		    | PascalCasing     	| int **Level**;
-    属性           	    | PascalCasing     	| int **Level** {get; set;}
-    函数           	    | PascalCasing     	| void **SetLevel** (int level)
-    函数参数         	| camelCasing      	| void SetLevel(int **level**)
-    局部变量         	| camelCasing      	| int **level** = 5;
+
+标识符  				| 类型				| 例子
+---  			 	| --- 				| ---
+类名    	            | PascalCasing     	| class **Example**
+成员变量  		    | PascalCasing     	| int **Level**;
+属性           	    | PascalCasing     	| int **Level** {get; set;}
+函数           	    | PascalCasing     	| void **SetLevel** (int level)
+函数参数         	    | camelCasing      	| void SetLevel(int **level**)
+局部变量         	    | camelCasing      	| int **level** = 5;
 
 ### lua示例 ###
-    标识符  				| 类型				| 例子
-    ---  			 	| --- 				| ---
-    文件内全局变量    	| PascalCasing     	| **Lib** = Import("scripts/lib.lua"); 
-    Panel的附加参数  		| PascalCasing     	| panel. **Parameter** = {**SelectIndex** = 5, };
-    函数名           	| PascalCasing     	| function **Register** (panel) ... end
-    函数参数         	| camelCasing      	| function OnTouchEvent(**panel**, **control**, **controlEvent**) ... end
-    Tab表中列名      	| PascalCasing     	| setting. **CardTemplateId**
+
+标识符  				| 类型				| 例子
+---  			 	| --- 				| ---
+文件内全局变量    	    | PascalCasing     	| **Lib** = Import("scripts/lib.lua"); 
+Panel的附加参数  		| PascalCasing     	| panel. **Parameter** = {**SelectIndex** = 5, };
+函数名           	    | PascalCasing     	| function **Register** (panel) ... end
+函数参数         	    | camelCasing      	| function OnTouchEvent(**panel**, **control**, **controlEvent**) ... end
+Tab表中列名      	    | PascalCasing     	| setting. **CardTemplateId**

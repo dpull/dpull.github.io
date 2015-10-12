@@ -43,34 +43,35 @@ tags: [csharp]
 
 
 
-
-	public class Script : MonoBehaviour, ISerializationCallbackReceiver
+```C#
+public class Script : MonoBehaviour, ISerializationCallbackReceiver
+{
+	private const int KCurrentVersion = 1;
+	//mark the old stuff as obsolete and hidden
+	[SerializeField]
+	[Obsolete]
+	[HideInInspector]
+	private int myField;
+	//add a new field with a better name
+	[SerializeField]
+	private int m_MyField;
+	//add a serialization version (could also use a bool for simpler things)
+	[SerializeField]
+	private int m_Version = 0;
+	public void OnSerialize()
+	{ }
+	public void OnDeserialize()
 	{
-		private const int KCurrentVersion = 1;
-		//mark the old stuff as obsolete and hidden
-		[SerializeField]
-		[Obsolete]
-		[HideInInspector]
-		private int myField;
-		//add a new field with a better name
-		[SerializeField]
-		private int m_MyField;
-		//add a serialization version (could also use a bool for simpler things)
-		[SerializeField]
-		private int m_Version = 0;
-		public void OnSerialize()
-		{ }
-		public void OnDeserialize()
+		// if we are not upgraded
+		if (m_Version < 1)
 		{
-			// if we are not upgraded
-			if (m_Version < 1)
-			{
-				 // upgrade
-				 m_MyField = myField;
-				 m_Version = KCurrentVersion;
-			}
+			 // upgrade
+			 m_MyField = myField;
+			 m_Version = KCurrentVersion;
 		}
 	}
+}
+```	
 
 
 -->

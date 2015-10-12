@@ -11,34 +11,34 @@ tags: []
 
 当类继承自UnityEngine.Object时，判空是不正确的，如下面代码：
 
-	{% highlight C++ %}
-	public class TestObject : MonoBehaviour 
-	{
-	    class StringObj : UnityEngine.Object
-	    {
-	        public string Value;
-	    }
-	
-		void Start ()
-	    {
-	        var test = new StringObj();
-	        test.Value = "Acai";
-	
-	        UnityEngine.Object testObj = test;
-	        UnityEngine.Object testObjNull = null;
-	
-	        Debug.Log("TestObject begin");
-	        Debug.Log(test == null); // True
-	        Debug.Log(testObj == null); // True
-	        Debug.Log(testObj is StringObj); // True
-	        Debug.Log(test.Value); // Acai
-	        Debug.Log(((StringObj)testObj).Value); // Acai
-	        Debug.Log(object.ReferenceEquals(testObj, null)); // False
-	        Debug.Log(object.ReferenceEquals(testObjNull, null)); // True
-	        Debug.Log("TestObject end");
-		}
+```C#
+public class TestObject : MonoBehaviour 
+{
+    class StringObj : UnityEngine.Object
+    {
+        public string Value;
+    }
+
+	void Start ()
+    {
+        var test = new StringObj();
+        test.Value = "Acai";
+
+        UnityEngine.Object testObj = test;
+        UnityEngine.Object testObjNull = null;
+
+        Debug.Log("TestObject begin");
+        Debug.Log(test == null); // True
+        Debug.Log(testObj == null); // True
+        Debug.Log(testObj is StringObj); // True
+        Debug.Log(test.Value); // Acai
+        Debug.Log(((StringObj)testObj).Value); // Acai
+        Debug.Log(object.ReferenceEquals(testObj, null)); // False
+        Debug.Log(object.ReferenceEquals(testObjNull, null)); // True
+        Debug.Log("TestObject end");
 	}
-	{% endhighlight %}
+}
+```
 
 ## 结论 ##
 猜测原因是UnityEngine.Object是重写了内存分配器的。

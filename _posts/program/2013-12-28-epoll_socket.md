@@ -24,18 +24,18 @@ tags: [socket, epoll]
 
 是《天天爱萌仙》进程设置上的bug，先getrlimit再setrlimit，setrlimit设置的数值就是系统默认的数值。
     
-    {% highlight C %}
-    rlimit  resLimit;
-    
-    resLimit.rlim_cur = SHRT_MAX;
-    resLimit.rlim_max = SHRT_MAX;
-    
-    nRetCode = getrlimit(RLIMIT_NOFILE, &resLimit); // bug行，去掉即修复
-    XYLOG_FAILED_JUMP(nRetCode == 0); // bug行，去掉即修复
-    
-    nRetCode = setrlimit(RLIMIT_NOFILE, &resLimit);
-    XYLOG_FAILED_JUMP(nRetCode == 0);
-    {% endhighlight %}
+```C
+rlimit  resLimit;
+
+resLimit.rlim_cur = SHRT_MAX;
+resLimit.rlim_max = SHRT_MAX;
+
+nRetCode = getrlimit(RLIMIT_NOFILE, &resLimit); // bug行，去掉即修复
+XYLOG_FAILED_JUMP(nRetCode == 0); // bug行，去掉即修复
+
+nRetCode = setrlimit(RLIMIT_NOFILE, &resLimit);
+XYLOG_FAILED_JUMP(nRetCode == 0);
+```
 
 修复该bug后，《卖个萌仙》的服务端需要以root权限启动了，遭到运营同学的反对，解决方案是，
 运维把服务器的打开文件数的软硬限制调整到大于SHRT_MAX，然后服务端程序就可以不以root启动了，
@@ -47,28 +47,28 @@ tags: [socket, epoll]
 
 **在memcached里面有一段代码，当accept错误码为EMFILE时会调用listen(sfd,0),为什么要这样调用呢？**
     
-    {% highlight C %}
-    if ((sfd = accept(c->sfd, (struct sockaddr *)&addr, &addrlen)) == -1) {
-        if (errno == EAGAIN || errno == EWOULDBLOCK) {
-            /* these are transient, so don't log anything */
-            stop = true;
-        } else if (errno == EMFILE) {
-            accept_new_conns();
-            stop = true;
-        } else {
-            perror("accept()");
-            stop = true;
+```C
+if ((sfd = accept(c->sfd, (struct sockaddr *)&addr, &addrlen)) == -1) {
+    if (errno == EAGAIN || errno == EWOULDBLOCK) {
+        /* these are transient, so don't log anything */
+        stop = true;
+    } else if (errno == EMFILE) {
+        accept_new_conns();
+        stop = true;
+    } else {
+        perror("accept()");
+        stop = true;
+    }
+    break;
+}
+
+void do_accept_new_conns(void) {
+        update_event(next, 0);
+        if (listen(next->sfd, 0) != 0) {
+            perror("listen");
         }
-        break;
-    }
-    
-    void do_accept_new_conns(void) {
-            update_event(next, 0);
-            if (listen(next->sfd, 0) != 0) {
-                perror("listen");
-            }
-    }
-    {% endhighlight %}
+}
+```
 
 **有一个回复如下：**
 

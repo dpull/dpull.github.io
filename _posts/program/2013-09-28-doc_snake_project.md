@@ -66,14 +66,14 @@ tags: []
 1. 作用域小于或者等于当前函数的变量使用camelCasing规则命名
 1. 作用域大于当前函数的变量使用PascalCasing规则命名
 
-	标识符  				| 类型				| 例子
-	---  			 	| --- 				| ---
-	文件内全局变量    	| PascalCasing     	| **Lib** = Import("scripts/lib.lua"); 
-	Panel的附加参数  		| PascalCasing     	| panel. **Parameter** = {**SelectIndex** = 5, };
-	函数名           	| PascalCasing     	| function **Register** (panel) ... end
-	函数参数         	| camelCasing      	| function OnTouchEvent(**panel**, **control**, **controlEvent**) ... end
-	CCB中控件名      	| PascalCasing     	| panel. **RoleName** .SetText(name);
-	Tab表中列名      	| PascalCasing     	| setting. **CardTemplateId**
+标识符  			| 类型				      | 例子
+---  			 	| --- 				   | ---
+文件内全局变量    | PascalCasing     	| **Lib** = Import("scripts/lib.lua"); 
+Panel的附加参数  | PascalCasing     	| panel. **Parameter** = {**SelectIndex** = 5, };
+函数名          | PascalCasing     	| function **Register** (panel) ... end
+函数参数         | camelCasing      	| function OnTouchEvent(**panel**, **control**, **controlEvent**) ... end
+CCB中控件名      | PascalCasing     	| panel. **RoleName** .SetText(name);
+Tab表中列名      | PascalCasing     	| setting. **CardTemplateId**
 
 ### 通用命名约定 ###
 1. 要选择易于阅读的名字

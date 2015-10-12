@@ -33,47 +33,47 @@ Cocostudio虽然支持骨骼动画，序列帧动画，但用起来复杂，制�
 - Using Custom Classes 编辑器支持Node设置 `Custom class`，如将其设置为 `HelloCocosBuilderLayer`。
 代码中需将`HelloCocosBuilderLayer` 对应的CCNodeLoader注册，存放在`CCNodeLoaderLibrary::mCCNodeLoaders`，其中包含了多个默认支持的类型和自定义的类型。
 
-    {% highlight C++ %}
-    /* Create an autorelease CCNodeLoaderLibrary. */
-    CCNodeLoaderLibrary * ccNodeLoaderLibrary = CCNodeLoaderLibrary::newDefaultCCNodeLoaderLibrary();
-    ccNodeLoaderLibrary->registerCCNodeLoader("HelloCocosBuilderLayer", HelloCocosBuilderLayerLoader::loader());
-    {% endhighlight %}
+```C++
+/* Create an autorelease CCNodeLoaderLibrary. */
+CCNodeLoaderLibrary * ccNodeLoaderLibrary = CCNodeLoaderLibrary::newDefaultCCNodeLoaderLibrary();
+ccNodeLoaderLibrary->registerCCNodeLoader("HelloCocosBuilderLayer", HelloCocosBuilderLayerLoader::loader());
+```
 
 ----------
 
-    {% highlight C++ %}
-    class HelloCocosBuilderLayerLoader : public cocos2d::extension::CCLayerLoader {
-       public:
-           // 用于创建一个自身的实例，保存为一个CCLayerLoader。
-           CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(HelloCocosBuilderLayerLoader, loader); 
-    
-       protected:
-           // 用于创建一个类型为HelloCocosBuilderLayer的CCNode。
-           CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(HelloCocosBuilderLayer);
-    };
-    {% endhighlight %}
+```C++
+class HelloCocosBuilderLayerLoader : public cocos2d::extension::CCLayerLoader {
+   public:
+       // 用于创建一个自身的实例，保存为一个CCLayerLoader。
+       CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(HelloCocosBuilderLayerLoader, loader); 
+
+   protected:
+       // 用于创建一个类型为HelloCocosBuilderLayer的CCNode。
+       CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(HelloCocosBuilderLayer);
+};
+```
 
 ----------
 
-    {% highlight C++ %}
-    cocos2d::extension::CCBReader * ccbReader = new cocos2d::extension::CCBReader(ccNodeLoaderLibrary);
-    
-    /* Read a ccbi file. */
-    CCNode * node = ccbReader->readNodeGraphFromFile("ccb/HelloCocosBuilder.ccbi", this);
-    {% endhighlight %}
+```C++
+cocos2d::extension::CCBReader * ccbReader = new cocos2d::extension::CCBReader(ccNodeLoaderLibrary);
+
+/* Read a ccbi file. */
+CCNode * node = ccbReader->readNodeGraphFromFile("ccb/HelloCocosBuilder.ccbi", this);
+```
 
 读取ccbi文件，生成CCNode。
 
 CCBFile控件用来嵌入另外一个ccbi文件，比如将导航栏做成一个单独的ccbi文件，多个文件引入。
 	
-    {% highlight C++ %}
-    class HelloCocosBuilderLayer
-        : public cocos2d::CCLayer
-        , public cocos2d::extension::CCBSelectorResolver
-        , public cocos2d::extension::CCBMemberVariableAssigner
-        , public cocos2d::extension::CCNodeLoaderListener   
-    {}；
-    {% endhighlight %}
+```C++
+class HelloCocosBuilderLayer
+    : public cocos2d::CCLayer
+    , public cocos2d::extension::CCBSelectorResolver
+    , public cocos2d::extension::CCBMemberVariableAssigner
+    , public cocos2d::extension::CCNodeLoaderListener   
+{}；
+```
 
 - Edit Custom Property 对于 `Custom class` 可设置 `Custom Property` 。
   当设置这些属性需重载`CCBMemberVariableAssigner::onAssignCCBCustomProperty`方法。
@@ -104,18 +104,18 @@ CCBFile控件用来嵌入另外一个ccbi文件，比如将导航栏做成一个
 
 	除了使用root node或owner node重载一些类实现回调功能外，CCBReader还支持默认的回调函数，通过构造函数设置。
 
-        {% highlight C++ %}
-        // 构造函数：(目标节点如果包含响应函数,优先目标节点)
-        CCBReader(
-           CCNodeLoaderLibrary * pCCNodeLoaderLibrary, // CCB类型转换为C++类型
-           CCBMemberVariableAssigner * pCCBMemberVariableAssigner, // 当指定的target不存在处理函数时, 变量赋值的处理函数
-           CCBSelectorResolver * pCCBSelectorResolver, // 按钮或菜单事件响应函数
-           CCNodeLoaderListener * pCCNodeLoaderListener // 当节点加载完成时, 回调函数(注意:是每一个节点,并非一个文件)
-        ); 
-        
-        // 设置资源文件根目录
-        void setCCBRootPath(const char* pCCBRootPath);  
-        {% endhighlight %}
+```C++
+// 构造函数：(目标节点如果包含响应函数,优先目标节点)
+CCBReader(
+   CCNodeLoaderLibrary * pCCNodeLoaderLibrary, // CCB类型转换为C++类型
+   CCBMemberVariableAssigner * pCCBMemberVariableAssigner, // 当指定的target不存在处理函数时, 变量赋值的处理函数
+   CCBSelectorResolver * pCCBSelectorResolver, // 按钮或菜单事件响应函数
+   CCNodeLoaderListener * pCCNodeLoaderListener // 当节点加载完成时, 回调函数(注意:是每一个节点,并非一个文件)
+); 
+
+// 设置资源文件根目录
+void setCCBRootPath(const char* pCCBRootPath);  
+```
 
 > 构造函数的参数 ``pCCBSelectorResolver`` 类中函数的返回函数指针要是target的成员函数，感觉实现的不完备。
 
@@ -129,69 +129,69 @@ CCBFile控件用来嵌入另外一个ccbi文件，比如将导航栏做成一个
 
 时间有限，仅记录几个关键词::
 	
-    {% highlight C++ %}
-    CCBReader::mActionManager 类型 CCBAnimationManager，init时创建, 
+```C++
+// CCBReader::mActionManager 类型 CCBAnimationManager，init时创建, 
+
+// CCBReader::mActionManagers 类型 CCDictionary readFileWithCleanUp时创建 ``key`` Node指针 ``value`` mActionManager， 用于给根节点setUserObject，其值为对应的
     
-    CCBReader::mActionManagers 类型 CCDictionary readFileWithCleanUp时创建 ``key`` Node指针 ``value`` mActionManager， 用于给根节点setUserObject，其值为对应的
-        
-    CCBReader::mAnimatedProps 类型 CCDictionary readNodeGraph中read属性前创建，用于parseProperties，然后释放
+// CCBReader::mAnimatedProps 类型 CCDictionary readNodeGraph中read属性前创建，用于parseProperties，然后释放
+
+// CCBAnimationManager::setRootNode CCB文件的第一个节点
+
+// CCBAnimationManager::mSequences 存放CCB文件的Timeline (CCBSequence)  CCBReader::readSequences()
+
+// CCBAnimationManager::mNodeSequences ``key`` Node指针 ``value`` CCDictionary<key frame 类型, CCBSequenceProperty> key frame 类型 rotation visible position scale...
+
+CCActionInterval* CCBAnimationManager::getAction
+    "rotation"      CCBRotateTo 
+    "opacity"       CCFadeTo 
+    "color"         CCTintTo 
+    "visible"       CCSequence::createWithTwoActions(CCDelayTime::create(duration), CCShow::create())
+    "displayFrame"  CCSequence::createWithTwoActions(CCDelayTime::create(duration), CCBSetSpriteFrame::create((CCSpriteFrame *)pKeyframe1->getValue()));
+    "position"      CCMoveTo
+    "scale"         CCScaleTo
     
-    CCBAnimationManager::setRootNode CCB文件的第一个节点
+CCActionInterval* CCBAnimationManager::getEaseAction
+    CCBKeyframeEasingLinear     pAction 
+    kCCBKeyframeEasingInstant   CCBEaseInstant::create(pAction)
+    kCCBKeyframeEasingCubicIn   CCEaseIn::create(pAction, fEasingOpt)
+    kCCBKeyframeEasingCubicOut  CCEaseOut::create(pAction, fEasingOpt)
+    ...
+
+CCBAnimationManager::runAction
+    CCNode->runAction(CCFiniteTimeAction); 
     
-    CCBAnimationManager::mSequences 存放CCB文件的Timeline (CCBSequence)  CCBReader::readSequences()
-    
-    CCBAnimationManager::mNodeSequences ``key`` Node指针 ``value`` CCDictionary<key frame 类型, CCBSequenceProperty> key frame 类型 rotation visible position scale...
-    
-    CCActionInterval* CCBAnimationManager::getAction
-        "rotation"      CCBRotateTo 
-        "opacity"       CCFadeTo 
-        "color"         CCTintTo 
-        "visible"       CCSequence::createWithTwoActions(CCDelayTime::create(duration), CCShow::create())
-        "displayFrame"  CCSequence::createWithTwoActions(CCDelayTime::create(duration), CCBSetSpriteFrame::create((CCSpriteFrame *)pKeyframe1->getValue()));
-        "position"      CCMoveTo
-        "scale"         CCScaleTo
-        
-    CCActionInterval* CCBAnimationManager::getEaseAction
-        CCBKeyframeEasingLinear     pAction 
-        kCCBKeyframeEasingInstant   CCBEaseInstant::create(pAction)
-        kCCBKeyframeEasingCubicIn   CCEaseIn::create(pAction, fEasingOpt)
-        kCCBKeyframeEasingCubicOut  CCEaseOut::create(pAction, fEasingOpt)
-        ...
-    
-    CCBAnimationManager::runAction
-        CCNode->runAction(CCFiniteTimeAction); 
-        
-    CCBAnimationManager::setDelegate
-    CCBAnimationManager::setAnimationCompletedCallback  
-    
-    CCBAnimationManager::runAnimationsForSequenceNamedTweenDuration(const char *pName, float fTweenDuration);
-    CCBAnimationManager::runAnimationsForSequenceNamed(const char *pName);
-    CCBAnimationManager::runAnimationsForSequenceIdTweenDuration(int nSeqId, float fTweenDuraiton); 如果fTweenDuration大于0，则CCNode->runAction(CCFiniteTimeAction)的参数CCFiniteTimeAction会添加一个CDelayTime::create(timeFirst)
-    {% endhighlight %}
+CCBAnimationManager::setDelegate
+CCBAnimationManager::setAnimationCompletedCallback  
+
+CCBAnimationManager::runAnimationsForSequenceNamedTweenDuration(const char *pName, float fTweenDuration);
+CCBAnimationManager::runAnimationsForSequenceNamed(const char *pName);
+CCBAnimationManager::runAnimationsForSequenceIdTweenDuration(int nSeqId, float fTweenDuraiton); 如果fTweenDuration大于0，则CCNode->runAction(CCFiniteTimeAction)的参数CCFiniteTimeAction会添加一个CDelayTime::create(timeFirst)
+```
 
 ## CCBFile控件的实现 ##
 CCBFile控件用来引用另外一个CCB文件
 
-    {% highlight C++ %}
-    CCBReader::readNodeGraph
-        // Read properties
-        ccNodeLoader->parseProperties(node, pParent, this);         
-            CCNodeLoader::parsePropTypeCCBFile ==> 加载文件并创建CCNode，将其设为CCBFile::mCCBFileNode
-            
-        // Handle sub ccb files (remove middle node)
-        if (dynamic_cast<CCBFile*>(node)) { ... } ==> 将CCBFile的属性和动作设定在CCBFile::mCCBFileNode上。  
-    {% endhighlight %}
+```C++
+CCBReader::readNodeGraph
+  // Read properties
+  ccNodeLoader->parseProperties(node, pParent, this);         
+      CCNodeLoader::parsePropTypeCCBFile ==> 加载文件并创建CCNode，将其设为CCBFile::mCCBFileNode
+      
+  // Handle sub ccb files (remove middle node)
+  if (dynamic_cast<CCBFile*>(node)) { ... } ==> 将CCBFile的属性和动作设定在CCBFile::mCCBFileNode上。  
+```
 
 > 要设置被引用的根layer的Content Size
 > 该版本的CCBReader存在bug，会将引用的CCB文件ignoreAnchorPointForPosition设置为false。
                 
     
-    {% highlight C++ %}
-    // CCBReader.cpp 642行是多余的，
-    // 因为ccbFileNode的ignoreAnchorPointForPosition没有被赋值，
-    // 会把原本的embeddedNode的ignoreAnchorPointForPosition给覆盖掉
-    embeddedNode->ignoreAnchorPointForPosition(ccbFileNode->isIgnoreAnchorPointForPosition()); 
-    {% endhighlight %}
+```C++
+// CCBReader.cpp 642行是多余的，
+// 因为ccbFileNode的ignoreAnchorPointForPosition没有被赋值，
+// 会把原本的embeddedNode的ignoreAnchorPointForPosition给覆盖掉
+embeddedNode->ignoreAnchorPointForPosition(ccbFileNode->isIgnoreAnchorPointForPosition()); 
+```
 
 ## 创建不同分辨率的layer如何编辑和使用 ##
 [官方文档](https://github.com/cocos2d/CocosBuilder/blob/master/Documentation/5.%20Working%20with%20Multiple%20Resolutions.md)
@@ -208,10 +208,10 @@ sceneWithNodeGraphFromFile:owner:parentSize: methods.
 如果有使用了自定义尺寸，就需要将尺寸传给loader。
 为此，需要调用nodeGraphFromFile:owner:parentSize: or sceneWithNodeGraphFromFile:owner:parentSize: 方法
 
-    {% highlight C++ %}
-    CGSize mySize = CGSizeMake(100.0f, 100.0f);
-    CCNode* myNode = [CCBReader nodeGraphFromFile:@"myNode.ccbi" owner:NULL parentSize:mySize];
-    {% endhighlight %}
+```C++
+CGSize mySize = CGSizeMake(100.0f, 100.0f);
+CCNode* myNode = [CCBReader nodeGraphFromFile:@"myNode.ccbi" owner:NULL parentSize:mySize];
+```
      
 Before loading your ccbi-files you can set the resolution scale you want
 to use. The default resolution scale is 1 for iPhone and 2 for iPad, but
@@ -220,9 +220,9 @@ sometimes it can be useful to use other scale factors.
 加载ccbi-files前，可以设置想要使用的分辨率缩放因子。
 iphone的默认因子是1，ipad是2，但有时可能其它因子更合适。
 
-    {% highlight C++ %}
-    [CCBReader setResolutionScale: 2.5f];
-    {% endhighlight %}
+```C++
+[CCBReader setResolutionScale: 2.5f];
+```
 
 
 >这个接口cocos2dx没有实现，但可以使用CCEGLView::setDesignResolutionSize间接实现此功能。
@@ -346,13 +346,13 @@ PublishDir-iphone.plist
 
 使用Cocosbuilder的时候，有使用UserFonts的选项，可以选择ttf文件，但是选择后在模拟器上没有效果，调试后发现了一个注释：
     
-    {% highlight C++ %}
-    // On iOS custom fonts must be listed beforehand in the App info.plist (in order to be usable) and referenced only the by the font family name itself when
-    // calling [UIFont fontWithName]. Therefore even if the developer adds 'SomeFont.ttf' or 'fonts/SomeFont.ttf' to the App .plist, the font must
-    // be referenced as 'SomeFont' when calling [UIFont fontWithName]. Hence we strip out the folder path components and the extension here in order to get just
-    // the font family name itself. This stripping step is required especially for references to user fonts stored in CCB files; CCB files appear to store
-    // the '.ttf' extensions when referring to custom fonts.
-    {% endhighlight %}
+```C++
+// On iOS custom fonts must be listed beforehand in the App info.plist (in order to be usable) and referenced only the by the font family name itself when
+// calling [UIFont fontWithName]. Therefore even if the developer adds 'SomeFont.ttf' or 'fonts/SomeFont.ttf' to the App .plist, the font must
+// be referenced as 'SomeFont' when calling [UIFont fontWithName]. Hence we strip out the folder path components and the extension here in order to get just
+// the font family name itself. This stripping step is required especially for references to user fonts stored in CCB files; CCB files appear to store
+// the '.ttf' extensions when referring to custom fonts.
+```
         
 然后经过一番尝试和研究，简单记录一下CCLabelTTF关于字体方面的坑。
 
@@ -360,22 +360,22 @@ PublishDir-iphone.plist
 1. XCode工程设置的Targets->Info属性页, 右键添加新行，选择Font provided by application，将字体路径添加到其子项中。
 1. 如果不知道该字体的英文名，可在main.m中添加如下代码，输出程序的字体英文名
 
-    {% highlight C++ %}
-    #ifdef COCOS2D_DEBUG
-       NSArray* familyNames = [[NSArray alloc] initWithArray:[UIFont familyNames]];
-       NSArray* fontNames;
-    
-       NSInteger indFamily, indFont;
-    
-       for (indFamily=0; indFamily<[familyNames count]; ++indFamily)
+```C++
+#ifdef COCOS2D_DEBUG
+   NSArray* familyNames = [[NSArray alloc] initWithArray:[UIFont familyNames]];
+   NSArray* fontNames;
+
+   NSInteger indFamily, indFont;
+
+   for (indFamily=0; indFamily<[familyNames count]; ++indFamily)
+   {
+       NSLog(@"Family name: %@", [familyNames objectAtIndex:indFamily]);
+
+       fontNames = [[NSArray alloc] initWithArray: [UIFont fontNamesForFamilyName: [familyNames objectAtIndex:indFamily]]];        
+       for (indFont=0; indFont<[fontNames count]; ++indFont)
        {
-           NSLog(@"Family name: %@", [familyNames objectAtIndex:indFamily]);
-    
-           fontNames = [[NSArray alloc] initWithArray: [UIFont fontNamesForFamilyName: [familyNames objectAtIndex:indFamily]]];        
-           for (indFont=0; indFont<[fontNames count]; ++indFont)
-           {
-               NSLog(@"    Font name: %@", [fontNames objectAtIndex:indFont]);
-           }
+           NSLog(@"    Font name: %@", [fontNames objectAtIndex:indFont]);
        }
-    #endif
-    {% endhighlight %}
+   }
+#endif
+```

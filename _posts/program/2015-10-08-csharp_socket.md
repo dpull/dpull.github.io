@@ -43,8 +43,7 @@ public bool Connected {
 
 Mono 实现
 
-{% highlight C# %}
-
+```C#
 public bool Connected
 {
 	get
@@ -56,8 +55,7 @@ public bool Connected
 		this.connected = value;
 	}
 }
-
-{% endhighlight %}	
+```
 
 ## 发送队列 ##
 以前Send其实是阻塞的，Send失败了，循环继续Send，这次增加了发送队列，虽然可能效率上降低了，但也算用对了吧。

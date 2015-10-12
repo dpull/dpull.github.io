@@ -9,33 +9,37 @@ tags: []
 
 我当时给出的方案是几年前我写ASP服务端时用的方法，代码如下：
 
-	void Log(string format, params object[] arg)
-	{
-		var sf = new System.Diagnostics.StackFrame(1, true);
-		string info = string.Format(format, arg);
-		string log = string.Format(
-			"{0}\tFile:{1}\tLine:{2}\t{3}\t{4}",
-			System.DateTime.Now.ToString("MM-dd HH:mm:ss"), 
-			sf.GetFileName(), 
-			sf.GetFileLineNumber(), 
-			sf.GetMethod(), 
-			info
-		);
-		// ...
-	}
+```C#
+void Log(string format, params object[] arg)
+{
+	var sf = new System.Diagnostics.StackFrame(1, true);
+	string info = string.Format(format, arg);
+	string log = string.Format(
+		"{0}\tFile:{1}\tLine:{2}\t{3}\t{4}",
+		System.DateTime.Now.ToString("MM-dd HH:mm:ss"), 
+		sf.GetFileName(), 
+		sf.GetFileLineNumber(), 
+		sf.GetMethod(), 
+		info
+	);
+	// ...
+}
+```	
 
 晚上闲着无聊随手翻了一下MSDN，看到一篇[Caller Information](http://msdn.microsoft.com/zh-cn/library/hh534540.aspx)的文档，可以使用如下Attribute实现这个功能，效率也会更高：
 
-	public void TraceMessage(string message,
-	        [CallerMemberName] string memberName = "",
-	        [CallerFilePath] string sourceFilePath = "",
-	        [CallerLineNumber] int sourceLineNumber = 0)
-	{
-	    Trace.WriteLine("message: " + message);
-	    Trace.WriteLine("member name: " + memberName);
-	    Trace.WriteLine("source file path: " + sourceFilePath);
-	    Trace.WriteLine("source line number: " + sourceLineNumber);
-	}
+```C#
+public void TraceMessage(string message,
+        [CallerMemberName] string memberName = "",
+        [CallerFilePath] string sourceFilePath = "",
+        [CallerLineNumber] int sourceLineNumber = 0)
+{
+    Trace.WriteLine("message: " + message);
+    Trace.WriteLine("member name: " + memberName);
+    Trace.WriteLine("source file path: " + sourceFilePath);
+    Trace.WriteLine("source line number: " + sourceLineNumber);
+}
+```	
 
 不过这些Attribute是.Net4.5提供的，而杨教授弄这个是为Unity3d，自然不支持了。
 
