@@ -86,6 +86,9 @@ listen()有个队列(或者说内核里面有个队列),
 [libev上相关的讨论](http://search.cpan.org/~mlehmann/EV-4.15/libev/ev.pod#The_special_problem_of_accept\(\)ing_when_you_can't)
 
 
-## [当send错误码为EAGAIN时](#send) ##
+## 当send错误码为EAGAIN时 ##
+
+<a href='#info'>前言</a> 
+
 我们网络库一直是非阻塞的Recv，阻塞的Send，说白了就是个循环，一定次数内不停的Send，尝试次数过了就断开链接，纯峰对此的解释是防止恶意客户端不收包，导致服务端内存暴涨，
 但在金山网络联运的虚拟机上，正常连接频繁出现Send缓冲区不可用，导致断线，解决的思路是回归到正统的epoll用法，当Send缓冲区不可用时，将其放入一个buffer内，待到Socket可写时，再处理缓冲区，当然，为了避免纯峰提到的恶意客户端，还是限制了该buffer的大小的。（以前我们通常是将Send缓冲区设大，但不知为何在联运的虚拟机上会出该问题，没有思路继续查，待高人指点）

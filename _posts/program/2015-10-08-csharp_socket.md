@@ -64,11 +64,6 @@ public bool Connected
 ## 功能性扩展 ##
 Socket存在断开但是应用层需要一段时间才能到的问题，以前都是放在逻辑层发Ping包来解决这个问题，想想还是放在这个类中扩展了吧。
 
-
-## 代码地址 ##
-未完待续
-
-
 [`源码`]: http://referencesource.microsoft.com
 [`当send错误码为EAGAIN时`]: ../epoll_socket/#send
 
