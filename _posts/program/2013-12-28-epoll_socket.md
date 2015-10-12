@@ -25,7 +25,7 @@ tags: [socket, epoll]
 是《天天爱萌仙》进程设置上的bug，先getrlimit再setrlimit，setrlimit设置的数值就是系统默认的数值。
     
 ```C
-rlimit  resLimit;
+rlimit resLimit;
 
 resLimit.rlim_cur = SHRT_MAX;
 resLimit.rlim_max = SHRT_MAX;
@@ -63,10 +63,10 @@ if ((sfd = accept(c->sfd, (struct sockaddr *)&addr, &addrlen)) == -1) {
 }
 
 void do_accept_new_conns(void) {
-        update_event(next, 0);
-        if (listen(next->sfd, 0) != 0) {
-            perror("listen");
-        }
+    update_event(next, 0);
+    if (listen(next->sfd, 0) != 0) {
+        perror("listen");
+    }
 }
 ```
 
