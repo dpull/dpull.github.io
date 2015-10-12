@@ -77,13 +77,13 @@ LOCAL_SRC_FILES += $(CLASS_FILES)
 
 1. 打开项目调试日志（可以看CCLOG的输出）
 
-```
+```bash
 LOCAL_CFLAGS += -DCOCOS2D_DEBUG=1
 ```
 
 1. MK文件输出
 
-```Shell
+```bash
 $(error LOCAL_PATH)  #输出字符串LOCAL_PATH
 $(warning $(LOCAL_PATH)) #输出变量$(LOCAL_PATH)的值
 $(info LOCAL_PATH= $(LOCAL_PATH)) 
@@ -93,14 +93,14 @@ $(info LOCAL_PATH= $(LOCAL_PATH))
 
 打开终端
 
-```
+```bash
 cd  
 vim .bash_profile  (i 进入编辑模式 ESC退出编辑模式 :wq退出并保存 :q!退出不保存)	
 ```
 
 编辑文件
 	
-```
+```bash
 export CLICOLOR=1
 export LSCOLORS=gxfxaxdxcxegedabagacad
 alias ll="ls -l"
