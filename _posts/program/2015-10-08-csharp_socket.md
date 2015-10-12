@@ -14,7 +14,7 @@ tags: [csharp, socket]
 
 ## 使用非阻塞的Socket，而非异步模型 ##
 
-简单看了一下.Net Socket的源码 [`NETFrameworkSource`] ，其异步接口的实现使用了完成端口和线程池，
+简单看了一下.Net Socket的[`源码`] ，其异步接口的实现使用了完成端口和线程池，
 我没看Mono源码，不知道其是如何跨平台实现的，也应当使用了线程池吧，
 我希望的封装是对C API的简单封装，这样出了问题也好查。
 
@@ -59,16 +59,16 @@ public bool Connected
 
 ## 发送队列 ##
 以前Send其实是阻塞的，Send失败了，循环继续Send，这次增加了发送队列，虽然可能效率上降低了，但也算用对了吧。
-以前的问题记录：当send错误码为EAGAIN时 [`EpollSocket`]
+以前的问题记录：[`当send错误码为EAGAIN时`]
 
 ## 功能性扩展 ##
 Socket存在断开但是应用层需要一段时间才能到的问题，以前都是放在逻辑层发Ping包来解决这个问题，想想还是放在这个类中扩展了吧。
 
 
 ## 代码地址 ##
-    未完待续
+未完待续
 
 
-[`NETFrameworkSource`]: http://referencesource.microsoft.com
-[`EpollSocket`]: ../epoll_socket/
+[`源码`]: http://referencesource.microsoft.com
+[`当send错误码为EAGAIN时`]: ../epoll_socket/
 
