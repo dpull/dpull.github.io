@@ -75,9 +75,7 @@ Android的调试比较复杂，如果不使用C++代码的调试，可采用如�
 
 1. 打开项目调试日志（可以看CCLOG的输出）
 
-```Shell
-LOCAL_CFLAGS += -DCOCOS2D_DEBUG=1
-```
+	LOCAL_CFLAGS += -DCOCOS2D_DEBUG=1
 
 1. MK文件输出
 
