@@ -18,13 +18,13 @@ tags: [csharp, socket]
 
 [`Unity Mono源码`]  的 Socket
 
-## 使用非堵塞的Socket，而非异步 ##
+## 使用非阻塞(non-blocking)的Socket，而非异步操作(asynchronous operation) ##
 
-.Net Socket，其异步接口的实现使用了线程池和完成端口。
+.Net Socket，其异步操作接口的实现使用了线程池和完成端口。
 
-Mono Socket，其异步接口实现使用了线程池。
+Mono Socket，其异步操作接口实现使用了线程池。
 
-对比两种Sokcet封装，我比较喜欢非堵塞的，首先利用了系统的异步特性，而非应用层拿多线程模拟的，其次是对C API的简单封装，
+对比两种Sokcet封装，我比较喜欢非阻塞的，首先利用了系统的异步特性，而非应用层拿多线程模拟的，其次是对C API的简单封装，
 封装越简单，代码越稳定。
 
 ## Mono的 Socket.Connected 实现有问题 ##
@@ -67,9 +67,9 @@ public bool Connected
 }
 ```
 
-对比以上代码可以得出，Mono版本没有针对非堵塞的Socket执行Poll进行再次判断，.Net的Poll只是对select的简单封装，
+对比以上代码可以得出，Mono版本没有针对非阻塞的Socket执行Poll进行再次判断，.Net的Poll只是对select的简单封装，
 于是尝试直接执行 Poll(0, SelectMode.SelectWrite) 来判断Connect是否成功，结果发现Poll(0, SelectMode.SelectWrite)
-在非堵塞Socket无法Connect的时候依旧返回true， 于是查看
+在非阻塞Socket无法Connect的时候依旧返回true， 于是查看
 [`Mono Socket的Poll函数`](https://github.com/Unity-Technologies/mono/blob/unity-staging/mcs/class/System/System.Net.Sockets/Socket.cs)
 
 ```C#
@@ -142,7 +142,7 @@ mono_poll (mono_pollfd *ufds, unsigned int nfds, int timeout)
 
 
 ## 发送队列 ##
-以前Send其实是堵塞的，Send失败了，循环继续Send，这次增加了发送队列，虽然可能效率上降低了，但也算用对了吧。
+以前Send其实是阻塞的，Send失败了，循环继续Send，这次增加了发送队列，虽然可能效率上降低了，但也算用对了吧。
 以前的问题记录：[`当send错误码为EAGAIN时`]
 
 ## 功能性扩展 ##
