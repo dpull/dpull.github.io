@@ -70,5 +70,5 @@ Socket存在断开但是应用层需要一段时间才能到的问题，以前�
 
 
 [`源码`]: http://referencesource.microsoft.com
-[`当send错误码为EAGAIN时`]: ../epoll_socket/
+[`当send错误码为EAGAIN时`]: ../epoll_socket/#send
 
