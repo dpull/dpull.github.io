@@ -10,18 +10,21 @@ tags: [csharp, socket]
 1. 开发速度慢
 1. 不易调试
 
-所以C模块的存在也就没有必要了，花了一天时间，用C#的Socket重写了一遍。（Unity版本 4.6.7）
+所以C模块的存在也就没有必要了，花了一天时间，用C#的Socket重写了一遍。
+
+（Unity版本 4.6.7，操作系统 MacOSX）
 
 [`.Net源码`] 的 Socket
 
 [`Unity Mono源码`]  的 Socket
 
-## 使用非阻塞的Socket，而非异步模型 ##
+## 使用非堵塞的Socket，而非异步 ##
 
-.Net Socket，其异步接口的实现使用了完成端口和线程池。
-Mono Socket，其异步接口实现只使用了线程池和阻塞的Sokcet。
+.Net Socket，其异步接口的实现使用了线程池和完成端口。
 
-对比两种Sokcet封装，我比较喜欢非阻塞的，首先利用了系统的异步特性，而非应用层拿多线程模拟的，其次是对C API的简单封装，
+Mono Socket，其异步接口实现使用了线程池。
+
+对比两种Sokcet封装，我比较喜欢非堵塞的，首先利用了系统的异步特性，而非应用层拿多线程模拟的，其次是对C API的简单封装，
 封装越简单，代码越稳定。
 
 ## Mono的 Socket.Connected 实现有问题 ##
@@ -64,9 +67,9 @@ public bool Connected
 }
 ```
 
-对比代码可以得出，Mono版本没有针对非阻塞的Socket执行Poll进行再次判断，.Net的Poll只是对select的简单封装，
-于是我直接执行了 Poll(0, SelectMode.SelectWrite) 来判断Connect是否成功，但Poll(0, SelectMode.SelectWrite)
-在非阻塞Socket无法Connect的时候依旧返回true， 于是察看[`Mono Socket的Poll函数`]
+对比以上代码可以得出，Mono版本没有针对非堵塞的Socket执行Poll进行再次判断，.Net的Poll只是对select的简单封装，
+于是尝试直接执行 Poll(0, SelectMode.SelectWrite) 来判断Connect是否成功，结果发现Poll(0, SelectMode.SelectWrite)
+在非堵塞Socket无法Connect的时候依旧返回true， 于是查看 [`Mono Socket的Poll函数`]
 
 ```C#
 public bool Poll (int time_us, SelectMode mode)
@@ -138,7 +141,7 @@ mono_poll (mono_pollfd *ufds, unsigned int nfds, int timeout)
 
 
 ## 发送队列 ##
-以前Send其实是阻塞的，Send失败了，循环继续Send，这次增加了发送队列，虽然可能效率上降低了，但也算用对了吧。
+以前Send其实是堵塞的，Send失败了，循环继续Send，这次增加了发送队列，虽然可能效率上降低了，但也算用对了吧。
 以前的问题记录：[`当send错误码为EAGAIN时`]
 
 ## 功能性扩展 ##
