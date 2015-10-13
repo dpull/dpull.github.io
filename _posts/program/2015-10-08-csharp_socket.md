@@ -107,7 +107,7 @@ public bool Poll (int time_us, SelectMode mode)
 
 1. Mono版本是在Poll函数中更新了connected的状态，也就是说，如果想查询非阻塞的Socket是否connected，
 .Net版本执行 Socket.Connected 即可，Mono版本每次执行前，要先执行 Socket.Poll(...)
-1. Poll函数返回值的含义不同，.Net Poll返回true时，即代表Connect成功，但Mono版本需要再判断GetSocketOption
+1. Poll函数返回值的含义不同，当用于判断非阻塞Socket是否Connect成功时，.Net Poll返回true时，即代表Connect成功，但Mono版本需要再判断GetSocketOption(...)
 1. Poll的实现不同，.Net的Poll只是对select的简单封装，但是Mono的实现是poll或者select
 
 ```C#
@@ -137,9 +137,6 @@ mono_poll (mono_pollfd *ufds, unsigned int nfds, int timeout)
 int
 mono_poll (mono_pollfd *ufds, unsigned int nfds, int timeout)
 ```
-
-
-
 
 ## 发送队列 ##
 以前Send其实是阻塞的，Send失败了，循环继续Send，这次增加了发送队列，虽然可能效率上降低了，但也算用对了吧。
