@@ -14,45 +14,50 @@ tags: []
 1. 易于扩展，解决性能瓶颈。
 
 新的拓扑结构如图
-	
 
-	+----------------------------+                                                         +--->Player id
-	|      Game server           |                                                         |
-	|                            |                                 +--->AutoIncreaseIndex+----->Auction id
-	|                            |                                 |                       |
-	| +--------+                 |                                 |                       +--->Guild id
-	| | skynet |    +--------+   |                                 |
-	| +--------+----+ skynet |   |  +--------+                     |
-	|    ...        +--------+   |  |        |           +---------+           +---------------+
-	|                  ...    <-----+   DB   +---------->+  redis  |           |Set            |
-	|               +--------+   |  |        |           +------------->Players|Player:PlayerId|
-	|               | skynet |   |  +---+----+               ...   |           |PlayerData     |
-	|               +--------+   |      |                +---------+           +---------------+
-	|                            |      |                |  redis  |               HashSet(ServerId:Account)
-	+----------------------------+      v                +---------+          +--->Account
-	                                +---+-----+                    |          |    Players Freeze
-	                      log <-----+ mongodb |                    +--->Server|
-	                                +---+-----+                               |    HasetSet(ServerId:Mail)
-	                                    |                                     +--->PlayerId
-	                                    v                                     |    MailData
-	                                  select                                  |
-	                                                                          |    HashSet(ServerId:Relationship)
-	                                                                          +--->PlayerId
-	                                                                          |    RelationshipData
-	                                                                          |
-	                                                                          |    HashSet(ServerId:PlayerCache)
-	                                                                          +--->PlayerId
-	                                                                          |    PlayerCacheData
-	                                                                          |
-	                                                                          |    HashSet(ServerId:Auction)
-	                                                                          +--->AuctionItemId
-	                                                                          |    AuctionItemData
-	                                                                          |
-	                                                                          |    HashSet(ServerId:Guild)
-	                                                                          +--->GuildId
-	                                                                               GuildData
-
-
+	                              +-----------------------------------------------------------------------------------+
+	                              |                                                                                   |
+	                              |                              Db center                                            |
+	                              |                                                                                   |
+	                              |                                                                                   |
+	                              |                                                                                   |
+	+-----------------------------+                                                         +--->Player id            |
+	|       Game server           |                                                         |                         |
+	|                             |                                 +--->AutoIncreaseIndex+----->Auction id           |
+	|                             |                                 |                       |                         |
+	| +--------+                  |                                 |                       +--->Guild id             |
+	| | skynet |     +--------+   |                                 |                                                 |
+	| | master | <---+ server1|   |  +--------+                     |                                                 |
+	| | /slave |     +--------+   |  |        |           +---------+           +---------------+                     |
+	| +--------+     |  ...    <-----+   DB   +---------->+  redis1 |           |Set            |                     |
+	|                +--------+   |  |        |           +------------->Players|Player:PlayerId|                     |
+	|                | ser|erN|   |  +---+----+               ...   |           |PlayerData     |                     |
+	|                +--------+   |      |                +---------+           +---------------+                     |
+	|                             |      |                |  redisN |               HashSet(ServerId:Account)         |
+	|                             |      v                +---------+          +--->Account                           |
+	+--------+--------------------+  +---+-----+                    |          |    Players Freeze                    |
+		 	 |                       | mongodb |                    +--->Server|                                      |
+			 |                       +---+-----+                               |    HasetSet(ServerId:Mail)           |
+			 |                           |                                     +--->PlayerId                          |
+			 |               Player log<-+                                     |    MailData                          |
+			 |                           |                                     |                                      |
+			 |       Data query service<-+                                     |    HashSet(ServerId:Relationship)    |
+			 |                           |                                     +--->PlayerId                          |
+			 |       Player data backup<-+                                     |    RelationshipData                  |
+			 |                                                                 |                                      |
+			 |                                                                 |    HashSet(ServerId:PlayerCache)     |
+			 |                                                                 +--->PlayerId                          |
+			 |                                                                 |    PlayerCacheData                   |
+			 |                                                                 |                                      |
+			 |                                                                 |    HashSet(ServerId:Auction)         |
+			 |                                                                 +--->AuctionItemId                     |
+			 |                                                                 |    AuctionItemData                   |
+			 |                                                                 |                                      |
+			 |                                                                 |    HashSet(ServerId:Guild)           |
+			 |                                                                 +--->GuildId                           |
+			 |                                                                      GuildData                         |
+	         |                                                                                                        |
+	         +--------------------------------------------------------------------------------------------------------+
 
 ## 易于新同学理解
 以前我们的服务器拓扑结构是虚拟玩家服，也就是一组服务器中，可能对应玩家的多个服。
