@@ -31,7 +31,7 @@ tags: []
 	| | /slave |     +--------+   |  |        |           +---------+           +---------------+                     |
 	| +--------+     |  ...    <-----+   DB   +---------->+  redis1 |           |Set            |                     |
 	|                +--------+   |  |        |           +------------->Players|Player:PlayerId|                     |
-	|                | ser|erN|   |  +---+----+               ...   |           |PlayerData     |                     |
+	|                | serverN|   |  +---+----+               ...   |           |PlayerData     |                     |
 	|                +--------+   |      |                +---------+           +---------------+                     |
 	|                             |      |                |  redisN |               HashSet(ServerId:Account)         |
 	|                             |      v                +---------+          +--->Account                           |
