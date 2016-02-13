@@ -8,8 +8,11 @@ include: ["_static"]
 exclude: ["README.md"] # files to exclude
 pygments: true
 encoding: utf-8
-markdown: kramdown
-extensions: ["fenced_code_blocks"]
+markdown: redcarpet
 markdown_ext: md
+redcarpet:
+#  extensions: ["tables", "fenced_code_blocks", "disable_indented_code_blocks", "space_after_headers", "with_toc_data"]
+  extensions: ["tables", "fenced_code_blocks", "with_toc_data"]
+
 #excerpt_separator: <!--more--> 
 excerpt_separator: ----------
