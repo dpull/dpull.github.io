@@ -138,6 +138,44 @@ int
 mono_poll (mono_pollfd *ufds, unsigned int nfds, int timeout)
 ```
 
+
+### 2016.03.01补充 ###
+因为Dns.GetHostEntry解析太慢，改用了 `public void Connect (string host, int port)` 接口，发现还是慢，不过这次慢在了 `Poll (-1, SelectMode.SelectWrite)`, 也就是说，对于非阻塞的Socket在Connect时，阻塞等待了。详细代码如下：
+
+	public void Connect (IPAddress[] addresses, int port)
+	{
+		// .....
+			
+			if (!blocking) {
+				Poll (-1, SelectMode.SelectWrite);
+				error = (int)GetSocketOption (SocketOptionLevel.Socket, SocketOptionName.Error);
+				if (error == 0) {
+					connected = true;
+					seed_endpoint = iep;
+					return;
+				}
+			}
+		}
+		// .....
+	}
+
+	public void Connect (string host, int port)
+	{
+		IPAddress [] addresses = Dns.GetHostAddresses (host);
+		Connect (addresses, port);
+	}
+
+
+再尝试以前使用的接口 `public void Connect (IPAddress address, int port)` 它是非阻塞的，其代码如下，但我没有找到 `public void Connect (IPEndPoint)` 的实现。
+
+	public void Connect (IPAddress address, int port)
+	{
+		Connect (new IPEndPoint (address, port));
+	}
+
+由此可以推断出为什么存在 Socket.Connected 的实现问题。
+
+
 ## 发送队列 ##
 以前Send其实是阻塞的，Send失败了，循环继续Send，这次增加了发送队列，虽然可能效率上降低了，但也算用对了吧。
 以前的问题记录：[`当send错误码为EAGAIN时`]
