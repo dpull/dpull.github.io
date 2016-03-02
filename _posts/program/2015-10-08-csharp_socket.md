@@ -10,7 +10,7 @@ tags: [csharp, socket]
 1. 开发速度慢
 1. 不易调试
 
-所以C模块的存在也就没有必要了，花了一天时间，用C#的Socket重写了一遍。
+所以C模块的存在也就没有必要了，花了一天时间，用[`C#的Socket重写了一遍`]。
 
 （Unity版本 4.6.7，操作系统 MacOSX）
 
@@ -18,7 +18,7 @@ tags: [csharp, socket]
 
 [`Unity Mono源码`]  的 Socket
 
-[`封装的Sokcet库`] 
+
 
 ## 使用非阻塞(non-blocking)的Socket，而非异步操作(asynchronous operation) ##
 
@@ -190,6 +190,6 @@ Dns.GetHostEntry 函数执行很慢，可以考虑使用 [`DnsPod提供的DNS解
 [`.Net源码`]: http://referencesource.microsoft.com
 [`Unity Mono源码`]: https://github.com/Unity-Technologies/mono
 [`当send错误码为EAGAIN时`]: ../epoll_socket/
-[`封装的Sokcet库`]: https://github.com/dpull/UnityUtils/blob/master/PackageSocket.cs
+[`C#的Socket重写了一遍`]: https://github.com/dpull/UnityUtils/blob/master/PackageSocket.cs
 [`DnsPod提供的DNS解析服务`]: https://www.dnspod.cn/httpdns
 [`httpdns的简单实现`]: https://github.com/dpull/UnityUtils/blob/master/DNS.cs
