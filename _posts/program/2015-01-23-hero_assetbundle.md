@@ -58,7 +58,7 @@ Id           | Type        | Remark
 Shader部分支持，待细查，
 Mesh部分支持，待细查。
 
-** 2015.3.30 **
+**2015.3.30**
 
 重新设计了diff文件，插件代码已经放github [`AssetBundlePatch`], 需要特殊处理和理论支持的部分还有待开发。
 
