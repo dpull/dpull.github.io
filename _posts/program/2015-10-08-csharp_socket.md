@@ -18,6 +18,8 @@ tags: [csharp, socket]
 
 [`Unity Mono源码`]  的 Socket
 
+[`封装的Sokcet库`] 
+
 ## 使用非阻塞(non-blocking)的Socket，而非异步操作(asynchronous operation) ##
 
 .Net Socket，其异步操作接口的实现使用了线程池和完成端口。
@@ -155,7 +157,6 @@ mono_poll (mono_pollfd *ufds, unsigned int nfds, int timeout)
 					return;
 				}
 			}
-		}
 		// .....
 	}
 
@@ -166,14 +167,14 @@ mono_poll (mono_pollfd *ufds, unsigned int nfds, int timeout)
 	}
 
 
-再尝试以前使用的接口 `public void Connect (IPAddress address, int port)` 它是非阻塞的，其代码如下，但我没有找到 `public void Connect (IPEndPoint)` 的实现。
+再尝试以前使用的接口 `public void Connect (IPAddress address, int port)` ，发现它是非阻塞的，其代码如下，但我没有找到 `public void Connect (IPEndPoint)` 的实现。
 
 	public void Connect (IPAddress address, int port)
 	{
 		Connect (new IPEndPoint (address, port));
 	}
 
-由此可以推断出为什么存在 Socket.Connected 的实现问题。
+由此可以推断出为什么存在 上一段说的 `Socket.Connected` 的实现问题。
 
 
 ## 发送队列 ##
@@ -183,7 +184,12 @@ mono_poll (mono_pollfd *ufds, unsigned int nfds, int timeout)
 ## 功能性扩展 ##
 Socket存在断开但是应用层需要一段时间才能到的问题，以前都是放在逻辑层发Ping包来解决这个问题，想想还是放在这个类中扩展了吧。
 
+## 解决dns解析慢的问题 ##
+Dns.GetHostEntry 函数执行很慢，可以考虑使用 [`DnsPod提供的DNS解析服务`]，用起来还是蛮简单的，我的 [`httpdns的简单实现`]
+
 [`.Net源码`]: http://referencesource.microsoft.com
 [`Unity Mono源码`]: https://github.com/Unity-Technologies/mono
 [`当send错误码为EAGAIN时`]: ../epoll_socket/
-
+[`封装的Sokcet库`]: https://github.com/dpull/UnityUtils/blob/master/PackageSocket.cs
+[`DnsPod提供的DNS解析服务`]: https://www.dnspod.cn/httpdns
+[`httpdns的简单实现`]: https://github.com/dpull/UnityUtils/blob/master/DNS.cs
