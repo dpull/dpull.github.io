@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Skynet Windows版本
-categories: [general, hero]
+categories: [general]
 tags: []
 ---
 
