@@ -4,7 +4,6 @@ title: 服务端拓扑结构调整
 categories: [general, hero]
 tags: []
 ---
-
 新项目依旧使用skynet做服务端，但在拓扑结构上做一些调整。
 
 这次改动的主要目标有三个：
@@ -13,48 +12,46 @@ tags: []
 1. 易于合服，跨服。
 1. 易于扩展，解决性能瓶颈。
 
+**2016.02.17调整，去掉redis(减少运维的学习成本)，mongodb采用云数据库(降低运维工作量)。**
+ 
+
 新的拓扑结构如图
 
-	                              +-----------------------------------------------------------------------------------+
-	                              |                              Db center                                            |
-	                              |                                                                                   |
-	                              |                                                                                   |
-	+-----------------------------+                                                         +--->Player id            |
-	|       Game server           |                                                         |                         |
-	|                             |                                 +--->AutoIncreaseIndex+----->Auction id           |
-	|                             |                                 |                       |                         |
-	| +--------+                  |                                 |                       +--->Guild id             |
-	| | skynet |     +--------+   |                                 |                                                 |
-	| | master | <---+server 1|   |  +--------+           +---------+                                                 |
-	| | /slave |     +--------+   |  |        |           |  redis  |           +---------------+                     |
-	| +--------+     |  ...    <-----+   DB   +---------->+         |           |Set            |                     |
-	|                +--------+   |  |        |           | cluster +--->Players|Player:PlayerId|                     |
-	|                |server N|   |  +---+----+           +---------+           |PlayerData     |                     |
-	|                +--------+   |      |                          |           +---------------+                     |
-	|                             |      |                          |               HashSet(ServerId:Account)         |
-	|                             |      v                          |          +--->Account                           |
-	+---+-----------------------+-+  +---++----+                    +          |    Players Freeze                    +
-	         +                       | mongodb +                    +--->Server|                                      +
-	         +                       ++--+-----+                               |    HasetSet(ServerId:Mail)           +
-	         |                           |                                     +--->PlayerId                          |
-	         |               Player log<-+                                     |    MailData                          |
-	         |                           |                                     |                                      |
-	         |       Data query service<-+                                     |    HashSet(ServerId:Relationship)    |
-	         |                           |                                     +--->PlayerId                          |
-	         |       Player data backup<-+                                     |    RelationshipData                  |
-	         |                                                                 |                                      |
-	         |                                                                 |    HashSet(ServerId:PlayerCache)     |
-	         |                                                                 +--->PlayerId                          |
-	         |                                                                 |    PlayerCacheData                   |
-	         |                                                                 |                                      |
-	         |                                                                 |    HashSet(ServerId:Auction)         |
-	         |                                                                 +--->AuctionItemId                     |
-	         |                                                                 |    AuctionItemData                   |
-	         |                                                                 |                                      |
-	         |                                                                 |    HashSet(ServerId:Guild)           |
-	         |                                                                 +--->GuildId                           |
-	         |                                                                      GuildData                         |
-	         +--------------------------------------------------------------------------------------------------------+
+                                 +---------------------------------------------------------------+
+                                 |                              Db center                        |
+                                 |                                                               |
+                                 |                                              +----->player    |
+   +-----------------------------+                                              |                |
+   |       Game server           |                                              |                |
+   |                             |                                 +--->serverdb+----->account   |
+   |                             |                                 |            |                |
+   | +--------+                  |                                 |            |                |
+   | | skynet |     +--------+   |                                 |            +----->rank      |
+   | | master | <---+server 1|   |                       +---------+            |                |
+   | | /slave |     +--------+   |                       |         |            |                |
+   | +--------+     |  ...    <--------------------------+ mongodb |            +----->....      |
+   |                +--------+   |                       |         +--->...                      |
+   |                |server N|   |           +-----------+---------+                             |
+   |                +--------+   |           |                     |                             |
+   |                             |           |                     |                             |
+   |                             |           |                     |                             |
+   +--------+--------------------+           |                     |                             |
+            |                                |                     +--->...                      |
+            |                                v                                                   |
+            |                             globaldb                                               |
+            |                                +                                                   |
+            |                                |                                                   |
+            |                                +--->player next id                                 |
+            |                                |                                                   |
+            |                                |                                                   |
+            |                                +--->guild next id                                  |
+            |                                |                                                   |
+            |                                |                                                   |
+            |                                +--->auction next id                                |
+            |                                                                                    |
+            |                                                                                    |
+            +-------------------------------------------------------------------------------------
+
 
 
 ## 易于新同学理解

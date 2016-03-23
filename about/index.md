@@ -50,9 +50,6 @@ title: Resume
 > 
 > *-- 吴军 《文明之光（第一册）》*
 
-
-*面包屑小道（breadcrumb trails）意指做过记号的路。这个词出自童话故事《Hansel and Gretel》（又名《奇幻森林历险记》），讲的是Hansel和Gretel的父亲外出干活时，后母乘机把这两兄妹赶走，将他们送往奇幻森林；两个孩子在去森林的路上沿路留下了面包屑，以便后母把他们丢下之后可以自己找到回家的路。*
-
 ## 历史 ##
 ### 2005.05.18 ###
 在[CSDN blog]开博
@@ -71,3 +68,6 @@ title: Resume
 [Github]: https://github.com/
 [site:dpull.com]: http://www.google.com/search?q=site%3Adpull.com
 [site:dpull.com GFW]: http://84.15.64.35/#q=site:dpull.com
+
+
+> **面包屑小道**（breadcrumb trails）意指做过记号的路。这个词出自童话故事《Hansel and Gretel》（又名《奇幻森林历险记》），讲的是Hansel和Gretel的父亲外出干活时，后母乘机把这两兄妹赶走，将他们送往奇幻森林；两个孩子在去森林的路上沿路留下了面包屑，以便后母把他们丢下之后可以自己找到回家的路。
