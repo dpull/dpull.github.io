@@ -6,12 +6,12 @@ tags: []
 ---
 
 [Sproto](https://github.com/cloudwu/skynet/wiki/Sproto) 默认不支持浮点数，
-但我们项目在一个模块用到了，而且调用频率还挺高，作为一个懒人，我不想扩展Sproto库，
+但我们项目在一个模块用到了，而且调用频率还挺高，作为一个懒人，我不想扩展Sproto库:
 
 1. 可能引入bug
 1. 更新skynet新版本的时候也麻烦
 
-因为使用频率挺高，使用转为字符串再转回来性能损失挺大，想想直接转为int比较好，代码如下
+因为使用频率挺高，使用转为字符串再转回来性能损失挺大，想想直接转为int比较好，代码如下:
 
     static int lua_encode_float(lua_State* L) {
         assert(sizeof(int64_t) == sizeof(double));
