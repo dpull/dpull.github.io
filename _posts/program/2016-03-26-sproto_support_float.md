@@ -12,7 +12,8 @@ tags: []
 1. 更新skynet新版本的时候也麻烦
 
 因为使用频率挺高，使用转为字符串再转回来性能损失挺大，想想直接转为int比较好，代码如下:
-
+    
+    {% highlight lua %}
     static int lua_encode_float(lua_State* L) {
         assert(sizeof(int64_t) == sizeof(double));
         
@@ -32,6 +33,7 @@ tags: []
         lua_pushnumber(L, d);
         return 1;
     }
+    {% endhighlight %}
     
 用纯lua也能实现（`string.pack`），但会有临时字符串产生。
 
