@@ -36,6 +36,22 @@ tags: []
 用纯lua也能实现（`string.pack`），但会有临时字符串产生。
 
 
+Unity的C#版本无法用指针，要产生临时数组了，代码如下：
+
+	public static long EncodeFloat(double number)
+	{
+		var data = BitConverter.GetBytes(number);
+		return BitConverter.ToInt64(data, 0);
+	}
+
+	public static double DecodeFloat(long number)
+	{
+		var data = BitConverter.GetBytes(number);
+		return BitConverter.ToDouble(data, 0);
+	}
+
+
+
 
 
 
