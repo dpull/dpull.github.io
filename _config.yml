@@ -1,4 +1,5 @@
 # jekyll config: http://jekyllcn.com/docs/configuration/
+# github jekyll config: https://help.github.com/articles/configuring-jekyll/
 # kramdown config: http://kramdown.gettalong.org/options.html
 
 description: 面包屑小道.
@@ -30,8 +31,10 @@ markdown_ext: "md"
 
 # 插件
 #whitelist: []
-#gems:      []
-
+gems:
+  - jekyll-coffeescript
+  - jekyll-paginate
+   
 # 转换
 markdown:    kramdown
 highlighter: rouge
@@ -61,7 +64,8 @@ kramdown:
   #smart_quotes:   lsquo,rsquo,ldquo,rdquo
   #enable_coderay: false
   input: GFM
-  
+  #hard_wrap: false
+
   #coderay:
     #coderay_wrap:              div
     #coderay_line_numbers:      inline
