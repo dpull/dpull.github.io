@@ -22,7 +22,7 @@ public interface IServerControl
 {
     void Add();    
 }
-{% highlight c# %}
+{% endhighlight %}
 
 **实现Remoting的对象，也就是允许在支持远程处理的应用程序中跨应用程序域边界访问对象。**
     
