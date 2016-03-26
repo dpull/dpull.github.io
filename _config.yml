@@ -6,12 +6,9 @@ paginate_path: "/page/:num"
 permalink: "/blog/:title"
 include: ["_static"]
 exclude: ["README.md"] # files to exclude
-pygments: true
 encoding: utf-8
 markdown: kramdown
 highlighter: pygments
 markdown_ext: md
-extensions: ["tables", "fenced_code_blocks", "with_toc_data"]
-
 #excerpt_separator: <!--more--> 
 excerpt_separator: ----------
