@@ -13,7 +13,7 @@ tags: []
 
 因为使用频率挺高，使用转为字符串再转回来性能损失挺大，想想直接转为int比较好，代码如下:
     
-    {% highlight lua %}
+    {% highlight c %}
     static int lua_encode_float(lua_State* L) {
         assert(sizeof(int64_t) == sizeof(double));
         
@@ -40,6 +40,7 @@ tags: []
 
 Unity的C#版本无法用指针，要产生临时数组了，代码如下：
 
+        {% highlight c# %}
 	public static long EncodeFloat(double number)
 	{
 		var data = BitConverter.GetBytes(number);
@@ -51,7 +52,7 @@ Unity的C#版本无法用指针，要产生临时数组了，代码如下：
 		var data = BitConverter.GetBytes(number);
 		return BitConverter.ToDouble(data, 0);
 	}
-
+       {% endhighlight %}
 
 
 
