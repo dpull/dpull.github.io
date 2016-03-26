@@ -13,7 +13,7 @@ tags: [cocos2dx, cocosbuilder]
 > 若是策划不停地改设计，想死的心都有了。
 > 所以需要一个所见即所得的编辑器。
 
-----------
+==========
 
 ## 为什么选用CocosBuilder？ ##
 2013年4月：
@@ -39,8 +39,6 @@ CCNodeLoaderLibrary * ccNodeLoaderLibrary = CCNodeLoaderLibrary::newDefaultCCNod
 ccNodeLoaderLibrary->registerCCNodeLoader("HelloCocosBuilderLayer", HelloCocosBuilderLayerLoader::loader());
 {% endhighlight %}
 
-----------
-
 {% highlight c++ %}
 class HelloCocosBuilderLayerLoader : public cocos2d::extension::CCLayerLoader {
    public:
@@ -52,8 +50,6 @@ class HelloCocosBuilderLayerLoader : public cocos2d::extension::CCLayerLoader {
        CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(HelloCocosBuilderLayer);
 };
 {% endhighlight %}
-
-----------
 
 {% highlight c++ %}
 cocos2d::extension::CCBReader * ccbReader = new cocos2d::extension::CCBReader(ccNodeLoaderLibrary);

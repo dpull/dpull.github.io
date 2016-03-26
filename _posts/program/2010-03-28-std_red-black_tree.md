@@ -11,7 +11,7 @@ tags: []
 可直接察看
 [ppt](https://docs.google.com/presentation/d/1CABjz*\ 10jImXXTAjjeZYN9ps4jQ98GJZMrcfQ5QjSAE/edit#slide=id.i0)。
 
-----------
+==========
 
 ## 红黑树性质 ##
 

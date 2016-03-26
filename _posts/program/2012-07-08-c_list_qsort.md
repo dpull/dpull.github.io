@@ -5,7 +5,7 @@ categories: [general]
 tags: [c]
 ---
 
-----------
+==========
 	
 {% highlight c++ %}
 // 头文件

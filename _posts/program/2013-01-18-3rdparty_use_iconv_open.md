@@ -9,7 +9,7 @@ tags: [iconv]
 不过在windows下，如果参数为`wchar_t`，返回-1（失败），（版本libiconv-1.9.2），
 翻看代码后得知，原来其对windows支持有问题。
 
-----------
+==========
 
 windows的`wchar_t`对应的编码为`UTF-16LE`，在libiconv对应为`ei_utf16le`。
 	

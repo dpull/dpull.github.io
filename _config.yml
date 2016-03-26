@@ -39,7 +39,7 @@ gems:
 markdown:    kramdown
 highlighter: rouge
 lsi:         false
-excerpt_separator: "----------"
+excerpt_separator: "=========="
 
 # 服务器选项
 #detach:  false

@@ -31,7 +31,7 @@ tags: [c]
 
 这道题主要考查的是C++标准，Point of declaration一节
 
-----------
+==========
 
 ## Point of declaration ##
 
