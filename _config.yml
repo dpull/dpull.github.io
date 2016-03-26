@@ -2,29 +2,68 @@ name: dpull
 description: 面包屑小道.
 url: http://www.dpull.com
 paginate: 10 # pagination based on number of posts
+
+
+# 目录结构
+#source:      .
+#destination: ./_site
+#plugins:     ./_plugins
+#layouts:     ./_layouts
+#data_source: ./_data
+#collections: null
+
+# 阅读处理
+#safe:         false
+include:      ["_static"]
+exclude:      ["README.md"]
+#keep_files:   [".git", ".svn"]
+encoding:     "utf-8"
+markdown_ext: "md"
+
+# 内容过滤
+#show_drafts: null
+#limit_posts: 0
+#future:      true
+#unpublished: false
+
+# 插件
+#whitelist: []
+#gems:      []
+
+# 转换
+markdown:    kramdown
+highlighter: rouge
+lsi:         false
+excerpt_separator: "----------"
+
+# 服务器选项
+#detach:  false
+#port:    4000
+#host:    127.0.0.1
+#baseurl: "" # does not include hostname
+
+# 输出
+permalink:     "/blog/:title"
 paginate_path: "/page/:num"
-permalink: "/blog/:title"
-include: ["_static"]
-exclude: ["README.md"] # files to exclude
-encoding: utf-8
-markdown: kramdown
-highlighter: pygments
-markdown_ext: md
-#excerpt_separator: <!--more--> 
-excerpt_separator: ----------
+#timezone:      null
 
+#quiet:    false
+#defaults: []
+
+# Markdown 处理器
 kramdown:
-  auto_ids:       true
-  footnote_nr:    1
-  entity_output:  as_char
-  toc_levels:     1..6
-  smart_quotes:   lsquo,rsquo,ldquo,rdquo
-  enable_coderay: false
+  #auto_ids:       true
+  #footnote_nr:    1
+  #entity_output:  as_char
+  #toc_levels:     1..6
+  #smart_quotes:   lsquo,rsquo,ldquo,rdquo
+  #enable_coderay: false
+  input: GFM
 
-  coderay:
-    coderay_wrap:              div
-    coderay_line_numbers:      inline
-    coderay_line_number_start: 1
-    coderay_tab_width:         4
-    coderay_bold_every:        10
-    coderay_css:               style
+  #coderay:
+    #coderay_wrap:              div
+    #coderay_line_numbers:      inline
+    #coderay_line_number_start: 1
+    #coderay_tab_width:         4
+    #coderay_bold_every:        10
+    #coderay_css:               style
