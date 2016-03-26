@@ -8,8 +8,9 @@ include: ["_static"]
 exclude: ["README.md"] # files to exclude
 encoding: utf-8
 markdown: kramdown
+kramdown:
+  input: GFM
 highlighter: pygments
 markdown_ext: md
-extensions: ["tables", "fenced_code_blocks", "with_toc_data"]
 #excerpt_separator: <!--more--> 
 excerpt_separator: ----------
