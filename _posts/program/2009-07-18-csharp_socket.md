@@ -13,10 +13,10 @@ tags: [csharp, socket]
 在.net2.0中Socket.Send,Socket.Receive 有了无异常的函数，
 减少不必要的异常，就等于增加效率。
 
-```C#
+{% highlight c# %}
 Socket.Send(Byte[], Int32, Int32, SocketFlags, SocketError) 
 Socket.Receive(Byte[], Int32, Int32, SocketFlags, SocketError) 
-```
+{% endhighlight %}
 
 ## Socket.Connected 不是当前的Socket状态 ##
 

@@ -39,7 +39,7 @@ ADO.NET2.0 为各种ADO.NET类引入了一个提供程序工厂的模型以及�
 所以需要扩充DbProviderFactories类兼容mysql, 而且在ADO.net
 2.0中mysql和sqlserver的ParameterMarkerFormat都有bug，所以扩展类顺带解决这个bug
 
-```C#
+{% highlight c# %}
 public static class DbProviderFactoryEx
 {
     public static DbProviderFactory GetFactory(string providerName)
@@ -79,7 +79,7 @@ public static class DbProviderFactoryEx
     public static readonly string SqlServerParameterMarkerFormat = "@{0}";
     public static readonly string MySqlParameterMarkerFormat = "?{0}";
 }
-```
+{% endhighlight %}
 
 ## 开启sql2005远程连接功能 ##
 连接到SQL Server 2005时，在默认的设置下SQL
@@ -119,7 +119,7 @@ Server不允许进行远程连接，需要自己手工开启，详细步骤如�
 
 **实现：**
 
-```C#
+{% highlight c# %}
 public static class DBHelper
 {
    public static T Get<T>(DbDataRecord record, string field)
@@ -179,12 +179,12 @@ public static class DBHelper
    public static string ParameterMarkerFormat = 
        DbProviderFactoryEx.SqlServerParameterMarkerFormat;
 }
-```
+{% endhighlight %}
 
 
 **应用：**
 
-```C#
+{% highlight c# %}
 // 处理DbDataReader
 using (DbDataReader reader = cmd.ExecuteReader())
 {
@@ -208,7 +208,7 @@ foreach (DataRow row in table.Rows)
 DbCommand cmd = conn.CreateCommand();
 cmd.CommandText = "select * from role where rolename=?rolename";
 DBHelper.AddParameter("rolename", DBHelper.GBK2Latin(name), cmd);   
-```
+{% endhighlight %}
 
 ## 避免SQL注入和特殊字符的一种方法 ##
 
@@ -222,7 +222,7 @@ MySQL实现就很简单了，他会把字符串类型的参数value使用一个�
 使用PHP+MySQL做网站的同学也可以利用着类似的思想生成安全的SQL连接串，我看了PHPWind数据库处理函数，貌似并没有对所有的过滤字符进行处理，这就存在着一些安全隐患。
 源代码
 
-```C#
+{% highlight c# %}
 private static string stringOfBackslashChars = "\u005c\u00a5\u0160\u20a9\u2216\ufe68\uff3c";        
 private static string stringOfQuoteChars = "\\u0027\\u00b4\\u02b9\\u02ba\\u02bb\\u02bc\\u02c8\\u02ca\\u02cb\\u02d9\\u0300\\u0301\\u2018\\u2019\\u201a\\u2032\\u2035\\u275b\\u275c\\uff07";    
 
@@ -238,4 +238,4 @@ public static string EscapeString(string value)
     }            
     return sb.ToString();        
 }
-```
+{% endhighlight %}

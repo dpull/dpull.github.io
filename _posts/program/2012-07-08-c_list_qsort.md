@@ -7,7 +7,7 @@ tags: [c]
 
 ----------
 	
-```C++
+{% highlight c++ %}
 // 头文件
 #pragma once
 
@@ -61,4 +61,4 @@ ListNode* QuickSortList(ListNode* pList)
 
     return headNode.m_pNext;
 }
-```
+{% endhighlight %}

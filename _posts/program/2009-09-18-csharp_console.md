@@ -25,7 +25,7 @@ Console.Write 大约写2G字符后就会抛出：
 
 示例如下: 
 
-```C#
+{% highlight c# %}
   public static class ConsoleEx
   {
      public static IntPtr OutHandle
@@ -87,4 +87,4 @@ Console.Write 大约写2G字符后就会抛出：
   
      static IntPtr outHandle = IntPtr.Zero;
   }
-```
+{% endhighlight %}

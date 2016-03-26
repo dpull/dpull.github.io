@@ -7,7 +7,7 @@ tags: [c]
 
 ## 字节对齐 ##
 
-```C++
+{% highlight c++ %}
 struct TestStruct1
 { 
     double doub; 
@@ -21,7 +21,7 @@ int main()
  
     return 0;
 }
-```
+{% endhighlight %}
 
 `sizeof(TestStruct1)`为多少呢？也许你会这样求： 
 
@@ -39,7 +39,6 @@ int main()
 
 	
 类型		| 对齐方式（变量存放的起始地址相对于结构的起始地址的偏移量）
----  	| --- 	 
 char    | 偏移量必须为sizeof(char)即1的倍数
 int	    | 偏移量必须为sizeof(int)即4的倍数
 double	| 偏移量必须为sizeof(double)即8的倍数
@@ -49,7 +48,7 @@ short	| 偏移量必须为sizeof(short)即2的倍数
 同时VC为了确保结构的大小为结构的字节边界数（即该结构中占用最大空间的类型所占用的字节数）的倍数，
 所以在为最后一个成员变量申请空间后，还会根据需要自动填充空缺的字节。**
 
-```C++
+{% highlight c++ %}
 struct TestStruct1
 {
     // 先为第一个成员分配空间，其起始地址和结构的起始地址相同, 偏移量为0是sizeof(double)的倍数, 
@@ -83,7 +82,7 @@ struct TestStruct2
 //（即结构中占用最大空间的类型所占用的字节数sizeof(double)）的倍数，
 // 所以需要填充4个字节，以满足结构的大小为 sizeof(double)的倍数。
 // sizeof(TestStruct2)为 1 + 7 + 8 + 4 + 4 = 24。
-```
+{% endhighlight %}
 
 ## 禁用字节对齐 ##
 VC中提供了 **#pragma pack(n)** 来设定变量以n字节对齐方式。
@@ -96,7 +95,7 @@ n字节对齐就是说变量存放的起始地址的偏移量有两种情况：
 如果n大于所有成员变量类型所占用的字节数，那么结构的总大小必须为占用空间最大的变量占用的空间数的倍数；
 否则必须为n的倍数。
 
-```C++
+{% highlight c++ %}
 #pragma pack(push)     //保存对齐状态 
 #pragma pack(4)        //设定为4字节对齐 
 struct TestStruct2 
@@ -108,4 +107,4 @@ struct TestStruct2
 #pragma pack(pop)    //恢复对齐状态
 
 // sizeof(TestStruct2) => 16
-```
+{% endhighlight %}

@@ -49,7 +49,7 @@ cocos2dx默认的触摸响应机制效率看似高但使用起来太过复杂，
 
 今天博强说我们手游的windows端比端游消耗的cpu都高，用VS的性能分析看了一下其热点在于Sleep函数。
 
-```C
+{% highlight c %}
     // file: cocos2dx/platform/win32/CCApplication.cpp
     if (nNow.QuadPart - nLast.QuadPart > m_nAnimationInterval.QuadPart)
     {
@@ -60,7 +60,7 @@ cocos2dx默认的触摸响应机制效率看似高但使用起来太过复杂，
     {
         Sleep(0); 
     }
-```
+{% endhighlight %}
 
 问题的原因就在于这个Sleep(0)， [MSDN](http://msdn.microsoft.com/en-us/library/windows/desktop/ms686298\(v=vs.85\).aspx) 中:
 
@@ -96,7 +96,7 @@ CCActionManager::update会根据间隔时间，执行多次
 
 核心修改如下，另外还修改了排版有点偏的问题，小改动，不展示代码了：
 
-```C
+{% highlight c %}
 // take care of stroke if needed
 if ( pInfo->hasStroke )
 {
@@ -118,7 +118,7 @@ if ( pInfo->hasStroke )
     }
 }
 CGContextSetTextDrawingMode(context, kCGTextFill);
-```
+{% endhighlight %}
 
 ## Win8支持 ##
 2014/06/18

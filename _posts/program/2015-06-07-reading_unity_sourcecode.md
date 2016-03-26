@@ -43,7 +43,7 @@ tags: [csharp]
 
 
 
-```C#
+{% highlight c# %}
 public class Script : MonoBehaviour, ISerializationCallbackReceiver
 {
 	private const int KCurrentVersion = 1;
@@ -71,7 +71,7 @@ public class Script : MonoBehaviour, ISerializationCallbackReceiver
 		}
 	}
 }
-```	
+{% endhighlight %}	
 
 
 -->

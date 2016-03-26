@@ -67,7 +67,6 @@ tags: []
 1. 作用域大于当前函数的变量使用PascalCasing规则命名
 
 标识符  			| 类型				      | 例子
----  			 	| --- 				   | ---
 文件内全局变量    | PascalCasing     	| **Lib** = Import("scripts/lib.lua"); 
 Panel的附加参数  | PascalCasing     	| panel. **Parameter** = {**SelectIndex** = 5, };
 函数名          | PascalCasing     	| function **Register** (panel) ... end

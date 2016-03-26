@@ -24,7 +24,6 @@ C++类型（本机类型）和.NET Framework类型对应，
 在托管C++里面使用这些类型就相当于使用后面的.NET Framework类型。
 
 C++ 类型 								| .NET Framework 类型
----  									| --- 		
 bool 									| System.Boolean
 signed char								| System.SByte
 unsigned char                           | System.Byte
@@ -46,45 +45,43 @@ void                                    | System.Void
 运算符^和指针运算符\*很类似。
 
 操作             	| 运算符^         	| 运算符*
---- 			    | ---             	| --- 	
 创建              	| gcnew           	| new
 销毁              	| 无              	| delete
 访问成员          	| ->              	| ->
 判空              	| nullptr         	| NULL
  
-```C++
+{% highlight c++ %}
 List^ result = gcnew List();
 result->Add("www.dpull.com");   
-```
+{% endhighlight %}
 
 ## 引用运算符 ##
 因为.NET Framework中只有out关键字，所以C++.NET的引用在C#中看来就是out
 
 C++             | C#              | C++.NET
---- 			  	| ---         | --- 	
 &               | ref, out        | %
 
-```C++
+{% highlight c++ %}
 bool TryGet(String^% value);  
-```
+{% endhighlight %}
        
 ## 托管数组声明和托管泛行声明 ##
 
-```C++
+{% highlight c++ %}
     array^ data;
     array^ names;
     List^ result; 
-```
+{% endhighlight %}
         
 ## 新增for each关键字 同C#的foreach ##
 
-```C++
+{% highlight c++ %}
 array^data =ms->ToArray();        
 for each (byte b in data)        
 {            
 	ret->AppendFormat("{0:X2}", b);        
 }
-```
+{% endhighlight %}
 
 ## 类和结构声明 ##
 使用C++语法声明的class 或者 struct为本机代码（非托管代码）。
@@ -97,33 +94,33 @@ for each (byte b in data)
 
 继承，和C++的继承类似
 
-```C++
+{% highlight c++ %}
 public ref class PluginRunException : public Exception   
 {    
 public:        
 	PluginRunException(){}        
 	PluginRunException(String^ message):Exception(message){}    
 };
-```
+{% endhighlight %}
 
 ## 重载 ##
 
-```C++
+{% highlight c++ %}
 virtual String^ ToString() override;
-```
+{% endhighlight %}
 
 ## .NET 异常 ##
 
-```C++
+{% highlight c++ %}
 throw gcnew ArgumentNullException("dllName");
-```
+{% endhighlight %}
 
 ## 事件(event) ##
 
-```C++
+{% highlight c++ %}
 delegate void ClickEventHandler(int, double);
 event ClickEventHandler^ OnClick;
-```
+{% endhighlight %}
 
 ## 托管和非托管交互 ##
 托管类中允许出现非托管成员变量，但非托管类中不允许出现托管成员变量。
@@ -134,12 +131,12 @@ event ClickEventHandler^ OnClick;
 可以在C++的Project通用属性页上配置引用的dll，也可以直接写入代码，
 举例说明：
 
-```C++
+{% highlight c++ %}
 using namespace System;
 using namespace System::Text;
 using namespace System::Data;
 using namespace System::Data::SqlClient;
-```
+{% endhighlight %}
 
 ## 遇到servprov.h中IServiceProvider报错 ##
 
@@ -159,7 +156,7 @@ System;前面。
 
 *第二种办法:* 修改代码
 
-```C++
+{% highlight c++ %}
 //Line 93 in servprov.h is:typedef 
 IServiceProvider *LPSERVICEPROVIDER;
 
@@ -169,20 +166,20 @@ IServiceProvider *LPSERVICEPROVIDER;
 #else 
     typedef IServiceProvider *LPSERVICEPROVIDER;
 #endif
-```
+{% endhighlight %}
 
 ## 字符串互转 ##
 
 **非托管字符串转托管字符串**
 
-```C++
+{% highlight c++ %}
 char *psz = "www.886s.com";
 String^ result = gcnew String(psz);
-```
+{% endhighlight %}
 
 **托管字符串转非托管字符串**
 
-```C++
+{% highlight c++ %}
 class Common    
 {     
 public:         
@@ -224,7 +221,7 @@ void Common::MarshalString(System::String ^sSource, TCHAR szDest[], int nDestSiz
 #else        
     MarshalString_A(sSource, szDest, nDestSize);#endif    
 }
-```
+{% endhighlight %}
 
 # Windows Phone8相关 #
 2014/06/25
@@ -238,7 +235,7 @@ void Common::MarshalString(System::String ^sSource, TCHAR szDest[], int nDestSiz
     
 C++代码
 
-```C++
+{% highlight c++ %}
 public interface class  XWebViewBase
 {
 	void Navigate(Platform::String^ url);
@@ -260,13 +257,13 @@ public:
 private:
 	property static XWebViewBase^ m_WebViewBase;
 };
-```
+{% endhighlight %}
 
 C#代码
 
-```C#
+{% highlight c# %}
 public class XWebView : XWebViewBase
 {
     public void Navigate(string url) { }
 }
-```
+{% endhighlight %}

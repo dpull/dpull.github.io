@@ -10,7 +10,7 @@ tags: []
 
 `UnityEngine.Object` 并不是真正的C#对象，并非引用后就可以一直使用了，如果有外部释放的可能性，需要在使用前判空。
 
-```C#
+{% highlight c# %}
 	void TestDestroy()
 	{
 		var test = new GameObject("test");
@@ -21,11 +21,11 @@ tags: []
 		Debug.Log(test == null); // True
 		Debug.Log(object.ReferenceEquals(test, null)); // False
 	}
-```
+{% endhighlight %}
 
 另外不要继承 `UnityEngine.Object`, 判空是不正确的,
 
-```C#
+{% highlight c# %}
 	void TestInherit()
 	{
 		var test = new StringObj();
@@ -46,7 +46,7 @@ tags: []
 		Object.DestroyImmediate(test);
 		Debug.Log("TestObject end");
 	}
-```
+{% endhighlight %}
 
 ### 参考 ###
 
@@ -59,7 +59,7 @@ tags: []
 ## WWW阻塞加载 ##
 一直以为WWW是不能阻塞加载的，后来看别人的代码发现并非如此，测试代码如下：
 
-```C#
+{% highlight c# %}
 	void TestWWW() 
 	{
 		using(WWW www = new WWW("http://dldir1.qq.com/qqfile/qq/QQ8.1/17283/QQ8.1.exe"))
@@ -79,4 +79,4 @@ tags: []
 			Debug.Log(www.text);
 		}
 	}
-```
+{% endhighlight %}

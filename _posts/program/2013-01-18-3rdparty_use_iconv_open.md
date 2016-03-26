@@ -13,14 +13,14 @@ tags: [iconv]
 
 windows的`wchar_t`对应的编码为`UTF-16LE`，在libiconv对应为`ei_utf16le`。
 	
-```C
+{% highlight c %}
 char stringpool_str544[sizeof("UTF-16LE")];
 {(int)(long)&((struct stringpool_t *)0)->stringpool_str544, ei_utf16le}, 
-```
+{% endhighlight %}
 
 然而libiconv在windows下把`wchar_t`解析为`ei_ucs2internal`
 	
-```C
+{% highlight c %}
 char stringpool_str350[sizeof("WCHAR_T")]; 
  {(int)(long)&((struct stringpool_t *)0)->stringpool_str350, ei_local_wchar_t}, 
  
@@ -46,12 +46,12 @@ char stringpool_str350[sizeof("WCHAR_T")];
 #endif
       goto invalid;
     }
-```
+{% endhighlight %}
 
 **补充：**
 libiconv在windows下把`char`使用`locale_charset`确定其编码，所以一定要`setlocale(LC_CTYPE,"");`
 
-```C
+{% highlight c %}
 char stringpool_str37[sizeof("CHAR")];
  {(int)(long)&((struct stringpool_t *)0)->stringpool_str37, ei_local_char},
 
@@ -63,4 +63,4 @@ char stringpool_str37[sizeof("CHAR")];
         goto invalid;
       continue;
     }
-```
+{% endhighlight %}

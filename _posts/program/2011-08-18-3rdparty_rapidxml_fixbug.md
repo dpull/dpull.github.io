@@ -15,7 +15,7 @@ rapidxml是性能非常好的xml库，但其对`wchar_t`的支持存在bug。
 
 修改如下：
 
-```Diff
+{% highlight diff %}
 Index: rapidxml.hpp
 ===================================================================
 @@ -330,8 +330,19 @@
@@ -167,4 +167,4 @@ Index: rapidxml.hpp
                                      unsigned char digit = internal::lookup_tables<0>::lookup_digits[static_cast<unsigned char>(*src)];
                                      if (digit == 0xFF)
                                          break;
-```
+{% endhighlight %}

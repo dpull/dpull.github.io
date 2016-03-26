@@ -35,7 +35,7 @@ Mono Socket，其异步操作接口实现使用了线程池。
 
 MS .Net实现
     
-```C#
+{% highlight c# %}
 public bool Connected {
     get {
         GlobalLog.Print("Socket#" + ValidationHelper.HashString(this) + "::Connected() m_IsConnected:"+m_IsConnected);
@@ -51,11 +51,11 @@ public bool Connected {
         return m_IsConnected;
     }
 }
-```
+{% endhighlight %}
 
 Mono 实现
 
-```C#
+{% highlight c# %}
 public bool Connected
 {
 	get
@@ -67,14 +67,14 @@ public bool Connected
 		this.connected = value;
 	}
 }
-```
+{% endhighlight %}
 
 对比以上代码可以得出，Mono版本没有针对非阻塞的Socket执行Poll进行再次判断，.Net的Poll只是对select的简单封装，
 于是尝试直接执行 Poll(0, SelectMode.SelectWrite) 来判断Connect是否成功，结果发现Poll(0, SelectMode.SelectWrite)
 在非阻塞Socket无法Connect的时候依旧返回true， 于是查看
 [`Mono Socket的Poll函数`](https://github.com/Unity-Technologies/mono/blob/unity-staging/mcs/class/System/System.Net.Sockets/Socket.cs)
 
-```C#
+{% highlight c# %}
 public bool Poll (int time_us, SelectMode mode)
 {
 	if (disposed && closed)
@@ -103,7 +103,7 @@ public bool Poll (int time_us, SelectMode mode)
 	
 	return result;
 }
-```
+{% endhighlight %}
 
 对比.Net版本，Mono版本有几个不同点:
 
@@ -112,7 +112,7 @@ public bool Poll (int time_us, SelectMode mode)
 1. Poll函数返回值的含义不同，当用于判断非阻塞Socket是否Connect成功时，.Net Poll返回true时，即代表Connect成功，但Mono版本需要再判断GetSocketOption(...)
 1. Poll的实现不同，.Net的Poll只是对select的简单封装，但是Mono的实现是poll或者select
 
-```C#
+{% highlight c# %}
 #ifdef HAVE_POLL
 int
 mono_poll (mono_pollfd *ufds, unsigned int nfds, int timeout)
@@ -123,11 +123,11 @@ mono_poll (mono_pollfd *ufds, unsigned int nfds, int timeout)
 
 int
 mono_poll (mono_pollfd *ufds, unsigned int nfds, int timeout) 
-```
+{% endhighlight %}
 
 这里应当是 [`Unity的Mono`](https://github.com/Unity-Technologies/mono/blob/unity-4.6-staging/mono/utils/mono-poll.c) 出现了bug，对照 [`Mono官方最新版`](https://github.com/mono/mono/blob/88d2b9da2a87b4e5c82abaea4e5110188d49601d/mono/utils/mono-poll.c)
 
-```C#
+{% highlight c# %}
 #if defined(HAVE_POLL) && !defined(__APPLE__)
 int
 mono_poll (mono_pollfd *ufds, unsigned int nfds, int timeout)
@@ -138,41 +138,45 @@ mono_poll (mono_pollfd *ufds, unsigned int nfds, int timeout)
 
 int
 mono_poll (mono_pollfd *ufds, unsigned int nfds, int timeout)
-```
+{% endhighlight %}
 
 
 ### 2016.03.01补充 ###
 因为Dns.GetHostEntry解析太慢，改用了 `public void Connect (string host, int port)` 接口，发现还是慢，不过这次慢在了 `Poll (-1, SelectMode.SelectWrite)`, 也就是说，对于非阻塞的Socket在Connect时，阻塞等待了。详细代码如下：
 
-	public void Connect (IPAddress[] addresses, int port)
-	{
-		// .....
-			
-			if (!blocking) {
-				Poll (-1, SelectMode.SelectWrite);
-				error = (int)GetSocketOption (SocketOptionLevel.Socket, SocketOptionName.Error);
-				if (error == 0) {
-					connected = true;
-					seed_endpoint = iep;
-					return;
-				}
+{% highlight c# %}
+public void Connect (IPAddress[] addresses, int port)
+{
+	// .....
+		
+		if (!blocking) {
+			Poll (-1, SelectMode.SelectWrite);
+			error = (int)GetSocketOption (SocketOptionLevel.Socket, SocketOptionName.Error);
+			if (error == 0) {
+				connected = true;
+				seed_endpoint = iep;
+				return;
 			}
-		// .....
-	}
+		}
+	// .....
+}
 
-	public void Connect (string host, int port)
-	{
-		IPAddress [] addresses = Dns.GetHostAddresses (host);
-		Connect (addresses, port);
-	}
+public void Connect (string host, int port)
+{
+	IPAddress [] addresses = Dns.GetHostAddresses (host);
+	Connect (addresses, port);
+}
+{% endhighlight %}
 
 
 再尝试以前使用的接口 `public void Connect (IPAddress address, int port)` ，发现它是非阻塞的，其代码如下，但我没有找到 `public void Connect (IPEndPoint)` 的实现。
 
-	public void Connect (IPAddress address, int port)
-	{
-		Connect (new IPEndPoint (address, port));
-	}
+{% highlight c# %}
+public void Connect (IPAddress address, int port)
+{
+	Connect (new IPEndPoint (address, port));
+}
+{% endhighlight %}
 
 由此可以推断出为什么存在 上一段说的 `Socket.Connected` 的实现问题。
 

@@ -9,7 +9,7 @@ tags: []
 
 我当时给出的方案是几年前我写ASP服务端时用的方法，代码如下：
 
-```C#
+{% highlight c# %}
 void Log(string format, params object[] arg)
 {
 	var sf = new System.Diagnostics.StackFrame(1, true);
@@ -24,11 +24,11 @@ void Log(string format, params object[] arg)
 	);
 	// ...
 }
-```	
+{% endhighlight %}	
 
 晚上闲着无聊随手翻了一下MSDN，看到一篇[Caller Information](http://msdn.microsoft.com/zh-cn/library/hh534540.aspx)的文档，可以使用如下Attribute实现这个功能，效率也会更高：
 
-```C#
+{% highlight c# %}
 public void TraceMessage(string message,
         [CallerMemberName] string memberName = "",
         [CallerFilePath] string sourceFilePath = "",
@@ -39,7 +39,7 @@ public void TraceMessage(string message,
     Trace.WriteLine("source file path: " + sourceFilePath);
     Trace.WriteLine("source line number: " + sourceLineNumber);
 }
-```	
+{% endhighlight %}	
 
 不过这些Attribute是.Net4.5提供的，而杨教授弄这个是为Unity3d，自然不支持了。
 

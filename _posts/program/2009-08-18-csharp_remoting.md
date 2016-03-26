@@ -17,25 +17,25 @@ tags: [csharp, remoting]
 
 **定义Server被web的基本操作的接口，我们定为IServerControl，里面只有一个Add方法。**
 	
-```C#
+{% highlight c# %}
 public interface IServerControl    
 {
     void Add();    
 }
-```C#
+{% highlight c# %}
 
 **实现Remoting的对象，也就是允许在支持远程处理的应用程序中跨应用程序域边界访问对象。**
     
-```C#
+{% highlight c# %}
 class RemotingControl : System.MarshalByRefObject, IServerControl
 {
     public void Add() { }
 }
-```
+{% endhighlight %}
 
 **定义配置文件类 和 封装Server端的封装**
 
-```C#
+{% highlight c# %}
 static class RemotingConfig    
 {       
     public const int RemotingPort = 8241;        
@@ -58,13 +58,13 @@ public class RemotingServer
 
     static IChannel channel;
 }
-```
+{% endhighlight %}
 
 **封装Client，把RemotingControl进行封装，隐藏Remoting机制！**
 
 代码中我们采用短连接，因为Web出现长连接的可能性也不大
 
-```C#
+{% highlight c# %}
 public class RemotingClient : IServerControl
 {
     public static void Init()
@@ -93,7 +93,7 @@ public class RemotingClient : IServerControl
         control.Add();
     }
 }
-```
+{% endhighlight %}
 
 **小补充 :**
 

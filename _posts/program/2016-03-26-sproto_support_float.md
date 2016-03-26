@@ -13,46 +13,46 @@ tags: []
 
 因为使用频率挺高，使用转为字符串再转回来性能损失挺大，想想直接转为int比较好，代码如下:
     
-    {% highlight c %}
-    static int lua_encode_float(lua_State* L) {
-        assert(sizeof(int64_t) == sizeof(double));
-        
-        double d = lua_tonumber(L, 1);
-        int64_t i;
-        memcpy(&i, &d, sizeof(i));
-        lua_pushinteger(L, i);
-        return 1;
-    }
+{% highlight c %}
+static int lua_encode_float(lua_State* L) {
+    assert(sizeof(int64_t) == sizeof(double));
+    
+    double d = lua_tonumber(L, 1);
+    int64_t i;
+    memcpy(&i, &d, sizeof(i));
+    lua_pushinteger(L, i);
+    return 1;
+}
 
-    static int lua_decode_float(lua_State* L) {
-        assert(sizeof(int64_t) == sizeof(double));
-        
-        int64_t i = lua_tointeger(L, 1);
-        double d;
-        memcpy(&d, &i, sizeof(d));
-        lua_pushnumber(L, d);
-        return 1;
-    }
-    {% endhighlight %}
+static int lua_decode_float(lua_State* L) {
+    assert(sizeof(int64_t) == sizeof(double));
+    
+    int64_t i = lua_tointeger(L, 1);
+    double d;
+    memcpy(&d, &i, sizeof(d));
+    lua_pushnumber(L, d);
+    return 1;
+}
+{% endhighlight %}
     
 用纯lua也能实现（`string.pack`），但会有临时字符串产生。
 
 
 Unity的C#版本无法用指针，要产生临时数组了，代码如下：
 
-        {% highlight c# %}
-	public static long EncodeFloat(double number)
-	{
-		var data = BitConverter.GetBytes(number);
-		return BitConverter.ToInt64(data, 0);
-	}
+{% highlight c# %}
+public static long EncodeFloat(double number)
+{
+	var data = BitConverter.GetBytes(number);
+	return BitConverter.ToInt64(data, 0);
+}
 
-	public static double DecodeFloat(long number)
-	{
-		var data = BitConverter.GetBytes(number);
-		return BitConverter.ToDouble(data, 0);
-	}
-       {% endhighlight %}
+public static double DecodeFloat(long number)
+{
+	var data = BitConverter.GetBytes(number);
+	return BitConverter.ToDouble(data, 0);
+}
+{% endhighlight %}
 
 
 

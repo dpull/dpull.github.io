@@ -27,7 +27,7 @@ ios和android特有功能的开发，选用mac作为开发机，因为它又能�
 ## Android ##
 Android的调试比较复杂，如果不使用C++代码的调试，可采用如下步骤。
 
-1. 下载adt-bundle-mac 和 android-ndk （[下载](http://developer.android.com/sdk/index.html)）** (android的NDK一定要选择 Platform(32-bit target)，在构建UnityLua时，使用x64版本出现缺失库的问题。） **
+1. 下载adt-bundle-mac 和 android-ndk （[下载](http://developer.android.com/sdk/index.html)）** (android的NDK一定要选择 Platform(32-bit target)，在构建Unitylua时，使用x64版本出现缺失库的问题。） **
 2. 点击C/C++ Build->Environment 增加NDK_ROOT的路径 （Vsriable：NDK_ROOT， Value：路径）
 3. 菜单File--Import--Android--Existing Android Code Into Workspace--项目工程proj.android文件夹 和 cocos2dx/platform中的android文件夹
 4. 右击项目->Debug As->Android Application
@@ -66,41 +66,41 @@ Android的调试比较复杂，如果不使用C++代码的调试，可采用如�
 ## Android MK文件 ##
 1. 示例工程中的LOCAL\_SRC\_FILE是全部列出来的，其实是没必要的。
  		
-```bash
+{% highlight shell %}
 CLASS_FILES := $(wildcard $(LOCAL_PATH)/../../Classes/*.cpp)
 CLASS_FILES := $(CLASS_FILES:$(LOCAL_PATH)/%=%) 
 
 LOCAL_SRC_FILES := Client/main.cpp
 LOCAL_SRC_FILES += $(CLASS_FILES)  
-```
+{% endhighlight %}
         
 
 1. 打开项目调试日志（可以看CCLOG的输出）
 
-```bash
+{% highlight shell %}
 LOCAL_CFLAGS += -DCOCOS2D_DEBUG=1
-```
+{% endhighlight %}
 
 1. MK文件输出
 
-```bash
+{% highlight shell %}
 $(error LOCAL_PATH)  #输出字符串LOCAL_PATH
 $(warning $(LOCAL_PATH)) #输出变量$(LOCAL_PATH)的值
 $(info LOCAL_PATH= $(LOCAL_PATH)) 
-```
+{% endhighlight %}
 
 ## 我的终端设置 ##
 
 打开终端
 
-```bash
+{% highlight shell %}
 cd  
 vim .bash_profile  (i 进入编辑模式 ESC退出编辑模式 :wq退出并保存 :q!退出不保存)	
-```
+{% endhighlight %}
 
 编辑文件
 	
-```bash
+{% highlight shell %}
 export CLICOLOR=1
 export LSCOLORS=gxfxaxdxcxegedabagacad
 alias ll="ls -l"
@@ -112,5 +112,5 @@ export ANDROID_NDK_ROOT=/Applications/android-ndk-r8d
 export NDK_ROOT=/Applications/android-ndk-r8d
 export PATH=$PATH:$ANDROID_SDK_ROOT
 export PATH=$PATH:$ANDROID_NDK_ROOT 
-```
+{% endhighlight %}
 

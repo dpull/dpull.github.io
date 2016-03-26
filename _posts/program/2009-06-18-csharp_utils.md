@@ -14,7 +14,7 @@ tags: [csharp]
 常用于工厂模式。要求每一种子类都有相同的构造函数，并且都在相同的程序集中
 我常在程序加载数据和处理网络通信协议的使用时候这个函数
 
-```C#
+{% highlight c# %}
 // 作用 根据基类 和 子类型的type字符串创建一个子类的实例        
 // 要确保要创建的对象类型和 T在一个程序集中       
 // 继承于Ｔ的类名字
@@ -36,12 +36,12 @@ public static T Create(string typename, Type[] types, object[] parameters)
     T result = (T)constructor.Invoke(parameters);
     return result;
 }
-```
+{% endhighlight %}
 
 ## 生成对象的深层副本 ##
 和Object.MemberwiseClone 方法 相对
 
-```C#
+{% highlight c# %}
 public static T Clone(T item)       
 {
     MemoryStream ms = new MemoryStream();            
@@ -50,12 +50,12 @@ public static T Clone(T item)
     ms.Seek(0, SeekOrigin.Begin);
     return (T)bf.Deserialize(ms);
 }
-```
+{% endhighlight %}
 
 ## 事件响应 ##
 《.NET设计规范》一书中讲到的，不过该函数存在编译警告。
 
-```C#
+{% highlight c# %}
 //警告    8   CA1030
 public static void Raise(EventHandler hander, object sender, TEventArgs args) where TEventArgs : EventArgs
 {
@@ -66,11 +66,11 @@ public static void Raise(EventHandler hander, object sender, TEventArgs args) wh
         eventHander(sender, args);
     }
 }
-```
+{% endhighlight %}
 
 ## 二进制协议解析 ##
 
-```C#
+{% highlight c# %}
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
 struct PatchFileHeader
 {
@@ -95,5 +95,5 @@ struct PatchFileHeader
         }
     }
 }
-```
+{% endhighlight %}
     
