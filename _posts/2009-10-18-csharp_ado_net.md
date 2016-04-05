@@ -15,8 +15,6 @@ tags: [csharp]
 > 如果 DbConnection 超出范围，则不会将其关闭。因此，必须通过调用功能上等效的 Close 或 Dispose 显式关闭该连接。
 > 如果将连接池值 Pooling 设置为 true 或 yes，则也会释放物理连接。
 
-==========
-
 ## 使用DbProviderFactories并扩充兼容mysql ##
 ADO.NET2.0 为各种ADO.NET类引入了一个提供程序工厂的模型以及通用基类。
 

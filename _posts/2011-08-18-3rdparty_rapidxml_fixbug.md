@@ -11,8 +11,6 @@ rapidxml是性能非常好的xml库，但其对`wchar_t`的支持存在bug。
 代码中存在着很多类似于`static_cast(ch)`的强制转换，
 当ch为 `wchar\_t ch = L'稀'`时，强转为 `unsigned char`为 0，解析出错。
 
-==========
-
 修改如下：
 
 {% highlight diff %}

@@ -5,8 +5,6 @@ categories: [general, note]
 tags: []
 ---
 
-==========
-
 ## ASCII ##
 ASCII码是7位编码，编码范围是0x00-0x7F。ASCII字符集包括英文字母、阿拉伯数字和标点符号等字符。其中0x00-0x20和0x7F共33个控制字符。
 

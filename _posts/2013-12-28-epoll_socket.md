@@ -16,9 +16,8 @@ tags: [socket, epoll]
 增加了日志查这个问题，发现accept出现了失败的情况，错误码除了非堵塞的常出的EAGAIN、EWOULDBLOCK、EINTR之外，
 出现了EMFILE（Too many open files），出现几次EMFILE之后，服务端的监听socket就不会触发epoll_wait了。
 
-==========
-
 这儿有两个问题：
+
 ### 为什么连接数会达到本进程设置的上限？ ###
 同样是一套网络库，同样的的压力，《逍遥江湖》为什么不会？
 

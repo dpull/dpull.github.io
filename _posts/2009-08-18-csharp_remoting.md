@@ -13,8 +13,6 @@ tags: [csharp, remoting]
 1. 为了减少开发者的学习成本，没必要每个程序员都要精通这套方案
 1. 为了减少业务逻辑对Remoting的依赖（说不定哪天发现不满足需求就换掉了）
 
-==========
-
 **定义Server被web的基本操作的接口，我们定为IServerControl，里面只有一个Add方法。**
 	
 {% highlight c# %}

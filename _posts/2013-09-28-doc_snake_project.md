@@ -13,8 +13,6 @@ tags: []
 -  Apache OpenOffice (可以将tab文件存为utf8编码，excel和wps都不支持)
 -  Texture Packer
 
-==========
-
 ## 开发环境 ##
 
 1. 取资源...

@@ -5,8 +5,6 @@ categories: [general]
 tags: [c]
 ---
 
-==========
-	
 {% highlight c++ %}
 // 头文件
 #pragma once

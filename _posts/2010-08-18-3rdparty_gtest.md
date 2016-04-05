@@ -10,8 +10,6 @@ tags: [gtest]
 
 C++单元测试框架, [项目主页](http://code.google.com/p/googletest/)
 
-==========
-
 ## 断言 Assertions ##
 
 Gtest提供一整套预定义的断言。断言分为两类：名称以`ASSERT_`开头的断言和名称以`EXPECT_`开头的断言。

@@ -15,8 +15,10 @@ UIPanel会根据UIWidget.depth进行排序后创建UIDrawCall，临近depth相�
 鼠标点击或触摸按照raycastDepth排序，其计算公式为UIPanel的depth*1000+UIWidget的depth，若当前物体没有UIWidget，则寻找其子物体的最小depth
 
 ## 分辨率适配 ##
+
 ### 3d ui ###
 我们主要使用3d ui，发现3d ui和2d ui对uiroot几种适配方式的响应不同，去论坛问了一下，回复：
+
 > UIRoot constrained / flexible size is meant for 2D UIs, not 3D. 3D UIs have perspective, which adds a 3rd dimension to it. Moving the camera forward or back will change how big your UI is. That's how you should be doing zoom with 3D UIs (or just by changing its field of view). Don't do anything with UIRoot. In fact 3D UIs don't even need a UIRoot.
 
 ### 2d ui ###
@@ -38,11 +40,10 @@ texture type设置为advanced，去掉generate mip maps的勾。
 小米遥控器的中键是KeyCode(10)，缺少这个枚举。
 
 ## 粒子系统 ##
-unity自带的粒子系统和NGUI的渲染优先级默认相同，需要用UIPanel调整render q来解决遮挡问题，十分复杂，参考cocos2d的代码，实现了一套简单的粒子系统[粒子系统](https://github.com/dpull/NGUIParticleSystem)，够用就好。
+unity自带的粒子系统和NGUI的渲染优先级默认相同，需要用UIPanel调整render q来解决遮挡问题，十分复杂，参考cocos2d的代码，实现了一套[简单的粒子系统](https://github.com/dpull/NGUIUtils)，够用就好。
 
 
-
-##辅助##
+## 辅助 ##
 Ray Camera.ScreenPointToRay(Vector3 position);
 Description
 Returns a ray going from camera through a screen point.

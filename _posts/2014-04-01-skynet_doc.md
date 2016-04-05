@@ -33,6 +33,7 @@ skynet存在以下优点：
 总而言之，使用skynet是突破我们固有思路的一个尝试，好处多于坏处。
 
 # 运维相关 #
+
 ## 示例工程没有在后台运营，是要自己扩充守护进程功能么？还是写个程序使用popen ##
 使用nohup
 
@@ -43,6 +44,7 @@ skynet存在以下优点：
 参考debug console 把 stdin 改成 listen 一个 port
 
 # skynet 常用函数 #
+
 ## address是什么？ ##
 address 可以理解为handle的变量名，有几种格式：
 
@@ -62,8 +64,11 @@ address 可以理解为handle的变量名，有几种格式：
 否则是本进程唯一的lua服务
 
 ## `skynet.call` ##
+
 ## `skynet.blockcall` ##
+
 ## `skynet.ret` ##
+
 和`skynet.call`配合使用。
 需要注意的是：
 
@@ -76,6 +81,7 @@ address 可以理解为handle的变量名，有几种格式：
 直接调用exit或者kill都是关闭掉snlua服务，`snax.kill`的做法是向指定服务发送命令，然后该服务调用服务内的函数后执行`skynet.exit`，可用类似的方式设计服务器关闭流程。
  
 ## `skynet.fork` ##
+
 ## `skynet.timeout` ##
 
 ## `mcgroup` ##

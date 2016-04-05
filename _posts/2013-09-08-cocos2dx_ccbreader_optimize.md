@@ -15,7 +15,6 @@ tags: [cocos2dx]
 * 阵容界面 myteam.ccb 
 * 活动界面 activity.ccb
 
-==========
 
 ## 吐槽 ##
 

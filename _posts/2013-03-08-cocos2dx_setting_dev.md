@@ -12,8 +12,6 @@ ios和android特有功能的开发，选用mac作为开发机，因为它又能�
 
 纯游戏功能使用windows开发，毕竟大家都熟windows。
 
-==========
-
 ## ios开发环境 ##
 
 1. 使用AppStore安装XCode

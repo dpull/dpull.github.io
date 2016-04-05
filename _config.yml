@@ -39,7 +39,7 @@ gems:
 markdown:    kramdown
 highlighter: rouge
 lsi:         false
-excerpt_separator: "=========="
+# excerpt_separator: "=========="
 
 # 服务器选项
 #detach:  false
@@ -48,7 +48,7 @@ excerpt_separator: "=========="
 #baseurl: "" # does not include hostname
 
 # 输出
-permalink:     "/blog/:title"
+permalink:     "/blog/:year/:month/:day/:title"
 paginate_path: "/page/:num"
 #timezone:      null
 

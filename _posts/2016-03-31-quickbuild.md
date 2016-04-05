@@ -16,6 +16,7 @@ tags: []
 其他的配置参考 [QuickBuild安装说明](http://pureivan.blog.51cto.com/2035414/1607215)。
 
 ## 我的常用任务
+
 ### 定期更新skynet_mingw库
 (skynet_mingw)[https://github.com/dpull/skynet-mingw] 是我维护的一个开源项目，它有一个日常需求就是更新`submoudle`到最新。
 
@@ -32,6 +33,7 @@ cat batchmode.txt
 mac很烦的是经常生成`.XXXX`文件，但是又没法子配置不产生，系统提供了`dot_clean`来清理，于是一段时间自动调用一次。
 
 ### 未完待续
+。。。
 
 
 
