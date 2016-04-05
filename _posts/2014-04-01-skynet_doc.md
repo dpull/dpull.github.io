@@ -45,6 +45,7 @@ skynet存在以下优点：
 
 # skynet 常用函数 #
 
+
 ## address是什么？ ##
 address 可以理解为handle的变量名，有几种格式：
 
@@ -83,5 +84,6 @@ address 可以理解为handle的变量名，有几种格式：
 ## `skynet.fork` ##
 
 ## `skynet.timeout` ##
+。。。。
 
 ## `mcgroup` ##
