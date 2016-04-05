@@ -2,6 +2,7 @@
 # github jekyll config: https://help.github.com/articles/configuring-jekyll/
 # kramdown config: http://kramdown.gettalong.org/options.html
 
+name: dpull
 description: 面包屑小道.
 url: http://www.dpull.com
 paginate: 10 # pagination based on number of posts
