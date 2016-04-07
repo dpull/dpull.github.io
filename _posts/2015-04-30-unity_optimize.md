@@ -39,7 +39,7 @@ tags: []
 	1. 减少光照图（美术制作流程规划，尽量一个场景只用一张光照图）
 1. Drawcall优化
 	1. 减少不必要的NGUI UIPanel
-	1. [NGUI UIPanel内调整depth顺序](../unity_ngui_drawcall_optimize)
+	1. [NGUI UIPanel内调整depth顺序](../2015-07-31-unity_ngui_drawcall_optimize)
 
 
 
