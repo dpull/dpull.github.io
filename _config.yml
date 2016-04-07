@@ -76,5 +76,5 @@ kramdown:
     #coderay_css:               style  
 
 sass:
-    sass_dir: resources/_sass
+    #sass_dir: resources/sass
     style: compressed
