@@ -193,7 +193,7 @@ Dns.GetHostEntry 函数执行很慢，可以考虑使用 [`DnsPod提供的DNS解
 
 [`.Net源码`]: http://referencesource.microsoft.com
 [`Unity Mono源码`]: https://github.com/Unity-Technologies/mono
-[`当send错误码为EAGAIN时`]: ../2013-12-28-epoll_socket
+[`当send错误码为EAGAIN时`]: 2013-12-28-epoll_socket
 [`C#的Socket重写了一遍`]: https://github.com/dpull/UnityUtils/blob/master/PackageSocket.cs
 [`DnsPod提供的DNS解析服务`]: https://www.dnspod.cn/httpdns
 [`httpdns的简单实现`]: https://github.com/dpull/UnityUtils/blob/master/DNS.cs
