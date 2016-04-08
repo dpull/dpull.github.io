@@ -18,7 +18,7 @@ tags: []
 ## 我的常用任务
 
 ### 定期更新skynet_mingw库
-(skynet_mingw)[https://github.com/dpull/skynet-mingw] 是我维护的一个开源项目，它有一个日常需求就是更新`submoudle`到最新。
+[skynet_mingw](https://github.com/dpull/skynet-mingw) 是我维护的一个开源项目，它有一个日常需求就是更新`submoudle`到最新。
 
 ### 更新工作的产品库
 我们的客户端采用`Unity`开发，虽然使用了`CacheServer`，但是`Unity`导入资源依旧是一件费时的事情，尤其是我机器上有三个资源类型的客户端（桌面版，iOS版本，Android版本）。
