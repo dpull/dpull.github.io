@@ -6,10 +6,9 @@ tags: []
 ---
 
 在去上海参加`Unite2016`的来回飞机上，读了这本《编写可读代码的艺术》，学到了不少经验。
-
 趁周末[将笔记从kindle上导出](https://www.clippings.io/)。
 
-吐槽一下：kindle的 `My Clippings.txt` 不能保存在云端么？
+*吐槽一下：kindle的 `My Clippings.txt` 不能保存在云端么？*
 
 ## 代码应当易于理解
 
