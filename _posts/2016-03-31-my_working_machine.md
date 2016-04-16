@@ -37,6 +37,8 @@ tags: []
 [QuickBuild](http://www.pmease.com/) 是一款持续集成工具，
 提供了对版本控制工具，编译工具，命令行很好的支持。
 
+**注意：**从官网下载后，不要执行安装，而是直接运行`./server.sh console`。因为安装要求用户是root，会造成一些权限问题。其他的配置参考[QuickBuild安装说明](http://pureivan.blog.51cto.com/2035414/1607215)。
+
 ### 定期更新skynet_mingw库
 [skynet_mingw](https://github.com/dpull/skynet-mingw) 是我维护的一个开源项目，它有一个日常需求就是更新`submoudle`到最新。
 
