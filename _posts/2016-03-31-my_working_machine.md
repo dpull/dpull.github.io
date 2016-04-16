@@ -1,0 +1,73 @@
+---
+layout: post
+title: 工作机设置备忘
+categories: [general]
+tags: []
+---
+
+# 软件列表
+
+* 浏览器：`Chrome`
+* 文件管理：`CRAX Commander`
+* 文本编辑：`Sublime Text`
+* 卸载软件：`AppCleaner`
+* 解压：`Keka`
+* git: `SourceTree`
+* svn: `Cornerstone`
+* 虚拟机：`Parallels Desktop`
+* 电子书：`CleanView`
+* 思维导图：`MindNode`
+* 时间管理：`OmniFocus`
+* 计划任务：`QuickBuild`
+* Markdown编辑器：`Mou`或`Ulysses`
+* 播放器：`射手影音`
+
+
+## `Sublime`插件设置
+
+安装[插件管理器](https://packagecontrol.io/installation)。
+
+我目前的常用插件有：
+
+* Advanced CSV，用于查看csv配置表
+* Path Tools，用于拷贝文件路径
+
+
+## `QuickBuild`常用任务
+[QuickBuild](http://www.pmease.com/) 是一款持续集成工具，
+提供了对版本控制工具，编译工具，命令行很好的支持。
+
+### 定期更新skynet_mingw库
+[skynet_mingw](https://github.com/dpull/skynet-mingw) 是我维护的一个开源项目，它有一个日常需求就是更新`submoudle`到最新。
+
+### 更新工作的产品库
+我们的客户端采用`Unity`开发，虽然使用了`CacheServer`，但是`Unity`导入资源依旧是一件费时的事情，尤其是我机器上有三个资源类型的客户端（桌面版，iOS版本，Android版本）。
+
+{% highlight shell %}
+svn up
+/Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -batchmode -executeMethod X.AutoBuilder.SwitchActiveBuildTarget -logFile batchmode.txt
+cat batchmode.txt
+{% endhighlight %}
+
+### 更新工作机
+mac很烦的是自动生成`.XXXX`文件，但是又没法配置不生成，
+系统提供了`dot_clean`来清理，一段时间自动调用一次。
+
+## 我的终端设置
+
+`.bash_profile` 的配置如下：
+
+{% highlight shell %}
+export CLICOLOR=1
+export LSCOLORS=gxfxaxdxcxegedabagacad
+alias ll="ls -l"
+alias la="ls -a"
+
+alias unity='open -a Unity -n'
+
+export ANDROID_SDK_ROOT=/Applications/ADT/sdk
+export ANDROID_NDK_ROOT=/Applications/android-ndk-r8d
+export NDK_ROOT=/Applications/android-ndk-r8d
+export PATH=$PATH:$ANDROID_SDK_ROOT
+export PATH=$PATH:$ANDROID_NDK_ROOT 
+{% endhighlight %}

@@ -86,29 +86,3 @@ $(error LOCAL_PATH)  #输出字符串LOCAL_PATH
 $(warning $(LOCAL_PATH)) #输出变量$(LOCAL_PATH)的值
 $(info LOCAL_PATH= $(LOCAL_PATH)) 
 {% endhighlight %}
-
-## 我的终端设置 ##
-
-打开终端
-
-{% highlight shell %}
-cd  
-vim .bash_profile  (i 进入编辑模式 ESC退出编辑模式 :wq退出并保存 :q!退出不保存)	
-{% endhighlight %}
-
-编辑文件
-	
-{% highlight shell %}
-export CLICOLOR=1
-export LSCOLORS=gxfxaxdxcxegedabagacad
-alias ll="ls -l"
-alias la="ls -a"
-alias unity='open -a Unity -n'
-
-export ANDROID_SDK_ROOT=/Applications/ADT/sdk
-export ANDROID_NDK_ROOT=/Applications/android-ndk-r8d
-export NDK_ROOT=/Applications/android-ndk-r8d
-export PATH=$PATH:$ANDROID_SDK_ROOT
-export PATH=$PATH:$ANDROID_NDK_ROOT 
-{% endhighlight %}
-
