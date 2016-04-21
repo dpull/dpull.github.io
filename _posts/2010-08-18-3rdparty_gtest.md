@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Gtest & GMock
+title: Gtest and GMock
 categories: [general, 3rdparty]
 tags: [gtest]
 ---
