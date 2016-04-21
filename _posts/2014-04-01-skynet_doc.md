@@ -37,9 +37,6 @@ skynet存在以下优点：
 ## 示例工程没有在后台运营，是要自己扩充守护进程功能么？还是写个程序使用popen ##
 使用nohup
 
-## 如何正确的关闭，以便通知各个模块进行存盘？ ##
-参考[如何安全的退出 skynet](http://blog.codingnow.com/2013/08/exit_skynet.html) 
-
 ## 示例工程使用了stdin操控服务器，运维中呢？ ##
 参考debug console 把 stdin 改成 listen 一个 port
 

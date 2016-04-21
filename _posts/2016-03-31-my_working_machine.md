@@ -19,7 +19,7 @@ tags: []
 * 思维导图：`MindNode`
 * 时间管理：`OmniFocus`
 * 计划任务：`QuickBuild`
-* Markdown编辑器：`Mou`或`Ulysses`
+* Markdown编辑器：`Markdown Plus`
 * 播放器：`射手影音`
 
 
