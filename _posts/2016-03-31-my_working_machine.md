@@ -29,9 +29,9 @@ tags: []
 
 我目前的常用插件有：
 
-* Advanced CSV，用于查看csv配置表
 * Path Tools，用于拷贝文件路径
-
+* Advanced CSV，用于查看csv配置表
+* Json Reindent，用于格式化json文本，用法：打开插件界面，输入json
 
 ## `QuickBuild`常用任务
 [QuickBuild](http://www.pmease.com/) 是一款持续集成工具，
