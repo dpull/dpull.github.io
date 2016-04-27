@@ -7,6 +7,28 @@ tags: []
 
 和纯峰一起开始研究手游，本文记录一些编译器差异，主要是针对的一些我们用到的非标准的内容。
 
+## char 的类型是什么 ##
+在《编程精粹》“第6章 风险事业” 中提到：
+
+> ANSI 标准忽视了一个非常重要的方面,它没有定 义象 char、int 和 long 这样一些内部数据类型。
+> ANSI 标准将这些重要的实现细节留给编译 程序的研制者来决定,标准本身并没有具体定义这些类型。
+> 
+> 例如,某一个 ANSI 标准的编泽程序可能具有 32 位的 int 和 char。它们在缺省状态下 是有符号的;
+> 而另一个 ANSI 标准的编译程序可能有 16 位的 int 和 char,缺省状态下是无符号的。
+> 尽管如此不同,然而,这两个编译程序可能都严格附合ANSI 标准。
+
+在X86机器的常见编译器上，char通常是signed char，如vc，gcc；
+但是在arm机器上，char默认是unsigned char。
+详细见文档 [C Library ABI for the ARM® Architecture](http://infocenter.arm.com/help/topic/com.arm.doc.ihi0039d/IHI0039D_clibabi.pdf):
+
+> 5.6 inttypes.h This C99 header file refers only to types and values standardized by the AEABI. 
+> It declares only constants and real functions whose type signatures involve only primitive types. 
+> **Note that plain char is unsigned [AAPCS]. **
+> This header does not define _AEABI_PORTABLE (§5.1.1)
+
+这个问题在 ndk 上可以通过 `Android.mk` 中的 `LOCAL_CFLAGS := -fsigned-char` 来指定。
+
+
 ## 字节对齐问题 ##
 若读/写非对齐的数据，一些微处理器不做处理，读出来或写进去的可能只是随机数； 还有一些微处理器，会使程序崩溃。
 
