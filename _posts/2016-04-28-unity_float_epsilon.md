@@ -40,6 +40,6 @@ Mathf.Epsilon = 1.175494E-38
 
 ## iOS使用Mono2x的原因：
 
-因为项目目前使用的Unity5.3，计划五一后才升级Unity5.3，
+因为项目目前使用的Unity5.2，计划五一后才升级Unity5.3，
 不过[Unity5.2导出的IL2CPP的Xcode工程不支持Xcode 7.3](http://forum.unity3d.com/threads/error-unknown-type-name-__declspec-after-xcode-7-3-upgrade.393128/)，
 为了兼容开发机和构建机，所以暂时先把编译选项改为Mono2x。
