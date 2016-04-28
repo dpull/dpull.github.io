@@ -41,16 +41,14 @@ static int lua_decode_float(lua_State* L) {
 Unity的C#版本无法用指针，要产生临时数组了，代码如下：
 
 {% highlight c# %}
-public static long EncodeFloat(double number)
+public static double TransferToFloat(this long value)
 {
-	var data = BitConverter.GetBytes(number);
-	return BitConverter.ToInt64(data, 0);
+    return BitConverter.Int64BitsToDouble(value);
 }
 
-public static double DecodeFloat(long number)
+public static long TransferToInt64(this double value)
 {
-	var data = BitConverter.GetBytes(number);
-	return BitConverter.ToDouble(data, 0);
+    return BitConverter.DoubleToInt64Bits(value);
 }
 {% endhighlight %}
 
