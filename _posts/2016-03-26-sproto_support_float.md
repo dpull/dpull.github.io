@@ -41,7 +41,7 @@ static int lua_decode_float(lua_State* L) {
 用纯lua也能实现（`string.pack`），但会有临时字符串产生。
 
 
-Unity的C#版本无法用指针，要产生临时数组了，代码如下：
+C#的BitConverter提供了这个的功能：
 
 {% highlight c# %}
 public static double TransferToFloat(this long value)
