@@ -20,12 +20,14 @@ docker正好能解决这个问题，于是决定趁五一假期期间，学习�
 参考教程 [Installation on CentOS](https://docs.docker.com/engine/installation/linux/centos/) 安装docker，官方下载镜像太慢了，可以使用国内的镜像库加速，如阿里云。
 
 ## 部署思路
-一个数据库的容器和多个服务器容器。
-服务器容器通过容器互联(--link)连接数据库容器。
-服务器容器通过端口映射保证外网可访问。
+在一台机器上部署一个数据库的容器和多个服务器容器。
+
+服务器容器通过[容器互联](https://yeasy.gitbooks.io/docker_practice/content/network/linking.html)连接数据库容器。
+
+服务器容器通过[端口映射](https://yeasy.gitbooks.io/docker_practice/content/network/port_mapping.html)保证外网可访问。
 
 ### 服务端容器
-因为还在开发期，频繁更新，所以没有将服务端内置于镜像中，而是通过数据卷的方式挂载上。
+因为还在开发期，频繁更新，所以没有将服务端内置于镜像中，而是通过[数据卷](https://yeasy.gitbooks.io/docker_practice/content/data_management/volume.html)的方式挂载上。
 
 ## 遇到的问题
 
