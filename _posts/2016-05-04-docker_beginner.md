@@ -7,8 +7,8 @@ tags: []
 
 ## 为何用docker
 
-一直以来我们是一台服务器运行一个skynet，
-最近有需求要服务器运行多个skynet，
+一直以来我们是一台服务器部署一套服务端，
+最近有需求要服务器运行多个服务端，
 我不想增加运维人员的学习成本（其实是不想自找麻烦，他们配错了，我擦屁股）。
 
 docker正好能解决这个问题，于是决定趁五一假期期间，学习部署一下。
@@ -42,12 +42,4 @@ sudo docker run -d -p 5555:7777 -v /root/code/DSF:/opt/dsf --name server1 centos
 iptables -L -n
 vi /etc/sysconfig/iptables
 {% endhighlight %}
-
-
-
-
-
-
-
-
 
