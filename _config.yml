@@ -3,7 +3,7 @@
 # kramdown config: http://kramdown.gettalong.org/options.html
 
 name: dpull
-title: dpull那点破事
+title: dpull的流水账
 description: 面包屑小道.
 url: http://www.dpull.com
 paginate: 10 # pagination based on number of posts
