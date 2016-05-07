@@ -21,9 +21,7 @@ docker正好能解决这个问题，于是决定趁五一假期期间，学习�
 
 ## 部署思路
 在一台机器上部署一个数据库的容器和多个服务器容器。
-
 服务器容器通过[容器互联](https://yeasy.gitbooks.io/docker_practice/content/network/linking.html)连接数据库容器。
-
 服务器容器通过[端口映射](https://yeasy.gitbooks.io/docker_practice/content/network/port_mapping.html)保证外网可访问。
 
 ### 服务端容器
