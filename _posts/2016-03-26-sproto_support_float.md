@@ -17,29 +17,32 @@ tags: []
 代码如下:
     
 {% highlight c %}
+static bool check_support() {
+    assert(sizeof(int64_t) == sizeof(double)); /*double must be 64bit*/
+    assert(0x3ff0000000000000 == ((union float_number){1.0}).i); /*check little-endian and IEEE 754*/
+    return true;
+}
+
 static int lua_encode_float(lua_State* L) {
-    assert(sizeof(int64_t) == sizeof(double));
+    assert(check_support());
     
-    double d = lua_tonumber(L, 1);
-    int64_t i;
-    memcpy(&i, &d, sizeof(i));
-    lua_pushinteger(L, i);
+    union float_number number;
+    number.d = lua_tonumber(L, 1);
+    lua_pushinteger(L, number.i);
     return 1;
 }
 
 static int lua_decode_float(lua_State* L) {
-    assert(sizeof(int64_t) == sizeof(double));
+    assert(check_support());
     
-    int64_t i = lua_tointeger(L, 1);
-    double d;
-    memcpy(&d, &i, sizeof(d));
-    lua_pushnumber(L, d);
+    union float_number number;
+    number.i = lua_tointeger(L, 1);
+    lua_pushnumber(L, number.d);
     return 1;
 }
 {% endhighlight %}
     
 用纯lua也能实现（`string.pack`），但会有临时字符串产生。
-
 
 C#的BitConverter提供了这个的功能：
 
@@ -54,9 +57,3 @@ public static long TransferToInt64(this double value)
     return BitConverter.DoubleToInt64Bits(value);
 }
 {% endhighlight %}
-
-
-
-
-
-
