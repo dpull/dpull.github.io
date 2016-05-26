@@ -17,6 +17,11 @@ tags: []
 代码如下:
     
 {% highlight c %}
+union float_number {
+    double d;
+    int64_t i;
+}
+
 static bool check_support() {
     assert(sizeof(int64_t) == sizeof(double)); /*double must be 64bit*/
     assert(0x3ff0000000000000 == ((union float_number){1.0}).i); /*check little-endian and IEEE 754*/
