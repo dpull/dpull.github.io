@@ -46,9 +46,7 @@ static int lua_decode_float(lua_State* L) {
     return 1;
 }
 {% endhighlight %}
-    
-用纯lua也能实现（`string.pack`），但会有临时字符串产生。
-
+  
 C#的BitConverter提供了这个的功能：
 
 {% highlight c# %}
