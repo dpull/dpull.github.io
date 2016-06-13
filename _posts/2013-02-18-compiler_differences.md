@@ -18,7 +18,7 @@ tags: []
 > 尽管如此不同,然而,这两个编译程序可能都严格附合ANSI 标准。
 
 在X86机器的常见编译器上，char通常是signed char，如vc，gcc；
-但是在arm机器上，char默认是unsigned char。
+但是在ARM机器上，char默认是unsigned char。
 详细见文档 [C Library ABI for the ARM® Architecture](http://infocenter.arm.com/help/topic/com.arm.doc.ihi0039d/IHI0039D_clibabi.pdf):
 
 > 5.6 inttypes.h This C99 header file refers only to types and values standardized by the AEABI. 
@@ -29,16 +29,25 @@ tags: []
 这个问题在 ndk 上可以通过 `Android.mk` 中的 `LOCAL_CFLAGS := -fsigned-char` 来指定。
 
 
-## 字节对齐问题 ##
-若读/写非对齐的数据，一些微处理器不做处理，读出来或写进去的可能只是随机数； 还有一些微处理器，会使程序崩溃。
+## 数据对齐问题 ##
+
+ARM处理器的内存访问，要求数据对齐，
+即存取“字（Word）”数据时要求四字节对齐，地址的bits[1：0]＝＝0b00；
+存取“半字（Halfwords）”时要求两字节对齐，地址的bit[0]＝＝0b0；
+存取“字节（Byte）”数据时要求该数据按其自然尺寸边界（Natural Size Boundary）定位。
 
 {% highlight c++ %}
-// 以前处理二进制常用写法
+// 以前处理二进制常用写法，在手机上应用会宕掉。
 dwLen = *(DWORD*)pbyPos;
 
 // 修改后的写法
 memcpy(&dwLen, pbyPos, sizeof(dwLen));
 {% endhighlight %}	
+
+** 参考文档: **
+
+1. [ARM C C++内存对齐](http://blog.csdn.net/ctthuangcheng/article/details/27203049)
+1. [对ARM处理器的内存对齐问题](http://blog.csdn.net/xcysuccess3/article/details/8308274)
 
 ## 0大小的数组大小 ##
 
