@@ -5,14 +5,12 @@ categories: [general]
 tags: []
 ---
 
-端午休息读了这本《深入理解C指针》，补充了自己的一些不熟悉的地方。
+端午假期读了这本《深入理解C指针》。
 
 ## 字面量
 声明字符串的方式有三种：字面量、字符数组、字符指针。
 
 使编译器能够为相同字符串创建单个副本，从而得到较小的程序，这种优化称为字面量池。字面量池是只读的，可以使用 `-fwritable-strings` 命令关闭字面量池，就可以读写字面量了。
-
-字面量的存储位置在数据段上，所以直接返回
 
 ## 强别名
 
@@ -20,9 +18,9 @@ tags: []
 
 {% highlight c %}
 /*
-GCC的O2默认开启了`-fstrict-aliasing`
-可以使用`-fno-strict-aliasing`关闭掉，
-注意，只能在O2或O2以上开启或关闭。
+GCC的O2默认开启了 -fstrict-aliasing
+可以使用 -fno-strict-aliasing 关闭掉，
+注意，只能在O2及其以上开启或关闭。
 */
 int32_t test(int32_t* num1, int16_t *num2)
 {
@@ -56,6 +54,7 @@ C编译器默认假设指针有别名，
 如果使用了别名，那么执行代码会导致未定义的行为，
 **编译器不会因为破坏别名假设而提供任何警告信息**。
 
+{% highlight c %}
 int test(int* restrict num1, int* restrict num2)
 {    
     *num1 = 1;
@@ -70,6 +69,7 @@ int main(int argc, const char * argv[])
     printf("num:%d\n", num);                        /*3         3   */
     return 0;
 }
+{% endhighlight %}
 
 ## sizeof('A')
 
@@ -87,7 +87,3 @@ int main(int argc, const char * argv[])
 字符常量通常由一个字符组成，也可以包含多个字符，比如转义字符。
 在C中，它们的类型是int。
 这个看似异常的现象乃语言设计者有意为之。
-
-
-
-
