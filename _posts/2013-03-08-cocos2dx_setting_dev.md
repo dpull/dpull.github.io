@@ -14,18 +14,19 @@ ios和android特有功能的开发，选用mac作为开发机，因为它又能�
 
 ## ios开发环境 ##
 
-1. 使用AppStore安装XCode
-1. 安装Svn：菜单选择XCode--Preferences--Downloads--Command Line
-   Tools。（其他的ios模拟器也都下载吧！）
+1. 使用AppStore安装Xcode
+1. 安装svn：菜单选择Xcode--Preferences--Downloads--Command Line
+   Tools。
 
-### XCode常用操作 ###
+### Xcode常用操作 ###
 1. 在myapp-Info.plist 中 Bundle display name 中修改就可以修改 app安装后的显示名 
-1. XCode4 设置命令行参数：左上角下拉列表 Scheme单击前面文字后选择Edit Scheme，选择Run 工程名
+1. Xcode4 设置命令行参数：左上角下拉列表 Scheme单击前面文字后选择Edit Scheme，选择Run 工程名
 
 ## Android ##
 Android的调试比较复杂，如果不使用C++代码的调试，可采用如下步骤。
 
-1. 下载adt-bundle-mac 和 android-ndk （[下载](http://developer.android.com/sdk/index.html)）** (android的NDK一定要选择 Platform(32-bit target)，在构建Unitylua时，使用x64版本出现缺失库的问题。） **
+1. 下载adt-bundle-mac 和 android-ndk （[下载](http://developer.android.com/sdk/index.html)）
+** (android的NDK一定要选择 Platform(32-bit target)，在构建Unitylua时，使用x64版本出现缺失库的问题。）**
 2. 点击C/C++ Build->Environment 增加NDK_ROOT的路径 （Vsriable：NDK_ROOT， Value：路径）
 3. 菜单File--Import--Android--Existing Android Code Into Workspace--项目工程proj.android文件夹 和 cocos2dx/platform中的android文件夹
 4. 右击项目->Debug As->Android Application
@@ -44,7 +45,7 @@ Android的调试比较复杂，如果不使用C++代码的调试，可采用如�
 - android:minSdkVersion 问题：修改AndroidManifest.xml 中的<uses-sdkandroid:minSdkVersion="？"/>将？修改为提示的数字（注意api的版本要低于手机的版本）
 - 只有一些info日志，没有出错信息：去.mk中删除相关的info
 
-## Svn注意事项 ##
+## svn注意事项 ##
 
 - 使用TortoiseSVN提交cocos2dx的源代码,需要将 Global ignore pattern 中的 \*.a \*.py等去掉，否则一些.a文件会漏提。
 - 使用命令行需要增加参数--no-ignore 如：`svn add --no-ignore`
