@@ -48,7 +48,7 @@ address 可以理解为handle的变量名，有几种格式：
 
 - `:name`, name是handle的16进制，一般用于会重复存在的service，如:agent
 - `.name`, name是本进程唯一的，集群内可以有多个。
-- `name`， name是集群内唯一的，（后注册的会覆盖前面注册的）。
+- `name`, name是集群内唯一的，（后注册的会覆盖前面注册的）。
 
 ## `skynet.launch` ##
 开启服务，如果要开启lua服务，可以写为`skynet.launch(snlua, lua模块`

@@ -22,7 +22,7 @@ UIPanel会根据UIWidget.depth进行排序后创建UIDrawCall，临近depth相�
 > UIRoot constrained / flexible size is meant for 2D UIs, not 3D. 3D UIs have perspective, which adds a 3rd dimension to it. Moving the camera forward or back will change how big your UI is. That's how you should be doing zoom with 3D UIs (or just by changing its field of view). Don't do anything with UIRoot. In fact 3D UIs don't even need a UIRoot.
 
 ### 2d ui ###
-*我们现在换回2d ui了， 主要是为了分辨率适配好做点，先说结论，暂时采用了960*640，两个fit都勾选。
+*我们现在换回2d ui了， 主要是为了分辨率适配好做点，先说结论，暂时采用了960 X 640，两个fit都勾选。
 
 写了一个[编辑器扩展](https://github.com/dpull/unity3d-tools/blob/master/UIAdapterEditor.cs)，来研究这个数值的选择。*
 

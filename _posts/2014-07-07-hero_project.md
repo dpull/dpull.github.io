@@ -26,19 +26,20 @@ tags: []
 当然，这也带来了一些问题，比如说，权限不好管理，在以往的项目，美术和UE通常只有产品库权限，没有代码库权限，按照这种想法，其实是没有代码库的。
  
 ## 代码规范 ##
-### C、C++ ###
+
+###C、C++###
 1. 参考金山、心游代码规范。
 1. 前缀改为C（C、C++的意思，省的换个项目就想着规范），即类前缀`CExample`，宏前缀`C_FAILED_JUMP`
 1. 无论在服务端和客户端，都是以插件的形式加载，所以不要直接记录Log，采用C的方式返回错误码。
 
-## C# 和 lua##
+##C# 和 lua##
 参考《.net设计规范：约定、惯用法与模式》
 
 1. 作用域小于或者等于当前函数的变量使用camelCasing规则命名
 1. 作用域大于当前函数的变量使用PascalCasing规则命名
 1. 不使用C前缀
 
-### C#示例 ###
+###C#示例###
 
 标识符  				| 类型				| 例子
 类名    	            | PascalCasing     	| class **Example**
@@ -48,7 +49,7 @@ tags: []
 函数参数         	    | camelCasing      	| void SetLevel(int **level**)
 局部变量         	    | camelCasing      	| int **level** = 5;
 
-### lua示例 ###
+###lua示例###
 
 标识符  				| 类型				| 例子
 文件内全局变量    	    | PascalCasing     	| **Lib** = Import("scripts/lib.lua"); 
