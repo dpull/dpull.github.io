@@ -23,7 +23,7 @@ tags: []
 
 > 5.6 inttypes.h This C99 header file refers only to types and values standardized by the AEABI. 
 > It declares only constants and real functions whose type signatures involve only primitive types. 
-> **Note that plain char is unsigned [AAPCS]. **
+> **Note that plain char is unsigned [AAPCS].**
 > This header does not define _AEABI_PORTABLE (§5.1.1)
 
 这个问题在 ndk 上可以通过 `Android.mk` 中的 `LOCAL_CFLAGS := -fsigned-char` 来指定。
@@ -44,7 +44,7 @@ dwLen = *(DWORD*)pbyPos;
 memcpy(&dwLen, pbyPos, sizeof(dwLen));
 {% endhighlight %}	
 
-** 参考文档: **
+**参考文档:**
 
 1. [ARM C C++内存对齐](http://blog.csdn.net/ctthuangcheng/article/details/27203049)
 1. [对ARM处理器的内存对齐问题](http://blog.csdn.net/xcysuccess3/article/details/8308274)
