@@ -49,19 +49,6 @@ memcpy(&dwLen, pbyPos, sizeof(dwLen));
 1. [ARM C C++内存对齐](http://blog.csdn.net/ctthuangcheng/article/details/27203049)
 1. [对ARM处理器的内存对齐问题](http://blog.csdn.net/xcysuccess3/article/details/8308274)
 
-## 0大小的数组大小 ##
-
-{% highlight c++ %}
-#pragma pack(1) 
-struct TG_PROTOCOL_BODY 
-{ 
-	char szText[0]; 
-}; 
-#pragma pack()
-// 0大小的数组是非标准的C
-// sizeof(TG_PROTOCOL_BODY) 在vc下是1，在xcode下是0
-{% endhighlight %}
-
 ## 获取时区 ##
 	
 {% highlight lua %}
