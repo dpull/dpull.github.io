@@ -18,12 +18,11 @@ tags: []
 * 电子书：`CleanView`
 * 思维导图：`MindNode`
 * 时间管理：`OmniFocus`
-* 计划任务：`QuickBuild`
 * 开发文档：`Dash`
 * 电子书：`Ulysses`
-* Markdown编辑器：`Markdown Plus`
-* 播放器：`暴风影音`
-
+* Markdown编辑器：`Mou`
+* 播放器：`射手影音`
+* 计划任务：`QuickBuild`
 
 ## `Sublime`插件设置
 
