@@ -47,8 +47,7 @@ tags: []
 
 ### 参考 ###
 
-[Forums > Unity Community Support > UnityEngine.Object](http://forum.unity3d.com/threads/unityengine-object.71205/)
+* [Forums > Unity Community Support > UnityEngine.Object](http://forum.unity3d.com/threads/unityengine-object.71205/)
+* [Playmaker Forum » Playmaker Help & Tips » Playmaker Help » Making custom FsmObject types?](http://hutonggames.com/playmakerforum/index.php?topic=3518.msg16185#msg16185)
 
-
-[Playmaker Forum » Playmaker Help & Tips » Playmaker Help » Making custom FsmObject types?](http://hutonggames.com/playmakerforum/index.php?topic=3518.msg16185#msg16185)
-> WARNING: Unity.Object do not obey garbage collections, they only get cleaned up if you call manually Resources.UnloadUnusedAssets() else on mobile you might get to a memory crash eventually if you use a lot of these.
+	> WARNING: Unity.Object do not obey garbage collections, they only get cleaned up if you call manually Resources.UnloadUnusedAssets() else on mobile you might get to a memory crash eventually if you use a lot of these.
