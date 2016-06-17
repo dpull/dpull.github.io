@@ -1,12 +1,9 @@
 ---
 layout: post
-title: Unity 杂记
+title: UnityEngine.Object 生命周期
 categories: [general]
 tags: []
 ---
-
-
-## UnityEngine.Object 生命周期 ##
 
 `UnityEngine.Object` 并不是真正的C#对象，并非引用后就可以一直使用了，如果有外部释放的可能性，需要在使用前判空。
 
@@ -55,28 +52,3 @@ tags: []
 
 [Playmaker Forum » Playmaker Help & Tips » Playmaker Help » Making custom FsmObject types?](http://hutonggames.com/playmakerforum/index.php?topic=3518.msg16185#msg16185)
 > WARNING: Unity.Object do not obey garbage collections, they only get cleaned up if you call manually Resources.UnloadUnusedAssets() else on mobile you might get to a memory crash eventually if you use a lot of these.
-
-## WWW阻塞加载 ##
-一直以为WWW是不能阻塞加载的，后来看别人的代码发现并非如此，测试代码如下：
-
-{% highlight c# %}
-	void TestWWW() 
-	{
-		using(WWW www = new WWW("http://dldir1.qq.com/qqfile/qq/QQ8.1/17283/QQ8.1.exe"))
-		{
-			var timeout = System.DateTime.Now.AddSeconds(200);
-			while (!www.isDone) 
-			{
-				if (timeout < System.DateTime.Now)
-				{
-					Debug.Log("Time out");
-					break;
-				}
-				Debug.Log("loop");
-			}
-			Debug.Log(www.isDone);
-			Debug.Log(www.error);
-			Debug.Log(www.text);
-		}
-	}
-{% endhighlight %}
