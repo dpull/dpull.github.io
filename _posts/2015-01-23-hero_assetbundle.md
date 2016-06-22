@@ -6,12 +6,13 @@ tags: []
 ---
 
 unity使用`AssetBundle`进行资源更新，分成三个步骤：
+
 1. 分包
 1. 打包
 1. 更新包
 
 
-##分包
+## 分包
 分包的目的：将需要打包的资源分成多个`AssetBundle`包。
 注意点：避免资源被重复打包。
 
@@ -40,7 +41,7 @@ unity使用`AssetBundle`进行资源更新，分成三个步骤：
 
 	(调试命令 `dot -Tpng -O 1.txt`)
 
-##打包
+## 打包
 根据分包出的结果，调用`BuildPipeline.BuildAssetBundles`进行打包。
 优化点：
 
@@ -52,13 +53,13 @@ unity使用`AssetBundle`进行资源更新，分成三个步骤：
 1. 使用WWW.LoadFromCacheOrDownload加载AssetBundle	
 注意，加载streamingAssetsPath中的文件要用WWW，因为Android的该文件夹在jar包内，当然也可以使用[AndroidAssetStream](https://github.com/dpull/UnityUtils/blob/master/AndroidAssetStream.cs)直接读取。
 
-##更新包
+## 更新包
 ### 以`AssetBundle`为单位更新
 可以直接将更改过的AssetBundle包，下载到persistentDataPath进行优先加载。
 
 缺点：更新包比较大，解决方案，如下：
 
-### 对`AssetBundle`进行差异更新（只能用于非压缩的AssetBundle）
+### 对`AssetBundle`Assetbundle进行差异更新（只能用于非压缩的AssetBundle）
 针对更新包大的问题，开发了一个对 `AssetBundle` 包差异比较合并工具[`AssetBundlePatch`]，可以将老包通过比较小的更新量变为新包，
 比如说 {CB->A} 变更为了 {DCB->A}，假设BCD都是纹理,且BC没有变更，这时候可以只把D更新下去，通过差异比较合并工具，得到二进制相同的DCB包。
 
