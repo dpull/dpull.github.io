@@ -4,44 +4,69 @@ title: Hero开发笔记-客户端资源更新
 categories: [general]
 tags: []
 ---
-## 基于AssetBundle的客户端资源 ##
 
-传统使用 `AssetBundle` 的方法通常是将工程内的每个可更新的“最小单位”打包，由游戏处理相关的依赖。
-如何定义“最小单位”，要根据项目的实际情况决定，
-有的项目每个文件是一个 `AssetBundle` ，一个模型要依赖多个 `AssetBundle` ，有的项目一个模型就是一个 `AssetBundle` ，有的项目所有模型是一个 `AssetBundle` 。
+unity使用`AssetBundle`进行资源更新，分成三个步骤：
+1. 分包
+1. 打包
+1. 更新包
 
-### 第一版 ###
-将 场景打包，NPC打包，UI打包，配置文件脚本打包，然后替换相关的包即可实现更新
-这样的坏处是:
 
-1. 更新包大
-1. 处理依赖复杂
-1. 压缩的 `AssetBundle` 不能太大，解压速度慢。
+##分包
+分包的目的：将需要打包的资源分成多个`AssetBundle`包。
+注意点：避免资源被重复打包。
 
-### 第二版 ###
+需要打包资源有哪些？Level 和 Resources资源，及它们的依赖资源。
+为了避免资源重复打包，我们把所有的资源进行分包处理，而不是由unity自动关联其依赖的资源。
+
+1. 遍历所有需要打包的资源，根据正则表达式将其分入不同的分组，没有设定规则的文件则使用其文件名，作为一个单独的分组。
+
+	常用的分包规则有：Resources中的UI预设归为一个分组，所有的Shader放在一个分组，Resources中的配置文件放在一个分组。
+	
+1. 通过 `AssetDatabase.GetDependencies` 生成分组的有向图，每个分组是有向图的顶点，依赖关系为其入度关系，如A依赖B，则B->A。
+
+	注意，要检查生成的有向图中不能存在环，如果存在则修改第一步中的正则表达式。
+	
+1. 寻找顶点间的最长路径，删除非最长路径，如 {C->B->A, C->A}，则删除{C->A}，只保留{C->B->A}。
+
+1. 寻找出度为1的顶点，根据其是否接受出度合并 及 其出度顶点是否接受入度合并的规则，进行合并。
+
+	{C->B->A, C->B->D},C允许出度合并，B允许入度合并，则合并为 {CB->A, CB->D}
+	
+1. 对于存在禁止入度合并配置，使用虚拟合并的方式（只合并有向图，不合并资源）进行优化。
+
+	{C->A, B->A} 如果A禁止入度合并，可将其合并为{CB->A}
+	
+1. 观察输出的调试信息，并使用XDot生成有向图，继续完善正则表达式。
+
+	(调试命令 `dot -Tpng -O 1.txt`)
+
+##打包
+根据分包出的结果，调用`BuildPipeline.BuildAssetBundles`进行打包。
+优化点：
+
+1. 打入安装包内的`AssetBundle`(放入streamingAssetsPath文件夹中的)可以考虑使用非压缩格式，因为：
+
+	1. 安装包会进行压缩，所以没必要重复进行压缩。
+	1. Resources和Level的数据在安装包中也是以非压缩的AssetBundle存储的。
+
+1. 使用WWW.LoadFromCacheOrDownload加载AssetBundle	
+注意，加载streamingAssetsPath中的文件要用WWW，因为Android的该文件夹在jar包内，当然也可以使用[AndroidAssetStream](https://github.com/dpull/UnityUtils/blob/master/AndroidAssetStream.cs)直接读取。
+
+##更新包
+### 以`AssetBundle`为单位更新
+可以直接将更改过的AssetBundle包，下载到persistentDataPath进行优先加载。
+
+缺点：更新包比较大，解决方案，如下：
+
+### 对`AssetBundle`进行差异更新（只能用于非压缩的AssetBundle）
 针对更新包大的问题，开发了一个对 `AssetBundle` 包差异比较合并工具[`AssetBundlePatch`]，可以将老包通过比较小的更新量变为新包，
-打包策略为 场景打包，Resource打包，然后将其压缩后，放StreamingAsset
-这样的坏处是：
+比如说 {CB->A} 变更为了 {DCB->A}，假设BCD都是纹理,且BC没有变更，这时候可以只把D更新下去，通过差异比较合并工具，得到二进制相同的DCB包。
 
-1. 因为手游的StreamingAsset是只读的，所以需要压缩存储，然后解压到支持读写的persistentDataPath，存在解压速度慢的问题（80Mzip压缩包，解压后180M，小米2需要90秒，iPhone5需要50秒，换成lzma算法也不快）
-1. 占用磁盘空间
+因为Resources和Level的资源其内部也是用了AssetBundle，
+所以不仅仅可以去自己打出的AssetBundle中进行差异合并，
+也可以获取应用包内的资源进行差异合并。
 
-占用磁盘空间我认为可接受，但解压速度慢不可接受。
-
-### 第三版 ###
-第二版是一个完整更新策略，支持全部资源的更新，可以减少需求只支持Resource资源的更新，
-打包策略：默认不打 `AssetBundle` 包，只是将修改过的文件和其依赖打成 `AssetBundle` ，利用 [`AssetBundlePatch`] 进行差异更新。
-这样的坏处是：
-
-资源冗余，如果是UI资源变更，可能会引发大量资源打包。
-进而可以再优化一下，比如将Resource按依赖打成小包，但我不想接受 `AssetBundle` 解压带来的性能损失和处理依赖的复杂，当然如果这一版更新包实在大，只好按照这个思路做第四版了。
-
-### 第四版 ###
-第三版提出了第四版的思路，但真正的第四版并不是并非如此。
-按照第三版的打包思路，Resource已被打入客户端，更新包会只打包Resource变更的资源，但因为依赖问题，导致了体积大。
-大部分依赖的资源通常是不变的，如：UI图素，字体，音效，这些资源是可以在客户端的资源包中找到的。
-也就是说，如果`没有依赖其他资源的资源`没有变更，我们可以从客户端的资源中把它拷贝出来。
-为何`依赖其他资源的资源`不支持呢？因为是两种打包过程，会导致资源的FileID和PathID不同，比如说GameObject资源依赖Component资源，依赖的FileID和PathID都变了，需要对其做特殊处理，未必值得，例如Font资源，它依赖了Material，但因为数据文件大，需要做特殊处理。
+目前支持的差异合并的资源类型有：
 
 Id           | Type        | Remark
 128          | Font        | 需特殊处理
@@ -51,15 +76,7 @@ Id           | Type        | Remark
 43           | Mesh        | 理论支持 
 28           | Texture2D   | 支持
 
-这项工作就告一段落了，因为手头上有优先级更高的事情，过一段再折腾吧。
-目前存在差异的四个可优化文件：
-字体2个文件，需单独处理资源件引用，
-Shader部分支持，待细查，
-Mesh部分支持，待细查。
-
-**2015.3.30**
-
-重新设计了diff文件，插件代码已经放github [`AssetBundlePatch`], 需要特殊处理和理论支持的部分还有待开发。
+插件代码已经放github [`AssetBundlePatch`], 需要特殊处理和理论支持的部分还有待开发。
 
 
 [`AssetBundlePatch`]: https://github.com/dpull/AssetBundlePatch
