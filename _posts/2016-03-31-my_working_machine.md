@@ -7,22 +7,34 @@ tags: []
 
 # 软件列表
 
+* 效率工具：`alfred`
+* 安装软件：`Homebrew`
+* 卸载软件：`AppCleaner`
+* 解压：`Keka`
 * 浏览器：`Chrome`
 * 文件管理：`CRAX Commander`
 * 文本编辑：`Sublime Text`
-* 卸载软件：`AppCleaner`
-* 解压：`Keka`
-* git: `SourceTree`
-* svn: `Cornerstone`
-* 虚拟机：`Parallels Desktop`
 * 电子书：`CleanView`
+* 虚拟机：`Parallels Desktop`
+* 办公：`Office(windows)`	
+* IDE：`Xcode` 和 `virtual studio(windows)`	
+* git：`SourceTree`
+* svn：`svn命令行` 和 `TortoiseSVN(windows)`
 * 思维导图：`MindNode`
 * 时间管理：`OmniFocus`
 * 开发文档：`Dash`
-* 电子书：`Ulysses`
 * Markdown编辑器：`Mou`
 * 播放器：`射手影音`
+* 下载：`迅雷(windows)`
 * 计划任务：`QuickBuild`
+
+## `alfred`常用功能或工作流
+* 锁屏：`lock`
+* 启动应用：`无` 或 `open`
+* 退出应用：`quit`
+* 执行终端命令：`> ls`
+* 搜索文件：`find`
+* dash工作流：查文档
 
 ## `Sublime`插件设置
 
