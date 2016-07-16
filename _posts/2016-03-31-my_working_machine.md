@@ -86,3 +86,15 @@ export NDK_ROOT=/Applications/android-ndk-r8d
 export PATH=$PATH:$ANDROID_SDK_ROOT
 export PATH=$PATH:$ANDROID_NDK_ROOT 
 {% endhighlight %}
+
+## 备份及恢复
+
+* 开启time machine时刻备份硬盘数据。
+
+	恢复硬盘时一定要使用快速的传输设备。	
+* 制作安装盘，防止需要网络下载系统。
+
+	将Install{0}替换为安装盘文件名(按tab选择);
+	将Install{1}替换为U盘名(按tab选择);
+
+		sudo /Applications/Install{0}/Contents/Resources/createinstallmedia --volume /Volumes/{1} --applicationpath /Applications/Install{0} --nointeraction 
