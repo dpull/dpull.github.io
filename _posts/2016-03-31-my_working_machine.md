@@ -12,12 +12,12 @@ tags: []
 * 卸载软件：`AppCleaner`
 * 解压：`Keka`
 * 浏览器：`Chrome`
-* 文件管理：`CRAX Commander`
+* 文件管理：`CRAX Commander` 和 `Total Commander(windows)`
 * 文本编辑：`Sublime Text`
 * 电子书：`CleanView`
 * 虚拟机：`Parallels Desktop`
 * 办公：`Office(windows)`	
-* IDE：`Xcode` 和 `virtual studio(windows)`	
+* IDE：`Xcode` 和 `Visual Studio(windows)`	
 * git：`SourceTree`
 * svn：`svn命令行` 和 `TortoiseSVN(windows)`
 * 思维导图：`MindNode`
@@ -35,12 +35,13 @@ tags: []
 * 执行终端命令：`> ls`
 * 搜索文件：`find`
 * dash工作流：查文档
+* `dot_clean` 文档目录
 
 ## `Sublime`插件设置
 
 安装[插件管理器](https://packagecontrol.io/installation)。
 
-我目前的常用插件有：
+我常用插件有：
 
 * Path Tools，用于拷贝文件路径
 * Advanced CSV，用于查看csv配置表
@@ -56,17 +57,7 @@ tags: []
 [skynet_mingw](https://github.com/dpull/skynet-mingw) 是我维护的一个开源项目，它有一个日常需求就是更新`submoudle`到最新。
 
 ### 更新工作的产品库
-我们的客户端采用`Unity`开发，虽然使用了`CacheServer`，但是`Unity`导入资源依旧是一件费时的事情，尤其是我机器上有三个资源类型的客户端（桌面版，iOS版本，Android版本）。
-
-{% highlight shell %}
-svn up
-/Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -batchmode -executeMethod X.AutoBuilder.SwitchActiveBuildTarget -logFile batchmode.txt
-cat batchmode.txt
-{% endhighlight %}
-
-### 更新工作机
-mac很烦的是自动生成`.XXXX`文件，但是又没法配置不生成，
-系统提供了`dot_clean`来清理，一段时间自动调用一次。
+每天早上自动更新svn
 
 ## 我的终端设置
 
@@ -91,10 +82,13 @@ export PATH=$PATH:$ANDROID_NDK_ROOT
 
 * 开启time machine时刻备份硬盘数据。
 
-	恢复硬盘时一定要使用快速的传输设备。	
+	教训：恢复硬盘时一定要使用快速的传输设备，有次使用了usb2.0的硬盘盒，恢复了四个多小时。
+	
 * 制作安装盘，防止需要网络下载系统。
-
-	将Install{0}替换为安装盘文件名(按tab选择);
-	将Install{1}替换为U盘名(按tab选择);
-
+	
+	教训：因为公司网络限速，有次下载`互联网恢复系统`用了一个多小时。
+	
+	
+		# 将Install{0}替换为安装盘文件名(按tab选择);
+		# 将Install{1}替换为U盘名(按tab选择);
 		sudo /Applications/Install{0}/Contents/Resources/createinstallmedia --volume /Volumes/{1} --applicationpath /Applications/Install{0} --nointeraction 

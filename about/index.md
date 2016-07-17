@@ -8,10 +8,11 @@ title: Resume
 浪迹在珠海的山东大汉。
 
 时间 				| 项目 		| 公司
-*2014.07-* 			| RPG手游	| 达人渡劫工作室（小米投资）
+*2016.07-.*     	| 剑网三 	| 西山居（金山）
+*2014.07-2016.07* 	| 莽荒纪	    | 达人渡劫工作室（小米投资）
 *2013.04-2014.07* 	| 天天爱萌仙 	| 心游科技（创新工场投资）
 *2011.06-2013.04* 	| 逍遥江湖 	| 心游科技（创新工场投资）
-*2007.05-2011.06* 	| 剑网三 		| 西山居（金山）
+*2007.05-2011.06* 	| 剑网三 	| 西山居（金山）
 
 ### 为什么要创建这个网站? ###
 
@@ -25,7 +26,7 @@ title: Resume
 于是，将一些知识整理下来，方便回顾和分享。
 本来将这些写成文档放在网盘中，发现分享不方便。
 不如做成blog，
-查找的时候使用用：关键字 [site:dpull.com]，国内请访问[site:dpull.com GFW]。
+查找的时候使用用：关键字 [site:dpull.com]。
 
 > 代码能借用就借用 
 > 
@@ -67,7 +68,6 @@ title: Resume
 [Google App Engine]: https://appengine.google.com
 [Github]: https://github.com/
 [site:dpull.com]: http://www.google.com/search?q=site%3Adpull.com
-[site:dpull.com GFW]: http://84.15.64.35/#q=site:dpull.com
 
 
 > **面包屑小道**（breadcrumb trails）意指做过记号的路。这个词出自童话故事《Hansel and Gretel》（又名《奇幻森林历险记》），讲的是Hansel和Gretel的父亲外出干活时，后母乘机把这两兄妹赶走，将他们送往奇幻森林；两个孩子在去森林的路上沿路留下了面包屑，以便后母把他们丢下之后可以自己找到回家的路。
