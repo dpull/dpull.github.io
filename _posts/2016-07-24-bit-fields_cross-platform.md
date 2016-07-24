@@ -9,25 +9,25 @@ tags: []
 
 `GCC`, `Clang` 提供了编译选项 `-mno-ms-bitfields` 或者编译指令 `#pragma ms_struct on` 来兼容`MSVC`的`Bit-fields`。
 
-举个例子，`uint64_t uSelectable : 8`只用了8位，其大小在两类编译器下是不同的，注释中标明了内存布局。
+举个例子，`uint64_t uSelectable : 8`只使用8位，其内存大小在两类编译器下是不同的，注释中标明了内存布局。
 
 {% highlight cpp %}
 #pragma	pack(1)
-// sizeof(S2C_SYNC_NEW_PLAYER)	 = sizeof(uint8_t) + sizeof(uint16_t)
+// sizeof(S2C_SYNC_NEW_PLAYER) = sizeof(uint8_t) + sizeof(uint16_t)
 // uSelectable | uSyncSN | uSyncSN
 struct S2C_SYNC_NEW_PLAYER 
 {
-	uint64_t    uSelectable : 8;
-	uint16_t    uSyncSN;
+	uint64_t uSelectable : 8;
+	uint16_t uSyncSN;
 };
 
 #pragma ms_struct on
-// sizeof(S2C_SYNC_NEW_PLAYER_MS)	 = sizeof(uint64_t) + sizeof(uint16_t)
-// uSelectable | 0 | 0 | 0 | uSyncSN | uSyncSN
+// sizeof(S2C_SYNC_NEW_PLAYER_MS) = sizeof(uint64_t) + sizeof(uint16_t)
+// uSelectable | 0 | 0 | 0 | 0 | 0 | 0 | 0 | uSyncSN | uSyncSN
 struct S2C_SYNC_NEW_PLAYER_MS 
 {
-    uint64_t    uSelectable : 8;
-    uint16_t    uSyncSN;
+    uint64_t uSelectable : 8;
+    uint16_t uSyncSN;
 };
 #pragma ms_struct reset
 #pragma	pack()
