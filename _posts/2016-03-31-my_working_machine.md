@@ -35,7 +35,17 @@ tags: []
 * 执行终端命令：`> ls`
 * 搜索文件：`find`
 * dash工作流：查文档
-* `dot_clean` 文档目录
+
+## 常用指令
+
+{% highlight shell %}
+dot_clean 路径 # 清理mac生成的._开头的文件
+lsof -i :80 # 查看某端口号被哪些程序占用
+svn revert -R Path 
+svn status --no-ignore [Path]
+svn add --no-ignore [Path]
+svn status | grep '^?' | awk '{print $2}' | xargs rm -rf #删除非版本内的文件
+{% endhighlight %}	
 
 ## `Sublime`插件设置
 
