@@ -33,4 +33,6 @@ struct S2C_SYNC_NEW_PLAYER_MS
 #pragma	pack()
 {% endhighlight %}
 	
-`Bit-fields`主要用于网络协议，所以其`ABI`需要保持一致，所以通常将其指定为`MSVC`格式，但建议不要使用位域。
+`Bit-fields`主要用于网络协议，需要保证内存布局一致，所以通常将其指定为`MSVC`格式。
+
+为了避免这种跨平台问题，强烈建议协议中不要使用`Bit-fields`。
