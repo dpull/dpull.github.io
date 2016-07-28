@@ -14,4 +14,15 @@ tags: []
 	clang     -Wl,-force_load
 	Android   LOCAL_WHOLE_STATIC_LIBRARIES
 	
-## 常见警告		
+## 常见警告
+
+	-Wno-unused-value
+	-Wno-unused-label
+	-Wno-unused-local-typedefs
+	-Wno-unused-variable
+	-Wno-reorder
+	-Wno-missing-braces
+	-Wno-shorten-64-to-32
+	-Wno-logical-op-parentheses
+	-Wno-sometimes-uninitialized
+	-Wno-incompatible-ms-struct
