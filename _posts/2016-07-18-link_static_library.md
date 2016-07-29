@@ -16,12 +16,14 @@ tags: []
 	
 	llvm ld
 		-force_load path_to_archive
-			Loads all members of the specified static archive library.  Note: -all_load forces all members of all archives to be
-			loaded.  This option allows you to target a specific archive.
+			Loads all members of the specified static archive library. 
+			Note: -all_load forces all members of all archives to be loaded.  
+			This option allows you to target a specific archive.
     
     msvc link 
-    	/OPT:REF 
-    		When /OFT:REF is enabled, LINK removes unreferenced packaged functions and data.
+    	/OPT:{REF | NOREF}
+    		/OPT:REF eliminates functions and data that are never referenced; 
+    		/OPT:NOREF keeps functions and data that are never referenced. 
 
 
 	
