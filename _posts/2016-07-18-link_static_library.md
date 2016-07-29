@@ -4,11 +4,11 @@ title: 链接静态库
 categories: [general]
 tags: []
 ---
-## 链接器可传递的 COMDAT 消除（transitive COMDAT elimination）
+## 禁止链接器优化掉未引用的函数和数据
 
-链接静态库时，对于没有引用的函数和数据会被删除掉，这种优化被称为transitive COMDAT elimination，
+链接静态库时，对于没有引用的函数和数据会被删除掉，这种优化被称为transitive COMDAT elimination。
 
-这可能引起未被引用的静态变量及其初始化代码被裁减掉的问题，可采用链接参数来避免这个问题。
+这可能引起未被引用的静态变量及其初始化代码没有执行的问题，可采用链接参数来避免这个问题。
 
 	gcc ld
 		--whole-archive             Include all archive contents
