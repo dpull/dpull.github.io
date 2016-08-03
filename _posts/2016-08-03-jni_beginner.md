@@ -10,7 +10,7 @@ JNI全称Java Native Interface，用于Java和C/C++交互。这里主要记录�
 ## 基本概念
 
 * `JavaVM` Java虚拟机，一般使用`JNI_OnLoad`函数缓存下来，配对函数`JNI_OnUnload`。 
-* `JNIEnv` 线程唯一，也就是说不同线程的`JNIEnv`不同。
+* `JNIEnv` JNI环境，线程唯一。
 	* 通过`JavaVM::GetEnv`来获取.
 	* 如果非`JavaVM`创建的线程，需要调用`JavaVM::AttachCurrentThread`来获取.
 
