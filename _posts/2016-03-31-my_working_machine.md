@@ -53,6 +53,7 @@ svn status | grep '^?' | awk '{print $2}' | xargs rm -rf #删除非版本内的�
 
 我常用插件有：
 
+* SyncedSidebar
 * Path Tools，用于拷贝文件路径
 * Advanced CSV，用于查看csv配置表
 * Json Reindent，用于格式化json文本，用法：打开插件界面，输入json
