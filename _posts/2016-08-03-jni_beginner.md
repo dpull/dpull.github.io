@@ -86,9 +86,7 @@ JNI全称Java Native Interface，用于Java和C/C++交互。这里主要记录�
 	javap -s java.util.UUID 
 	
 ## 隐式注册函数
-
-	JNIEnv::RegisterNatives
-	JNIEnv::UnregisterNatives
+使用`JNIEnv::RegisterNatives`和`JNIEnv::UnregisterNatives`可以不使用jni接口命名的规范，将接口注册到虚拟机
 	
 
 ## 参考资料 ##
