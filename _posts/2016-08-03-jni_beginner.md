@@ -85,12 +85,11 @@ JNI全称Java Native Interface，用于Java和C/C++交互。这里主要记录�
 	＃ 显示函数的内部类型
 	javap -s java.util.UUID 
 	
-		
+## 隐式注册函数
 
-
-
-
-
+	JNIEnv::RegisterNatives
+	JNIEnv::UnregisterNatives
+	
 
 ## 参考资料 ##
 * 《Android C++高级编程 使用NDK》第三章
