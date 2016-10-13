@@ -16,8 +16,8 @@ tags: []
 * 文本编辑：`Sublime Text`
 * 电子书：`CleanView`
 * 虚拟机：`Parallels Desktop`
-* 办公：`Office(windows)`	
-* IDE：`Xcode` 和 `Visual Studio(windows)`	
+  * 办公：`Office(windows)`
+  * IDE：`Xcode` 和 `Visual Studio(windows)`
 * git：`SourceTree`
 * svn：`svn命令行` 和 `TortoiseSVN(windows)`
 * 思维导图：`MindNode`
@@ -93,13 +93,13 @@ export PATH=$PATH:$ANDROID_NDK_ROOT
 
 * 开启time machine时刻备份硬盘数据。
 
-	教训：恢复硬盘时一定要使用快速的传输设备，有次使用了usb2.0的硬盘盒，恢复了四个多小时。
-	
+  教训：恢复硬盘时一定要使用快速的传输设备，有次使用了usb2.0的硬盘盒，恢复了四个多小时。
+
 * 制作安装盘，防止需要网络下载系统。
-	
-	教训：因为公司网络限速，有次下载`互联网恢复系统`用了一个多小时。
-	
-	
-		# 将Install{0}替换为安装盘文件名(按tab选择);
-		# 将Install{1}替换为U盘名(按tab选择);
-		sudo /Applications/Install{0}/Contents/Resources/createinstallmedia --volume /Volumes/{1} --applicationpath /Applications/Install{0} --nointeraction 
+
+  教训：因为公司网络限速，有次下载`互联网恢复系统`用了一个多小时。
+
+
+  	# 将Install{0}替换为安装盘文件名(按tab选择);
+  	# 将Install{1}替换为U盘名(按tab选择);
+  	sudo /Applications/Install{0}/Contents/Resources/createinstallmedia --volume /Volumes/{1} --applicationpath /Applications/Install{0} --nointeraction 
