@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 使用C＋＋11实现lock free
+title: 使用C＋＋11实现lock free的知识点
 categories: [general]
 tags: []
 ---
@@ -39,7 +39,7 @@ else
 }
 {% endhighlight %}    
 
-## `atomic_compare_exchange_weak`和`atomic_compare_exchange_strong`的区别
+## `*_weak`和`*_strong`的区别
 
 `atomic_compare_exchange_weak`性能高于`atomic_compare_exchange_strong`，
 但是当`*obj == *expected`时，有时会返回false，
