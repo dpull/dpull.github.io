@@ -24,11 +24,26 @@ bool atomic_compare_exchange_strong( volatile std::atomic<T>* obj,
                                
 ## 实现原理
 
-** 当`*obj == *expected`时，将`*obj = desired`返回true，否则将`*expected ＝ *obj`返回flase。 **
+伪代码：
+
+{% highlight c++ %}
+if (*obj == *expected)
+{
+	*obj = desired;
+	return true
+}
+else
+{
+	*expected ＝ *obj
+	return false
+}
+{% endhighlight %}    
 
 ## `atomic_compare_exchange_weak`和`atomic_compare_exchange_strong`的区别
 
-`atomic_compare_exchange_weak`性能比`atomic_compare_exchange_strong`高，但是当某些`*obj == *expected`情况时，它会返回false，所以`atomic_compare_exchange_weak`一般用于循环，以实现更好的性能。
+`atomic_compare_exchange_weak`性能高于`atomic_compare_exchange_strong`，
+但是当`*obj == *expected`时，有时会返回false，
+所以`atomic_compare_exchange_weak`一般用于循环，以实现更好的性能。
 
 ## std::memory_order介绍
 待完善
