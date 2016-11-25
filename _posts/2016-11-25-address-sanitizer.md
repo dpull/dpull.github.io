@@ -1,11 +1,11 @@
 ---
 layout: post
-title: 使用**Address Sanitizer**解决越界等内存问题
+title: 使用Address Sanitizer解决越界等内存问题
 categories: [general]
 tags: []
 ---
 
-##内存越界##
+##内存越界
 
 内存越界是C／C++的最常见的bug，可能导致程序诡异崩溃，十分难查。
 
@@ -27,7 +27,7 @@ ptr[12] = 0;
 程序会在越界时立即宕掉。
 
 
-##有符号整数溢出##
+##有符号整数溢出
 
 {% highlight c %}
 int num = 100;
@@ -41,6 +41,7 @@ for (int i = 0 ; i < 10; ++i)
 num在第三次循环的时候，产生上溢。有符号的整数溢出是C的未定义行为，会产生诡异的后果。可以使用 **Undefined Behavior Sanitizer** 查找这类问题
 
 开启方法：
+
 * `XCode` 在`Other Warning Flags`（其他也可）添加： -fsanitize=undefined-trap -fsanitize-undefined-trap-on-error
 * clang -fsanitize=undefined-trap -fsanitize-undefined-trap-on-error undefined.c
 
