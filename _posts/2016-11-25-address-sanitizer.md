@@ -5,7 +5,7 @@ categories: [general]
 tags: []
 ---
 
-##内存越界
+## 内存越界
 
 内存越界是C／C++的最常见的bug，可能导致程序诡异崩溃，十分难查。
 
@@ -21,13 +21,13 @@ ptr[12] = 0;
 
 开启方法：
 
-* `XCode` Edit Scheme-->Run-->Diagnostics--->勾选Address Sanitizer
-*  clang -fsanitize=address test.c
+* `XCode` `Edit Scheme`-->`Run`-->`Diagnostics`-->勾选`Address Sanitizer`
+* å`clang -fsanitize=address test.c`
 
 程序会在越界时立即宕掉。
 
 
-##有符号整数溢出
+## 有符号整数溢出
 
 {% highlight c %}
 int num = 100;
@@ -42,8 +42,8 @@ num在第三次循环的时候，产生上溢。有符号的整数溢出是C的�
 
 开启方法：
 
-* `XCode` 在`Other Warning Flags`（其他也可）添加： -fsanitize=undefined-trap -fsanitize-undefined-trap-on-error
-* clang -fsanitize=undefined-trap -fsanitize-undefined-trap-on-error undefined.c
+* `XCode` 在`Other Warning Flags`（其他也可）添加： `-fsanitize=undefined-trap -fsanitize-undefined-trap-on-error`
+* `clang -fsanitize=undefined-trap -fsanitize-undefined-trap-on-error undefined.c`
 
 
 
