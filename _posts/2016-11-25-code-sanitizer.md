@@ -45,9 +45,7 @@ public:
     int Release()
     {
         if (--m_nRef == 0)
-        {
             delete this;
-        }
         return m_nRef;
     }
     int m_nRef = 1;
