@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 使用Clang/GCC的Sanitizer参数提升程序质量
+title: 使用Clang/GCC的Sanitizer提升程序质量
 categories: [general]
 tags: []
 ---
