@@ -27,9 +27,11 @@ if (*(long long*)&n == *(long long*)"hr")
 
 ### AddressSanitizer: strncpy-param-overlap: memory ranges
 
+{% highlight c %}
 char sz[64];
 sz[0] = '\0';
 strncpy(sz, sz, sizeof(sz));
+{% endhighlight %}
 
 ## UndefinedBehaviorSanitizer
 
