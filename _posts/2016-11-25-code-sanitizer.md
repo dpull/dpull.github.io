@@ -23,7 +23,7 @@ tags: []
 * AddressSanitizer: stack-buffer-overflow
 
 {% highlight c %}
-int n = 0;
+long long n = 0;
 if (*(long long*)&n == *(long long*)"hr");
 {% endhighlight %}
 
