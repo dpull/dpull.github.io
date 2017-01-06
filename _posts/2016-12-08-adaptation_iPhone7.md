@@ -8,9 +8,15 @@ tags: []
 一直用iPad pro开发，也是用的iOS10系统，心想应当和iPhone没啥区别，但实际上还是有些问题。
 
 ## Opengles 设备丢失
-当把程序设置为可横屏也可竖屏时，从横屏进入后台，然后恢复前台，iPhone7的渲染设备丢失了，iPad pro不会；仅横屏或者仅竖屏游戏设置都没有这个问题；搜索网上没有相关的解决方案。
+当把程序设置为可横屏也可竖屏时，从横屏进入后台，然后恢复前台，iPhone7的渲染设备丢失了，iPad pro不会；
+游戏设置为仅横屏或者仅竖屏时没有这个问题；
+搜索网上没有相关的解决方案。
 
-仔细看`GLKView`的文档，发现`bindDrawable`方法，在`applicationWillEnterForeground`时调用一下，问题解决。
+仔细看`GLKView`的文档，发现`bindDrawable`方法，文档中提到：
+
+> If your application changed the framebuffer object bound to OpenGL ES, it calls this method to rebind the view’s framebuffer object to OpenGL ES.
+
+在`applicationWillEnterForeground`时执行该方法，问题解决。
 
 ## 无法连接网络
 游戏的资源放在http服务器上，发现程序运行后，使用`curl`无法下载资源，返回错误码是无法连接服务器。
