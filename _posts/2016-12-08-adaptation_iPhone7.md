@@ -48,4 +48,4 @@ extern "C" void FixDataPermissions()
 }
 {% endhighlight %}
 
-**说明：** iOS的权限申请弹框应当通过hook相关API实现的，故而只有使用iOS自带的网络请求API才会弹框。
+**思路说明：** iOS的权限申请弹框应当通过hook相关API实现的，故而只有使用iOS自带的网络请求API才会弹框。
