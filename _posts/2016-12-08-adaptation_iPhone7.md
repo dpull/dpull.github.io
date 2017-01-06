@@ -37,7 +37,7 @@ tags: []
 
 网上提供了几种解决方案，都不怎么靠谱。
 
-经过多次尝试，使用如下方案解决此问题。
+经过多次尝试，使用如下方案解决此问题：
 
 {% highlight objc %}
 extern "C" void FixDataPermissions()
