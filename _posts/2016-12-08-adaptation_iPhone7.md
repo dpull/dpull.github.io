@@ -46,11 +46,31 @@ tags: []
 经过多次尝试，使用如下方案解决此问题：
 
 {% highlight objc %}
-extern "C" void FixDataPermissions()
+- (BOOL)checkDataPermissions
 {
-    NSURL* pUrl = [NSURL URLWithString:@"https://www.baidu.com"];
-    NSURLSessionDataTask* pTask = [[NSURLSession sharedSession]dataTaskWithURL:pUrl];
-    [pTask resume];
+    const int NoDataPermissionsState = 0;
+    const int HasDataPermissionsState = 1;
+    const int CheckingDataPermissionsState = 2;
+    
+    static int CurDataPermissionsState = NoDataPermissionsState;
+    
+    if (CurDataPermissionsState == HasDataPermissionsState)
+        return YES;
+    
+    if (CurDataPermissionsState == CheckingDataPermissionsState)
+        return NO;
+    CurDataPermissionsState = CheckingDataPermissionsState;
+    
+    NSURL* url = [NSURL URLWithString:@"https://www.baidu.com"];
+    NSURLSessionDataTask* task = [[NSURLSession sharedSession] dataTaskWithURL:url completionHandler:
+        ^(NSData * __nullable data, NSURLResponse * __nullable response, NSError * __nullable error) {
+            if (CurDataPermissionsState != HasDataPermissionsState)
+            {
+                CurDataPermissionsState = response == nil ? NoDataPermissionsState : HasDataPermissionsState;
+            }
+        }];
+    [task resume];
+    return NO;
 }
 {% endhighlight %}
 
