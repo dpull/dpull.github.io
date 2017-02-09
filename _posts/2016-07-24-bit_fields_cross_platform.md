@@ -7,7 +7,7 @@ tags: []
 
 常见的`Bit-fields`有两种，一种是微软的(`MSVC`)，一种是非微软的(`GCC`, `Clang`)，它们大多数情况下相同，当声明的类型和使用的位数不一致时可能不同。
 
-`GCC`, `Clang` 提供了编译选项 `-mno-ms-bitfields` 或者编译指令 `#pragma ms_struct on` 来兼容`MSVC`的`Bit-fields`。
+`GCC`, `Clang` 提供了编译选项 `-mms-bitfields` 或者编译指令 `#pragma ms_struct on` 来兼容`MSVC`的`Bit-fields`。
 
 举个例子，`uint64_t uSelectable : 7`只使用7位，其内存大小在两类编译器下是不同的，注释中标明了内存布局。
 
