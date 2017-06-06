@@ -23,7 +23,7 @@ tags: []
 * 思维导图：`MindNode`
 * 时间管理：`OmniFocus`
 * 开发文档：`Dash`
-* Markdown编辑器：`Mou`
+* Markdown编辑器：`MacDown`
 * 播放器：`射手影音`
 * 下载：`迅雷(windows)`
 * 计划任务：`QuickBuild`
@@ -87,6 +87,8 @@ export ANDROID_NDK_ROOT=/Applications/android-ndk-r8d
 export NDK_ROOT=/Applications/android-ndk-r8d
 export PATH=$PATH:$ANDROID_SDK_ROOT
 export PATH=$PATH:$ANDROID_NDK_ROOT 
+
+export ALL_PROXY=socks5://10.20.1.1:1111
 {% endhighlight %}
 
 ## 备份及恢复
