@@ -25,7 +25,7 @@ condition variable存在假醒问题（spurious wakeup），也就是某个condi
 1. `std::condition_variable::wait` 的pred函数在哪个线程执行？
 1. `std::condition_variable::wait` 的pred函数如果直接返回true是否等同于不用这个参数？
 1. 如果在锁内调用`std::condition_variable::notify_all`是立即 `std::condition_variable::wait` 响应还是等`std::condition_variable::notify_all`所在线程的锁结束了，再响应？
-1. 如果锁内多次调用 `std::condition_variable::notify_all`，`std::condition_variable::wait`会响应几次？
+1. 如果在`std::condition_variable::wait` 的pred函数执行的时候，继续发起`std::condition_variable::notify_all`，会不会多次响应
 
 把 [cppreference的Example](http://en.cppreference.com/w/cpp/thread/condition_variable/notify_all) 简单改了一下，在`Xcode Version 8.1 (8B62)`进行了验证，结论如下：
 
@@ -33,7 +33,7 @@ condition variable存在假醒问题（spurious wakeup），也就是某个condi
 1. `std::condition_variable::wait` 的pred函数wait`的线程执行。
 1. `std::condition_variable::wait` 的pred函数如果直接返回true，该线程并不会`wait`，所以不等同于无此参数。
 1. 如果在锁内调用`std::condition_variable::notify_all`要等其所在线程的锁结束了，再响应`std::condition_variable::wait` 的pred函数。
-1. 没有想到办法测试`std::condition_variable::notify_all`多次调用，但多次调用`std::condition_variable::notify_one`后，可以被多个线程响应到。
+1. 不会多次响应。
 
 测试代码：
 
