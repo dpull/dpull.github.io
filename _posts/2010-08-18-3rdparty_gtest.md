@@ -147,6 +147,14 @@ Values(v1, v2, ..., vN)                             | v1,v2到vN的值
 ValuesIn(container) and ValuesIn(begin, end)        | 从一个C类型的数组或是STL容器，或是迭代器中取值
 Bool()	                                            | 取false 和 true 两个值
 
+## 调试 ##
+
+GTest捕获了assert等异常，这会导致开发时难以调试，可以增加以下参数，启用调试器中断：
+
+{% highlight bash %}
+--gtest_catch_exceptions=0
+{% endhighlight %}
+
 ## GTest的扩展版GMock ##
 [Gmock](http://code.google.com/p/googlemock/)是一套用来模拟类的库，也就是提供单元测试上所需要桩函数。
 
