@@ -41,9 +41,7 @@ else
 
 ## `*_weak`和`*_strong`的区别
 
-`atomic_compare_exchange_weak`性能高于`atomic_compare_exchange_strong`，
-但是当`*obj == *expected`时，有时会返回false，
-所以`atomic_compare_exchange_weak`一般用于循环，以实现更好的性能。
+对于compare_exchange_weak()函数，当原始值与预期值一致时，存储也可能会不成功；在这个例子中变量的值不会发生改变，并且compare_exchange_weak()的返回是false。这可能发生在缺少独立“比较-交换”指令的机器上，当处理器不能保证这个操作能够自动的完成——可能是因为线程的操作将指令队列从中间关闭，并且另一个线程安排的指令将会被操作系统所替换(这里线程数多于处理器数量)。这被称为“伪失败”(spurious failure)，因为造成这种情况的原因是时间，而不是变量值。所以`atomic_compare_exchange_weak`一般用于循环，以实现更好的性能。
 
 ## std::memory_order介绍
 待完善
