@@ -15,7 +15,7 @@ tags: []
 1. 模块间的后台线程没有优先级，无法保证对实时性要求高的任务能及时分配到CPU资源。
 1. 不方便根据程序需要动态的调整某个模块的线程数。
 
-针对这三个问题，设计了异步任务系统，特点如下：
+针对这些问题，设计了异步任务系统，特点如下：
 
 1. 简单易用，仅需要实现两个函数就可以提供后台线程运行和工作线程回调。
 1. 任务执行器内所有的任务使用统一的优先级排序，可以在逻辑上对CPU的使用进行控制。
@@ -24,11 +24,13 @@ tags: []
 ## 异步任务系统有三个逻辑概念：
 1. 任务（Task）
 
+	![](../resources/images/2017-09-09-async_task_task.png)
+
 	参考[Android异步任务](https://developer.android.com/reference/android/os/AsyncTask.html)，提供了两个重载函数：DoInBackground， OnPostExecute：
 	* `void DoInBackground()` 在后台线程执行
 	* `void OnPostExecute(int bIsCancel)` 当任务执行完成或者被取消后，在工作线程回调。
 	
-通过这两个接口可以避免在DoInBackground中加锁，提升CPU利用率。另外任务在添加到任务执行器后，可以调整任务优先级或取消任务。
+通过这两个接口可以避免在DoInBackground中加锁，提升CPU利用率。任务在添加到执行器后，可以调整优先级或取消任务。
 
 1. 任务分组（TaskGroup）
 
