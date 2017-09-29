@@ -27,10 +27,10 @@ tags: []
 	![](../resources/images/2017-09-09-async_task_task.png)
 
 	参考[Android异步任务](https://developer.android.com/reference/android/os/AsyncTask.html)，提供了两个重载函数：DoInBackground， OnPostExecute：
-	* `void DoInBackground()` 在后台线程执行
+	* `void DoInBackground()` 在后台线程执行。
 	* `void OnPostExecute(int bIsCancel)` 当任务执行完成或者被取消后，在工作线程回调。
 	
-通过这两个接口可以避免在DoInBackground中加锁，提升CPU利用率。任务在添加到执行器后，可以调整优先级或取消任务。
+	通过这两个接口可以避免在DoInBackground中加锁，提升CPU利用率。任务在添加到执行器后，可以调整优先级或取消任务。
 
 1. 任务分组（TaskGroup）
 
@@ -44,7 +44,49 @@ tags: []
 	* 在实际应用中，根据任务对响应时间的差异，分为了快速任务执行器和高并发任务执行器，对于对响应时间敏感，单个任务执行时间较长的任务，也提供了接口创建自己的任务执行器。
 		* 快速任务执行器用于对响应时间敏感，但单个任务执行时间较短的任务。（如：捏脸数据计算）
 		* 高并发任务执行器用于对响应时间不敏感的任务。（如：模型加载，地形加载）
-		
+
+## 异步任务系统接口介绍：
+
+** `AsyncTaskGroup* CreateGroup(int nExecutorIndex, const char* pszName);` **
+
+创建任务分组，nExecutorIndex为任务执行器的索引，该接口不会阻塞工作线程。
+
+** `int DestoryGroup(AsyncTaskGroup* pGroup);` **
+
+删除任务分组，未执行的任务将会被取消，该接口会阻塞调用线程。
+
+** `int AwaitGroup(AsyncTaskGroup* pGroup);` **
+
+等待任务分组中所有任务执行完成，该接口会阻塞调用线程。
+
+** `int TraversalGroup(AsyncTaskGroup* pGroup, const std::function<int(AsyncTask*)>& fnCallback);` **
+
+在后台线程中遍历未执行的任务，可以调用`ChangeTaskPriority`和`CancelTask`来调整任务优先级或取消任务，该接口不会阻塞工作线程。
+
+** `int AddTask(AsyncTask* pTask, int nPriority, AsyncTaskGroup* pGroup);` **
+
+添加一个任务，该接口不会阻塞工作线程。
+
+** `int AddTask(AsyncTask* const* ppTaskArray, int nArrayLength, int nPriority, AsyncTaskGroup* pGroup);` **
+
+添加多个任务，该接口不会阻塞工作线程。
+
+** `int CancelTask(AsyncTask* pTask);` **
+
+取消任务，不会阻塞，该接口可以在工作线程调用，也可以在后台线程调用。
+
+** `int RemoveTask(AsyncTask* pTask); ` **
+
+移除任务，该接口会阻塞工作线程。
+
+** `int AwaitTask(AsyncTask* pTask);` **
+
+等待任务完成，该接口会阻塞工作线程。
+
+** `int ChangeTaskPriority(AsyncTask* pTask, int nPriority);` **
+
+修改任务优先级，该接口不会阻塞工作线程，可以在工作线程调用，也可以在后台线程调用。
+
 
 ## 实际应用对比
 对于预加载列表模块：
