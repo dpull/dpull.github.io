@@ -47,52 +47,90 @@ tags: []
 
 ## 异步任务系统接口介绍：
 
-** `AsyncTaskGroup* CreateGroup(int nExecutorIndex, const char* pszName);` **
+**`AsyncTaskGroup* CreateGroup(int nExecutorIndex, const char* pszName);`**
 
 创建任务分组，nExecutorIndex为任务执行器的索引，该接口不会阻塞工作线程。
 
-** `int DestoryGroup(AsyncTaskGroup* pGroup);` **
+**`int DestoryGroup(AsyncTaskGroup* pGroup);`**
 
 删除任务分组，未执行的任务将会被取消，该接口会阻塞调用线程。
 
-** `int AwaitGroup(AsyncTaskGroup* pGroup);` **
+**`int AwaitGroup(AsyncTaskGroup* pGroup);`**
 
 等待任务分组中所有任务执行完成，该接口会阻塞调用线程。
 
-** `int TraversalGroup(AsyncTaskGroup* pGroup, const std::function<int(AsyncTask*)>& fnCallback);` **
+**`int TraversalGroup(AsyncTaskGroup* pGroup, const std::function<int(AsyncTask*)>& fnCallback);`**
 
 在后台线程中遍历未执行的任务，可以调用`ChangeTaskPriority`和`CancelTask`来调整任务优先级或取消任务，该接口不会阻塞工作线程。
 
-** `int AddTask(AsyncTask* pTask, int nPriority, AsyncTaskGroup* pGroup);` **
+**`int AddTask(AsyncTask* pTask, int nPriority, AsyncTaskGroup* pGroup);`**
 
 添加一个任务，该接口不会阻塞工作线程。
 
-** `int AddTask(AsyncTask* const* ppTaskArray, int nArrayLength, int nPriority, AsyncTaskGroup* pGroup);` **
+**`int AddTask(AsyncTask* const* ppTaskArray, int nArrayLength, int nPriority, AsyncTaskGroup* pGroup);`**
 
 添加多个任务，该接口不会阻塞工作线程。
 
-** `int CancelTask(AsyncTask* pTask);` **
+**`int CancelTask(AsyncTask* pTask);`**
 
 取消任务，不会阻塞，该接口可以在工作线程调用，也可以在后台线程调用。
 
-** `int RemoveTask(AsyncTask* pTask); ` **
+**`int RemoveTask(AsyncTask* pTask); `**
 
 移除任务，该接口会阻塞工作线程。
 
-** `int AwaitTask(AsyncTask* pTask);` **
+**`int AwaitTask(AsyncTask* pTask);`**
 
 等待任务完成，该接口会阻塞工作线程。
 
-** `int ChangeTaskPriority(AsyncTask* pTask, int nPriority);` **
+**`int ChangeTaskPriority(AsyncTask* pTask, int nPriority);`**
 
 修改任务优先级，该接口不会阻塞工作线程，可以在工作线程调用，也可以在后台线程调用。
 
+**示例**
+
+{% highlight c++ %}
+TEST(AsyncTaskInterface, TestExecutorDestoryGroup)
+{
+	int nTaskCount = 256;
+	std::atomic<int> nCallbackCount(0);
+	auto pGroup = AsyncTaskInterface::CreateGroup(AsyncTaskExecutor_HighConcurrency, "Test");
+	auto fn = [nTaskCount, &nCallbackCount, pGroup]() {
+		int nCount = 0;
+		for (int i = 0; i < nTaskCount; i++)
+		{
+			auto pTask = CommonAsyncTask::Create([]() {
+				std::this_thread::sleep_for(std::chrono::microseconds(2));
+			}, [&nCallbackCount](int) {
+				nCallbackCount++;
+			});
+			AsyncTaskInterface::AddTask(pTask, 0, pGroup);
+		}
+
+		while (true)
+		{
+			std::this_thread::sleep_for(std::chrono::microseconds(1));
+			nCount += AsyncTaskInterface::FetchResult();
+			if (nCount > 0)
+				break;
+		}
+	};
+	std::thread Thread1(fn), Thread2(fn);
+	Thread1.join();
+	Thread2.join();
+
+	AsyncTaskInterface::DestoryGroup(pGroup);
+	
+	ASSERT_EQ(nTaskCount * 2, nCallbackCount.load());
+}
+{% endhighlight %}
 
 ## 实际应用对比
 对于预加载列表模块：
 
 * 代码量：由143行减少到101行。
 * 执行时间：由平均4637.8毫秒降低到2746.8毫秒。（受限于HDD的读取速度）
+* 更多模块数据等待测试开发反馈
 
 ## 和std::future比较
 std::future 提供了在后台执行任务的功能，但没有提供线程数、优先级控制及取消任务功能。
