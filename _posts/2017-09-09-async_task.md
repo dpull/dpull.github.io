@@ -7,7 +7,11 @@ tags: []
 
 随着CPU主频提升缓慢，核心数越来越多，充分利用多核来提升程序性能成为了必不可少的手段。
 
-项目中现有多线程的做法是以模块为单位的，即某个需要多线程的模块，会开启一个或多个后台线程去执行任务。这种方式存在三个问题：
+项目中现有多线程的做法是以模块为单位的，即某个需要多线程的模块，会开启一个或多个后台线程去执行任务。
+
+![](../resources/images/2017-09-09-async_task_module_thread.svg)
+
+这种方式存在三个问题：
 
 1. 模块都要维护自己的多线程逻辑，增加了程序的开发成本，容易引入问题。常见的问题有：
 	* 没有使用信号量，采用Sleep轮询的方式检查是否有任务要做。
@@ -21,10 +25,12 @@ tags: []
 1. 任务执行器内所有的任务使用统一的优先级排序，可以在逻辑上对CPU的使用进行控制。
 1. 任务执行器内开启多个后台线程，对于高优先级的任务并发执行。
 
+![](../resources/images/2017-09-09-async_task_async_task_system.svg)
+
 ## 异步任务系统有三个逻辑概念：
 1. 任务（Task）
 
-	![](../resources/images/2017-09-09-async_task_task.png)
+	![](../resources/images/2017-09-09-async_task_task.svg)
 
 	参考[Android异步任务](https://developer.android.com/reference/android/os/AsyncTask.html)，提供了两个重载函数：DoInBackground， OnPostExecute：
 	* `void DoInBackground()` 在后台线程执行。
