@@ -40,7 +40,7 @@ gcc -O2 后，死循环：
 
 为什么开启`O2`优化后，程序死循环了？看一下汇编代码
 
-{% highlight asm %}
+{% highlight nasm %}
 ;gcc -O
 main:
 .LFB23:
@@ -67,7 +67,7 @@ main:
 {% endhighlight %}
 
 
-{% highlight asm %}
+{% highlight nasm %}
 ;gcc -O2
 main:
 .LFB23:
