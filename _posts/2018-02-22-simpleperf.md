@@ -38,4 +38,30 @@ Simpleperf 提供了简单的GUI来查看数据（--gui选项），使用-g选�
 
 Unity5.6.5后，Android il2cpp版本的符号表不再存在于apk中的libil2cpp.so中了，会存在于apk的同级目录下的*.symbols.zip文件中，有个libil2cpp.sym的文件，要将它改名为libil2cpp.so放入上述路径进行分析
 
+### Suggestions about recording call graphs
+elow is our experiences of dwarf based call graphs and stack frame based call graphs.
 
+dwarf based call graphs:
+1. Need support of debug information in binaries.
+2. Behave normally well on both ARM and ARM64, for both fully compiled Java code and C++ code.
+3. Can only unwind 64K stack for each sample. So usually can't show complete flame-graph. But
+   probably is enough for users to identify hot places.
+4. Take more CPU time than stack frame based call graphs. So the sample frequency is suggested
+   to be 1000 Hz. Thus at most 1000 samples per second.
+
+stack frame based call graphs:
+1. Need support of stack frame registers.
+2. Don't work well on ARM. Because ARM is short of registers, and ARM and THUMB code have different
+   stack frame registers. So the kernel can't unwind user stack containing both ARM/THUMB code.
+3. Also don't work well on fully compiled Java code on ARM64. Because the ART compiler doesn't
+   reserve stack frame registers.
+4. Work well when profiling native programs on ARM64. One example is profiling surfacelinger. And
+   usually shows complete flame-graph when it works well.
+5. Take less CPU time than dwarf based call graphs. So the sample frequency can be 4000 Hz or
+   higher.
+
+So if you need to profile code on ARM or profile fully compiled Java code, dwarf based call graphs
+may be better. If you need to profile C++ code on ARM64, stack frame based call graphs may be
+better. After all, you can always try dwarf based call graph first, because it always produces
+reasonable results when given unstripped binaries properly. If it doesn't work well enough, then
+try stack frame based call graphs instead.
