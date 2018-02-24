@@ -26,11 +26,11 @@ tags: []
 ### record 功能
 对于游戏而言，因为启动时间较长，通常是直接截取运行中的数据，所以需要加上-nc选项，避免启动游戏。
 
-有两种获取堆栈信息的方法，一种是基于dwarf的call graph 使用 -g 选项，另外一种是基于stack frame的call graph 使用 --call-graph fp 选项。不同的CPU支持的类型不同，优先尝试基于dwarf的，如果不支持，再尝试基于stack frame的。
+有两种获取堆栈信息的方法，一种是基于`dwarf`的`call graph` 使用`-g`选项，另外一种是基于`stack frame`的`call graph` 使用`--call-graph fp`选项。不同的CPU支持的类型不同，优先尝试基于`dwarf`的，如果不支持，再尝试基于`stack frame`的。
 
-`-lib` 选项用于so的符号表不存在于APK内的时候, Unity5.6.5后，Android il2cpp版本的符号表不再存在于apk中的libil2cpp.so中了，会存在于apk的同级目录下的*.symbols.zip文件中，有个libil2cpp.sym的文件，要将它改名为libil2cpp.so放入-lib制定路径进行分析
+`-lib` 选项用于so的符号表不存在于APK内的时候, Unity5.6.5后，Android il2cpp版本的符号表不再存在于apk中的libil2cpp.so中了，会存在于apk的同级目录下的*.symbols.zip文件中，有个libil2cpp.sym的文件，要将它改名为libil2cpp.so放入-lib制定路径进行分析。
 
-`-nb` 选项是指不需要从设备拉取符号，同版本的应用第二次运行可使用该选项，同时不设置`-lib`，这样可以减少push调试符号到设备上，从流程上缩减
+`-nb` 选项是指不需要从设备拉取符号，同版本的应用第二次运行可使用该选项，同时不设置`-lib`，这样可以减少push调试符号到设备上，从流程上缩减。
 
     python app_profiler.py -p com.dpull.test -nc -r "-g --duration 10" -lib /Volumes/Data/git/TestUnity/Symbol
     python app_profiler.py -p com.dpull.test -nc -r "-g --duration 10" -nb
