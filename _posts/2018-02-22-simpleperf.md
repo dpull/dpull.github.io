@@ -28,22 +28,21 @@ tags: []
 
 有两种获取堆栈信息的方法，一种是基于dwarf的call graph 使用 -g 选项，另外一种是基于stack frame的call graph 使用 --call-graph fp 选项。不同的CPU支持的类型不同，优先尝试基于dwarf的，如果不支持，再尝试基于stack frame的。
 
-    python app_profiler.py -p com.dpull.test -nc -r "-g --duration 10"
-    python app_profiler.py -p com.dpull.test -nc -r "--call-graph fp --duration 10"
+`-lib` 选项用于so的符号表不存在于APK内的时候, Unity5.6.5后，Android il2cpp版本的符号表不再存在于apk中的libil2cpp.so中了，会存在于apk的同级目录下的*.symbols.zip文件中，有个libil2cpp.sym的文件，要将它改名为libil2cpp.so放入-lib制定路径进行分析
+
+`-nb` 选项是指不需要从设备拉取符号，同版本的应用第二次运行可使用该选项，同时不设置`-lib`，这样可以减少push调试符号到设备上，从流程上缩减
+
+    python app_profiler.py -p com.dpull.test -nc -r "-g --duration 10" -lib /Volumes/Data/git/TestUnity/Symbol
+    python app_profiler.py -p com.dpull.test -nc -r "-g --duration 10" -nb
+    python app_profiler.py -p com.dpull.test -nc -r "--call-graph fp --duration 10" -lib /Volumes/Data/git/TestUnity/Symbol
+    python app_profiler.py -p com.dpull.test -nc -r "--call-graph fp --duration 10" -nb
 
 ### report 功能
 
 `Simpleperf`提供了简单的GUI来查看数据（--gui选项），使用-g选项可以查看热点的堆栈，不使用可以看热点函数
 
-    python report.py --gui -g --symfs /Volumes/Data/git/TestUnity/Symbol
-
-这里重点说一下`--symfs`选项，它需要文件路径一致。
-
-例如上述命令 
-`/data/app/com.dpull.test-1/lib/arm/libil2cpp.so`的符号文件要存在于 `/Volumes/Data/git/TestUnity/Symbol/data/app/com.dpull.test-1/lib/arm/libil2cpp.so`
-
-Unity5.6.5后，Android il2cpp版本的符号表不再存在于apk中的libil2cpp.so中了，会存在于apk的同级目录下的*.symbols.zip文件中，有个libil2cpp.sym的文件，要将它改名为libil2cpp.so放入上述路径进行分析
-
+    python report.py --gui -g
+    
 ### Suggestions about recording call graphs
 elow is our experiences of dwarf based call graphs and stack frame based call graphs.
 
