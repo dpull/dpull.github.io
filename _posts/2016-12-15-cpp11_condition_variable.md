@@ -18,7 +18,6 @@ condition variable存在假醒问题（spurious wakeup），也就是某个condi
 
 `std::unique_lock<>` 提供了“何时”以及如何锁定或者解锁其mutex，因此其object可能（但也可能不）拥有一个被锁住的mutex。可以调用`owns_lock()`或`bool()`来查询mutex是否被锁住。
 
-
 ## 验证的问题
 
 1. `std::condition_variable::wait` 的pred函数是否是加锁的？
@@ -35,74 +34,33 @@ condition variable存在假醒问题（spurious wakeup），也就是某个condi
 1. 如果在锁内调用`std::condition_variable::notify_all`要等其所在线程的锁结束了，再响应`std::condition_variable::wait` 的pred函数。
 1. 不会多次响应。
 
-测试代码：
+
+## 项目中出现过的问题
+在实际应用中出现这样一个问题，代码如下：
 
 {% highlight c++ %}
-#include <iostream>
-#include <condition_variable>
-#include <thread>
-#include <chrono>
-
-std::condition_variable cv;
-std::mutex cv_m; // This mutex is used for three purposes:
-// 1) to synchronize accesses to i
-// 2) to synchronize accesses to std::cerr
-// 3) for the condition variable cv
-volatile int i = 0;
-
-void waits_signals(int index)
+class ThreadAwait
 {
-    std::unique_lock<std::mutex> lk(cv_m);
-    
-    std::cerr << index << "\t[waits_signals][waiting]:" << i << "\t" << std::this_thread::get_id() << std::endl;
-    
-    cv.wait(lk, [index]{
-        std::cerr << index << "\t[waits_signals][wait-start]:" << i << "\t" << std::this_thread::get_id() << std::endl;
-        std::this_thread::sleep_for(std::chrono::seconds(1));
-        std::cerr << index << "\t[waits_signals][wait-end]:" << i << "\t" << std::this_thread::get_id() << std::endl;
-        return i == 1;
-    });
-    
-    i = 3;
-    std::cerr << index << "\t[waits_signals][signal-before]:" << i << "\t" << std::this_thread::get_id() << std::endl;
-    cv.notify_all();
-    
-    i = 4;
-    std::cerr << index << "\t[waits_signals][signal-end]:" << i << "\t" << std::this_thread::get_id() << std::endl;
-}
+public:
+	ThreadAwait() : m_WaitFinish(false){}
 
-void signals_waits(int index)
-{
-    std::this_thread::sleep_for(std::chrono::seconds(5));
-    
-    {
-        std::unique_lock<std::mutex> lk(cv_m);
-        i = 1;
-        
-        std::cerr << index << "\tsignals_waits][signal-before]:" << i << "\t" << std::this_thread::get_id() << std::endl;
-        cv.notify_all();
-        // cv.notify_one();
-        // cv.notify_one();
-        
-        //i = 2;
-        std::cerr << index << "\tsignals_waits][signal-end]:" << i << "\t" << std::this_thread::get_id() << std::endl;
+	void Wait()
+	{
+		std::unique_lock<decltype(m_Mutex)> lock(m_Mutex);
+		m_ConditionVar.wait(lock, [this]() {return m_WaitFinish.load(); });
+	}
 
-        std::cerr << index << "\tsignals_waits][waiting]:" << i << "\t" << std::this_thread::get_id() << std::endl;
-        cv.wait(lk, [index]{
-            std::cerr << index << "\tsignals_waits][wait]:" << i << "\t" << std::this_thread::get_id() << std::endl;
-            return i == 3;
-        });
-    }
-}
+	void Notify()
+	{
+		m_WaitFinish.store(true);
+		m_ConditionVar.notify_all();
+	}
 
-int main()
-{
-    std::thread t1(signals_waits, 1), t2(waits_signals, 2), t3(waits_signals, 3), t4(waits_signals, 4);
-    t1.join();
-    t2.join();
-    t3.join();
-    t4.join();
-}
+private:
+	std::atomic<bool> m_WaitFinish;
+	std::mutex m_Mutex;
+	std::condition_variable m_ConditionVar;
+};
 {% endhighlight %}
 
-
+它使用`std::atomic`作为`std::condition_variable`的判断条件，在`Notify()`时去掉了锁，这个逻辑看似没有问题，但如果出现在 `验证问题[5]` 这种情形时，就会发生死锁。
