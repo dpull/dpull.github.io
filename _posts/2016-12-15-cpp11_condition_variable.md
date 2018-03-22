@@ -42,24 +42,21 @@ condition variable存在假醒问题（spurious wakeup），也就是某个condi
 class ThreadAwait
 {
 public:
-	ThreadAwait() : m_WaitFinish(false){}
-
-	void Wait()
-	{
-		std::unique_lock<decltype(m_Mutex)> lock(m_Mutex);
-		m_ConditionVar.wait(lock, [this]() {return m_WaitFinish.load(); });
-	}
-
-	void Notify()
-	{
-		m_WaitFinish.store(true);
-		m_ConditionVar.notify_all();
-	}
-
+    void Wait()
+    {
+        std::unique_lock<decltype(m_Mutex)> lock(m_Mutex);
+        m_ConditionVar.wait(lock, [this]() {return m_WaitFinish.load(); });
+    }
+	
+    void Notify()
+    {
+        m_WaitFinish.store(true);
+        m_ConditionVar.notify_all();
+    }
 private:
-	std::atomic<bool> m_WaitFinish;
-	std::mutex m_Mutex;
-	std::condition_variable m_ConditionVar;
+    std::atomic<bool> m_WaitFinish{false};
+    std::mutex m_Mutex;
+    std::condition_variable m_ConditionVar;
 };
 {% endhighlight %}
 
