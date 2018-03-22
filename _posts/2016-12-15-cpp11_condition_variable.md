@@ -47,7 +47,7 @@ public:
         std::unique_lock<decltype(m_Mutex)> lock(m_Mutex);
         m_ConditionVar.wait(lock, [this]() {return m_WaitFinish.load(); });
     }
-	
+
     void Notify()
     {
         m_WaitFinish.store(true);
@@ -60,4 +60,4 @@ private:
 };
 {% endhighlight %}
 
-它使用`std::atomic`作为`std::condition_variable`的判断条件，在`Notify()`时去掉了锁，这个逻辑看似没有问题，但如果出现在 `验证问题[5]` 这种情形时，就会发生死锁。
+它使用`std::atomic`作为`std::condition_variable`的判断条件，在`Notify()`时去掉了锁，这个逻辑看似没有问题，但如果出现在 `验证问题[5]` 这种情形时，导致调用`Wait()`的线程无法恢复。
