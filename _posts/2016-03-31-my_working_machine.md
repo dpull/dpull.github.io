@@ -7,15 +7,16 @@ tags: []
 
 # 软件列表
 
-* 效率工具：`alfred`
+* 效率工具：`alfred` 和 `Magnet`
 * 安装软件：`Homebrew`
 * 卸载软件：`AppCleaner`
+* 系统监控：`iStat Menus`
 * 解压：`Keka`
-* 浏览器：`Chrome`
-* 文件管理：`CRAX Commander` 和 `Total Commander(windows)`
-* 文本编辑：`Sublime Text`
+* 浏览器：`Google Chrome`
+* 文件管理：`Commander One`
+* 文本编辑：`VS Code`
 * 电子书：`CleanView`
-* 虚拟机：`Parallels Desktop`
+* 虚拟机：`Parallels Desktop` 和 `Docker`
   * 办公：`Office(windows)`
   * IDE：`Xcode` 和 `Visual Studio(windows)`
 * git：`SourceTree`
@@ -47,16 +48,14 @@ svn add --no-ignore [Path]
 svn status | grep '^?' | awk '{print $2}' | xargs rm -rf #删除非版本内的文件
 {% endhighlight %}	
 
-## `Sublime`插件设置
+## `Docker `常用命令
 
-安装[插件管理器](https://packagecontrol.io/installation)。
-
-我常用插件有：
-
-* SyncedSidebar
-* Path Tools，用于拷贝文件路径
-* Advanced CSV，用于查看csv配置表
-* Json Reindent，用于格式化json文本，用法：打开插件界面，输入json
+{% highlight shell %}
+docker ps -a
+docker run -t -i -v /Volumes/Data/git:/git centos /bin/bash
+docker exec -i -t 69d1 bash
+docker start 69d1
+{% endhighlight %}	
 
 ## `QuickBuild`常用任务
 [QuickBuild](http://www.pmease.com/) 是一款持续集成工具，
