@@ -7,7 +7,7 @@ tags: []
 
 公司立了个新项目，让我设计下服务器端，趁机尝试一下skynet。
 
-## skynet 优缺点 ##
+# skynet 优缺点
 
 传统的服务器是单线程，多进程的拓扑结构。
 它按照逻辑分布，将玩家分散于不同的进程，游戏的主循环依次运行着各个子系统。它存在的问题是：当单核性能不足时，需要将一些逻辑从主循环中分出去。针对这个问题：
@@ -34,27 +34,35 @@ skynet为解决这个问题引入lua，每一个Actor是一个独立的lua虚拟
 
 skynet采用了固定的线程数，以减少线程切换带来的开销，所以actor的数量会远多于线程数，其调度策略是公平的轮询每个actor，但actor在实际中是有不同优先级的。
 
-# skynet 简单概念 #
+## 待补充
+RPC调用超时，调用方无法区分
+* 是网络故障还是对方机器崩溃
+* 软件还是硬件错误
+* 是去的路上错误还是回来的路上错误
+* 对方有没有收到请求， 能不能重试
 
-## address是什么？ ##
+
+# skynet 简单概念
+
+## address是什么？
 address 可以理解为handle的变量名，有几种格式：
 
 - `:name`, name是handle的16进制，一般用于会重复存在的service，如:agent
 - `.name`, name是本进程唯一的，集群内可以有多个。
 - `name`, name是集群内唯一的，（后注册的会覆盖前面注册的）。
 
-## `skynet.launch` ##
+## `skynet.launch`
 开启服务，如果要开启lua服务，可以写为`skynet.launch(snlua, lua模块`
 
-## `skynet.newservice` ##
+## `skynet.newservice`
 开启lua服务，并在服务退出或出错时，通知创建者。
 即等同于：`skynet.launch(snlua, lua模块` + 退出回调功能。
 
-## `skynet.uniqueservice` ##
+## `skynet.uniqueservice`
 创建唯一的skynet.newservice， 如果第一个参数为ture，即为创建集群内唯一的服务，
 否则是本进程唯一的lua服务
 
-## `skynet.call` 和 `skynet.ret` ##
+## `skynet.call` 和 `skynet.ret`
 
 和`skynet.call`配合使用。
 需要注意的是：
@@ -65,6 +73,6 @@ address 可以理解为handle的变量名，有几种格式：
 
 云风说这两个都是为了兼容老项目而无法改进其封装的形式。
 
-## `skynet.exit` 和 `skynet.kill` ##
+## `skynet.exit` 和 `skynet.kill`
 直接调用exit或者kill都是关闭掉snlua服务，`snax.kill`的做法是向指定服务发送命令，然后该服务调用服务内的函数后执行`skynet.exit`，可用类似的方式设计服务器关闭流程。
  

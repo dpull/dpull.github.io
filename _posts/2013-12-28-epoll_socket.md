@@ -5,88 +5,73 @@ categories: [general]
 tags: [socket, epoll]
 ---
 
-## 感悟 ##
-每次查网络库的bug都会走一些弯路，因为网络库已经经历了四五款产品，大家从心里上认为它是稳定的。
-甚至每进行一些改动，都要回答，当时剑三为什么没有这样做-_-!!
+随着虚拟主机和移动互联网的兴起，原本端游的服务端网络库需要运行在更为复杂的环境中了。
 
-## 当accept错误码为EMFILE时 ##
+为此我对其中一些代码进行完善，下面是针对各个接口的总结。
 
-这几天在测试gateway的性能，当大量玩家登录时，会出现客户端connect成功，但服务端的epoll_wait没有响应。
+## TCP的socket是什么？
 
-增加了日志查这个问题，发现accept出现了失败的情况，错误码除了非堵塞的常出的EAGAIN、EWOULDBLOCK、EINTR之外，
-出现了EMFILE（Too many open files），出现几次EMFILE之后，服务端的监听socket就不会触发epoll_wait了。
+TCP的socket是状态机。
 
-这儿有两个问题：
+它通过三次握手建立连接；
+在关闭时，发送SYN分节进行终止，操作系统会保持套接字time_wait状态，以实现可靠的实现TCP全双工终止和允许老的重复分节在网络中消逝。
 
-### 为什么连接数会达到本进程设置的上限？ ###
-同样是一套网络库，同样的的压力，《逍遥江湖》为什么不会？
+## `connect()` 函数
 
-是《天天爱萌仙》进程设置上的bug，先getrlimit再setrlimit，setrlimit设置的数值就是系统默认的数值。
-    
-{% highlight c %}
-rlimit resLimit;
+因为TCP的socket是状态机，如果`connect()`失败后要`close()`，不能再次`connect()`。* 与此相反，UDP的socket是没有状态的，它的`connect()`可以多次调用，然后调用`write()`或`read()`操作，效果和`sendto()`和`recvfrom()`相同，但减少了参数传递。 * 
 
-resLimit.rlim_cur = SHRT_MAX;
-resLimit.rlim_max = SHRT_MAX;
+## `listen()` 函数
 
-nRetCode = getrlimit(RLIMIT_NOFILE, &resLimit); // bug行，去掉即修复
-XYLOG_FAILED_JUMP(nRetCode == 0); // bug行，去掉即修复
+调用`listen()`后该socket， 会有两条队列：未完成三次握手队列，完成三次握手队列。两个队列总和的最大值和参数backlog有关。 * 不要把backlog定义为0，因为不同的实现对此有不同的解释。 *
 
-nRetCode = setrlimit(RLIMIT_NOFILE, &resLimit);
-XYLOG_FAILED_JUMP(nRetCode == 0);
-{% endhighlight %}
+## `accept()` 函数
 
-修复该bug后，《卖个萌仙》的服务端需要以root权限启动了，遭到运营同学的反对，解决方案是，
-运维把服务器的打开文件数的软硬限制调整到大于SHRT_MAX，然后服务端程序就可以不以root启动了，
-《逍遥江湖》一直要以root启动的原因也应该是这个。
+堵塞的`accept()`，在polling模型中会出现安全隐患。当一个连接连上随即断开，可能会出现`select()`时显示可读，但是`accept()`时堵塞，由此将线程堵塞住。为解决这个问题，可以将监听的socket设置为非堵塞。
 
-### 为什么epoll_wait没有响应？ ###
+`accept()`返回`-1`时，如果`errno`为 `EAGAIN, EINTR, EMFILE, ECONNABORTED` 可继续使用该socket。
 
-在[这个帖子](http://bbs.chinaunix.net/thread-1495863-1-1.html)中，有这样一个问题：
+但针对`EMFILE`需要特殊处理下，该错误表示file descriptor已耗尽，当出现这个错误时，如果监听套接字使用EPOLLLT将一直提醒fd可读，使用EPOLLET，程序再也不会收到新连接。有几种方案，可以减少或者修复该问题：
+1. 设置系统连接数，可以调用函数`setrlimit(2)`或者执行命令`ulimit(1)`。该方案减少问题发生。
+1. 关闭listening fd, 例如：[memcached](https://github.com/memcached/memcached/blob/dbb7a8af90054bf4ef51f5814ef7ceb17d83d974/memcached.c)中执行`listen(next->sfd, 0)`禁用了新连接。该方案需要有新的策略去重新允许新连接。另外该做法和`listen()` 函数的斜体注释部分有冲突。
+1. 准备一个空闲的文件描述符。遇到这种情况，先关闭这个空闲文件，获得一个文件描述符名额；在accept()拿到新socket连接描述符，然后立即close它，这样优雅地断开了客户端连接；最后重新打开一个空闲文件，把“坑”占住，以备再次出现这种情况。
 
-**在memcached里面有一段代码，当accept错误码为EMFILE时会调用listen(sfd,0),为什么要这样调用呢？**
-    
-{% highlight c %}
-if ((sfd = accept(c->sfd, (struct sockaddr *)&addr, &addrlen)) == -1) {
-    if (errno == EAGAIN || errno == EWOULDBLOCK) {
-        /* these are transient, so don't log anything */
-        stop = true;
-    } else if (errno == EMFILE) {
-        accept_new_conns();
-        stop = true;
-    } else {
-        perror("accept()");
-        stop = true;
-    }
-    break;
-}
+## socket 设置接收缓冲区
 
-void do_accept_new_conns(void) {
-    update_event(next, 0);
-    if (listen(next->sfd, 0) != 0) {
-        perror("listen");
-    }
-}
-{% endhighlight %}
+当设置TCP套接字接收缓冲区大小时，函数调用的顺序很重要。这是因为TCP的窗口规模选项是在建立连接时用SYN分节与对端互换得到的。
 
-**有一个回复如下：**
+* 对于客户端，这意味着SO_RECVBUF选项必须在调用connect之前设置；
+* 对于服务器，这意味着该选项必须在调用listen之前给监听套接字设置。
 
-listen()有个队列(或者说内核里面有个队列),
-就算服务端没有accept(),客户端也能connect()成功甚至能够发送数据.
-一旦程序不能成功accept()队列中已有的连接(比如发生EMFILE),队列会很快变满(进行并发压力测试或者负载很高的情况下),
-队列变满之后,监听套接字上便不会再次触发边沿事件,
-也就是epoll的ET模式下的事件.
-这种情况下即便程序关闭了一些套接字(比如由超时处理关闭)并能够再次进行accept(),
-但是程序不会被通知进行accept(), 也就不能继续提供服务了.
-所以这种情况要做一下处理.
-我通常的做法是发生EMFILE之后定期的epoll_ctl(...MOD...)一下监听套接字以便再次触发.
+给已连接套接字设置该选项对于可能存在的窗口规模选项没有任何影响，
+因为accept直到TCP的三路握手完成才会创建并返回已连接套接字。
+这就是必须给监听套接字设置本选项的原因。（套接字缓冲区的大小总是由新创建的已连接套接字从监听套接字继承而来）
 
-**另外，**
-[libev上相关的讨论](http://search.cpan.org/~mlehmann/EV-4.15/libev/ev.pod#The_special_problem_of_accept\(\)ing_when_you_can't)
+## socket 超时检查
 
+TCP 提供了keep-alive选项, 但该选项s默认是两小时无任一方向的数据交换，才发送超时检查，并没有接口将该时间调短。
 
-## 当send错误码为EAGAIN时 ##
+当进程关闭socket或者进程退出时，操作系统会往对方发送FIN分节，但是
 
-我们网络库一直是非阻塞的recv，阻塞的send，说白了就是个循环，一定次数内不停的send，尝试次数过了就断开链接，纯峰对此的解释是防止恶意客户端不收包，导致服务端内存暴涨，
-但在金山网络联运的虚拟机上，正常连接频繁出现Send缓冲区不可用，导致断线，解决的思路是回归到正统的epoll用法，当send缓冲区不可用时，将其放入一个buffer内，待到socket可写时，再处理缓冲区，当然，为了避免纯峰提到的恶意客户端，还是限制了该buffer的大小的。
-（以前我们通常是将send缓冲区设大，但不知为何在联运的虚拟机上会出该问题，没有思路继续查，待高人指点）
+* 如果操作系统崩溃或硬件故障导致机器重启，没有机会发送FIN分节；
+* 并发连接数很高时，操作系统或进程如果重启，可能没有即会断开全部连接。换句话说，FIN分节可能出现丢包，但这时没机会重试；
+* 网络故障
+
+等情况时，需要用户层自己做socket超时检查。
+
+## socket 杂项
+
+1. `SIGPIPE`：如果管道的读进程已终止时写管道，则产生此信号。当类型为`SOCK_STREAM`的套接字已不在连接时，进程写该套接字也产生此信号。`SIGPIPE`的默认行为时终止进程，对于游戏服务器需要在进程开始时，忽略该信号。
+1. `TCP_NODELAY`选项，开启本选型将禁止TCP的Nagle算法，Nagle算法的目的在于减少广域网上小分组的数目，禁用该算法可避免连续发包出现延迟，这对编写低延迟网络服务很重要。
+1. select返回各个socket就绪条件小结（图6-7）（待补充）
+1. shutdown 和 so_linger各种情况总结（图7-12）（待补充）
+
+## epoll相关
+
+epoll相对于poll，减少了对文件的polling操作。
+
+* poll是对传入的所有文件进行polling，
+* epoll是对rdllist中的文件进行polling。rdllist 由内核在I/O event时回调。如果调用epoll_wait时参数timeout不为0，会调用wait queue，检查是否有I/O event。
+
+对当前rdllist进行polling时，如果是EPOLLLT,则会插入下一次的rdllist，
+因为这个差异，在EPOLLLT模式下，对EPOLLOUT事件，在send完成后，要及时的修改fd关联的事件。
+
