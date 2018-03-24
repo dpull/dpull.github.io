@@ -87,7 +87,7 @@ int main(char *argv[], int argc)
 
 使用`objdump -S`反汇编，查看它的汇编代码。
 
-{% highlight asm %}
+{% highlight nasm %}
 080483b0 <main>:
  // Prologue
  80483b0:       55                      push   %ebp
@@ -125,7 +125,7 @@ int main(char *argv[], int argc)
 
 在上面程序中，用likely()代替其中的unlikely()，重新编译，再来看它的汇编代码：
 
-{% highlight asm %}
+{% highlight nasm %}
 080483b0 <main>:
  //             Prologue
  80483b0:       55                      push   %ebp
