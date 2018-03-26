@@ -1,6 +1,6 @@
 ---
 layout: post
-title: likely(x)与unlikely(x)函数，即__builtin_expect的使用
+title: `likely(x)`与`unlikely(x)`
 categories: [general]
 tags: []
 ---
@@ -163,4 +163,4 @@ int main(char *argv[], int argc)
 
 ## 如何使用
 
-在一个条件判断语句中，当这个条件被认为是非常非常有可能满足时，则使用`likely()`宏，否则，条件非常非常不可能或很难满足时，则使用unlikely()`宏。
+在一个条件判断语句中，当这个条件被认为是非常非常有可能满足时，则使用`likely()`宏，否则，条件非常非常不可能或很难满足时，则使用`unlikely()`宏。
