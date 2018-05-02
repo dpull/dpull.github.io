@@ -34,10 +34,11 @@ tags: []
 {% highlight shell %}
 dot_clean 路径 # 清理mac生成的._开头的文件
 lsof -i :80 # 查看某端口号被哪些程序占用
-svn revert -R Path 
+svn revert -R [Path]
 svn status --no-ignore [Path]
 svn add --no-ignore [Path]
-svn status | grep '^?' | awk '{print $2}' | xargs rm -rf #删除非版本内的文件 #IFS=$(echo -en "\n\b")
+svn status | grep '^?' | awk '{print $2}' | xargs rm -rf #删除非版本内的文件 
+IFS=$(echo -en "\n\b") #处理文件名中空格 
 {% endhighlight %}	
 
 ## `Docker `常用命令
