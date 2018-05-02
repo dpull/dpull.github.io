@@ -29,14 +29,6 @@ tags: []
 * 下载：`迅雷(windows)`
 * 计划任务：`QuickBuild`
 
-## `alfred`常用功能或工作流
-* 锁屏：`lock`
-* 启动应用：`无` 或 `open`
-* 退出应用：`quit`
-* 执行终端命令：`> ls`
-* 搜索文件：`find`
-* dash工作流：查文档
-
 ## 常用指令
 
 {% highlight shell %}
@@ -45,7 +37,7 @@ lsof -i :80 # 查看某端口号被哪些程序占用
 svn revert -R Path 
 svn status --no-ignore [Path]
 svn add --no-ignore [Path]
-svn status | grep '^?' | awk '{print $2}' | xargs rm -rf #删除非版本内的文件
+svn status | grep '^?' | awk '{print $2}' | xargs rm -rf #删除非版本内的文件 #IFS=$(echo -en "\n\b")
 {% endhighlight %}	
 
 ## `Docker `常用命令
@@ -78,15 +70,6 @@ export CLICOLOR=1
 export LSCOLORS=gxfxaxdxcxegedabagacad
 alias ll="ls -l"
 alias la="ls -a"
-
-alias unity='open -a Unity -n'
-
-export ANDROID_SDK_ROOT=/Applications/ADT/sdk
-export ANDROID_NDK_ROOT=/Applications/android-ndk-r8d
-export NDK_ROOT=/Applications/android-ndk-r8d
-export PATH=$PATH:$ANDROID_SDK_ROOT
-export PATH=$PATH:$ANDROID_NDK_ROOT 
-
 export ALL_PROXY=socks5://10.20.1.1:1111
 {% endhighlight %}
 
