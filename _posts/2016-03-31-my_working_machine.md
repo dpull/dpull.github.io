@@ -10,21 +10,22 @@ tags: []
 * 效率工具：`alfred` 和 `Magnet`
 * 安装软件：`Homebrew`
 * 卸载软件：`AppCleaner`
-* 系统监控：`iStat Menus`
-* 解压：`Keka`
+* 解压：`The Unarchiver`
 * 浏览器：`Google Chrome`
-* 文件管理：`Commander One`
-* 文本编辑：`VS Code`
-* 电子书：`CleanView`
-* 虚拟机：`Parallels Desktop` 和 `Docker`
-  * 办公：`Office(windows)`
-  * IDE：`Xcode` 和 `Visual Studio(windows)`
 * git：`SourceTree`
-* svn：`svn命令行` 和 `TortoiseSVN(windows)`
 * 思维导图：`MindNode`
 * 时间管理：`OmniFocus`
+* 文本编辑：`VS Code`
+* Markdown编辑器：`VS Code`
+---
+* 系统监控：`iStat Menus`
+* 文件管理：`Commander One`
+* 电子书：`CleanView`
+* 虚拟机：`Parallels Desktop` 和 `Docker`
+* IDE：`Xcode` 和 `Visual Studio(windows)`
+* 办公：`Office`
+* svn：`svn命令行` 和 `TortoiseSVN(windows)`
 * 开发文档：`Dash`
-* Markdown编辑器：`MacDown`
 * 播放器：`射手影音`
 * 下载：`迅雷(windows)`
 * 计划任务：`QuickBuild`
