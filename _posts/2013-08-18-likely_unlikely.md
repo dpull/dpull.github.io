@@ -1,6 +1,6 @@
 ---
 layout: post
-title: `likely(x)`与`unlikely(x)`
+title: likely(x) 与 unlikely(x)
 categories: [general]
 tags: []
 ---
