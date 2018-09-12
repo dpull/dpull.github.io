@@ -6,9 +6,9 @@ tags: []
 ---
 
 `Unity`内置的`Profiler`是基于标签统计实现的，存在统计不全的问题。
-如我的某次统计中`FixUpdate`占总体性能的46%，但其中只有不到7%是有更详细的分析，所以需要一些更强力的性能剖析工具进行分析。
+如我的某次统计中`FixUpdate`占总体性能的46%，但其中只有不到7%是有更详细的分析，所以需要一些更强力的性能剖析工具进行分析。
 
-在`iOS`上可以使用`Xcode`的`TimeProfiler`来分析，在`Android`上，`AndroidStudio`内置的性能剖析工具主要是针对Java应用，第三方的有`Intel Vtune Amplifier`的Android版只能用于Intel CPU，`Snapdragon  prefiler`的`Sampling Capture`是对`Simpleperf`的封装，对我们游戏支持不好。
+在`iOS`上可以使用`Xcode`的`TimeProfiler`来分析，在`Android`上，`AndroidStudio`内置的性能剖析工具主要是针对Java应用，第三方的有`Intel Vtune Amplifier`的Android版只能用于Intel CPU，`Snapdragon  prefiler`的`Sampling Capture`是对`Simpleperf`的封装，对我们游戏支持不好。
 
 ## Simpleperf简单介绍
 
@@ -19,7 +19,7 @@ tags: []
 
 ## Simpleperf 常用法
 
-`Simpleperf`常用法分为record和report两个功能。做法是在Android机器上运行`Simpleperf`程序的record功能，然后将输出文件同步到PC上，使用report功能分析数据。
+`Simpleperf`常用法分为record和report两个功能。做法是在Android机器上运行`Simpleperf`程序的record功能，然后将输出文件同步到PC上，使用report功能分析数据。
 
 提供了app_profiler.py和report.py，report_sample.py等封装了`Simpleperf`常见的用法，简化命令行的难度。
 
