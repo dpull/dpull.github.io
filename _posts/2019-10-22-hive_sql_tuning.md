@@ -1,6 +1,6 @@
 ---
 layout: post
-title: hive sql 耗时优化
+title: Hive SQL 耗时优化
 categories: [general]
 tags: []
 ---
@@ -14,7 +14,7 @@ tags: []
 
 ## 增加并行
 
-通过增加并行，可以同时执行多条SQL语句，达到优化时间的目的，hive 可并行的SQL语句有：
+通过增加并行，可以同时执行多条SQL语句，达到优化时间的目的，Hive可并行的SQL语句有：
 
 {% highlight SQL %}
 FROM from_statement
@@ -36,7 +36,7 @@ select_statement
 
 我尝试了以下几种办法，降低并行查询时的数据量级：
 
-1. with语句
+* `with`语句
 
 {% highlight SQL %}
 with tmp as (select_statement)
@@ -49,10 +49,9 @@ SELECT * FROM (
 )
 {% endhighlight %}
 
-这种方式是无效的，通过'explain'可以看出，这只是一个语法糖。
+这种方式是无效的，通过 `explain` 可以看出，这只是语法糖。
 
-1. 视图
-
+* 视图
 
 {% highlight SQL %}
 create view tmp select_statement;
@@ -66,9 +65,9 @@ SELECT * FROM (
 drop view tmp;
 {% endhighlight %}
 
-这种方式是无效的，Hive不支持物化的视图，这个和使用with语句在时间消耗上没啥区别
+这种方式是无效的，Hive不支持物化的视图，这个和使用with语句在时间消耗上没区别。
 
-1. 临时表
+* 临时表
 
 {% highlight SQL %}
 create table tmp select_statement;
@@ -82,4 +81,4 @@ SELECT * FROM (
 drop table tmp;
 {% endhighlight %}
 
-这种方式是可以的，但是创建了一张临时表，有IO操作。
+这种方式是可行的，但是创建了一张临时表，有IO操作。
