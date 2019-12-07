@@ -5,7 +5,7 @@ categories: [general]
 tags: []
 ---
 
-常见编程语言中字符串存在转义字符, 造成正则表达式/Windows路径等需要特殊处理, 所以有的语言提供了原义标识符(verbatim string literal).
+常见编程语言中字符串存在转义字符, 造成写 正则表达式 或 Windows路径 等等含有转义字符的字符串时需要处理, 所以有的语言提供了原义标识符(verbatim string literal).
 
 ## 相同之处
 
