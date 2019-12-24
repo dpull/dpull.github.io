@@ -7,7 +7,7 @@ tags: []
 
 # 软件列表
 
-* 效率工具：`alfred` 和 `Magnet`
+* 效率工具：`alfred`  `Magnet`
 * 安装软件：`Homebrew`
 * 卸载软件：`AppCleaner`
 * 解压：`The Unarchiver`
@@ -16,7 +16,6 @@ tags: []
 * 思维导图：`MindNode`
 * 时间管理：`OmniFocus`
 * 文本编辑：`VS Code`
-* Markdown编辑器：`VS Code`
 ---
 * 系统监控：`iStat Menus`
 * 文件管理：`Commander One`
@@ -24,10 +23,8 @@ tags: []
 * 虚拟机：`Parallels Desktop` 和 `Docker`
 * IDE：`Xcode` 和 `Visual Studio(windows)`
 * 办公：`Office`
-* svn：`svn命令行` 和 `TortoiseSVN(windows)`
 * 开发文档：`Dash`
 * 播放器：`射手影音`
-* 下载：`迅雷(windows)`
 * 计划任务：`QuickBuild`
 
 ## 常用指令
@@ -35,6 +32,26 @@ tags: []
 {% highlight shell %}
 dot_clean 路径 # 清理mac生成的._开头的文件
 lsof -i :80 # 查看某端口号被哪些程序占用
+netstat -lnp # 查看监听的程序和端口
+find path -name *.cpp
+pmap -x pid # 可用于查看加载的模块
+pstack pid # 查看堆栈
+screen # 多会话
+source ~/.bash_profile
+dos2unix 
+rpm -ql sqlite-devel
+/usr/include/c++/ #C++ 库文件
+{% endhighlight %}	
+
+## `git`常用命令
+
+{% highlight shell %}
+git checkout # 可用于回滚
+{% endhighlight %}	
+
+## `svn`常用命令
+
+{% highlight shell %}
 svn revert -R [Path]
 svn status --no-ignore [Path]
 svn add --no-ignore [Path]
@@ -42,7 +59,7 @@ svn status | grep '^?' | awk '{print $2}' | xargs rm -rf #删除非版本内的�
 IFS=$(echo -en "\n\b") #处理文件名中空格 
 {% endhighlight %}	
 
-## `Docker `常用命令
+## `Docker`常用命令
 
 {% highlight shell %}
 docker ps -a
@@ -65,7 +82,7 @@ docker start 69d1
 
 ## 我的终端设置
 
-`.bash_profile` 的配置如下：
+`~/.bash_profile` 的配置如下：
 
 {% highlight shell %}
 export CLICOLOR=1
@@ -84,7 +101,6 @@ export ALL_PROXY=socks5://10.20.1.1:1111
 * 制作安装盘，防止需要网络下载系统。
 
   教训：因为公司网络限速，有次下载`互联网恢复系统`用了一个多小时。
-
 
   	# 将Install{0}替换为安装盘文件名(按tab选择);
   	# 将Install{1}替换为U盘名(按tab选择);
