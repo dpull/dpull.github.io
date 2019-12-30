@@ -54,6 +54,8 @@ Sign    | Exponent          | Mantissa
 
 
 **在线演示** [IEEE-754 Analysis](http://babbage.cs.qc.cuny.edu/IEEE-754/)
+该网页已经无法访问, 可使用[源码](https://github.com/cvickery/IEEE-754)自行搭建.
+
 
 ## 取值范围 ##
 
