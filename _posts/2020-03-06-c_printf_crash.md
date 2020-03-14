@@ -7,7 +7,7 @@ tags: []
 
 [TOC]
 
-# 背景
+## 背景
 
 新版本正式服上线当天上午, 收到了DS Crash的报警, 因为DS没有开启生成Core文件,  所以只有Log中的堆栈信息:
 
@@ -35,22 +35,22 @@ UE_LOG(LogXXX, Log, TEXT("Float set <%s>|%llf"), *PropertyName, tf_ReadVal);
 
 该段代码在体验服没有发生过变更, 且体验服没有发现与此相关的Crash.
 
-## 背景结论
+### 背景结论
 * 这是一个偶现的DS Crash.
 * 空指针读内存失败导致Crash.
 
-# 静态分析
+## 静态分析
 
 通过查看项目源码和glibc源码进行静态分析.
 
-## 项目代码错误
+### 项目代码错误
 
 `double`类型在日志格式化输出时, 错误使用了`%llf`. 
 根据标准, `double` 应当用`%f`, `long double` 应当用`%Lf`, `%llf`是未定义的.
 
 我们服务器的`glibc`对应版本是`glibc2.17`, 通过查看对应源码[vfprintf.c](https://github.com/bminor/glibc/blob/release/2.17/master/stdio-common/vfprintf.c) 将`llf`识别为`long double`类型.
 
-## 崩溃堆栈分析
+### 崩溃堆栈分析
 
 对照日志中的堆栈信息和[libc.so的反汇编](./libc.so.6.asm)代码可知, 函数崩溃在:
 
@@ -76,13 +76,13 @@ __guess_grouping (unsigned int intdig_max, const char *grouping)
 
 但是搜索源码发现, 两处调用`__guess_grouping`的地方都有指针判空.
 
-## 静态分析结论
+### 静态分析结论
 
 1. 项目误将`double`类型使用`long double`类型格式化输出
 1. 确定程序崩溃在函数`__guess_grouping`, 调用该函数的地方是在将`double`或`long double`转为字符串
 1. 调用`__guess_grouping`的地方均有判空, 但出现了空指针访问
 
-# 动态分析
+## 动态分析
 
 静态分析陷入了死胡同, 于是搭建环境重现问题.
 
@@ -107,13 +107,13 @@ __guess_grouping (unsigned int intdig_max, const char *grouping)
 
 通过GDB查看上一层写入`%rsi`的内存, 发现其值也是也是该无效地址.
 
-## 动态分析结论
+### 动态分析结论
 1. 堆栈没有被破坏, 没有异常的函数调用
 1. `grouping`在上一层中指针是一个无效指针, 导致判空失败和传入函数`__guess_grouping`后崩溃
 1. **支线任务** 为何无效的指针在信号捕获时传参为空指针?
 1. **支线任务** 错误的传参实际读到的是什么?
 
-# 假设/验证
+## 假设/验证
 
 假设当传入特定`long double`时, `vswprintf`会引起Crash.
 
@@ -159,7 +159,7 @@ int main (void)
 
 而我们的`glibc`版本是`libc-2.17.so`发布于`2012-12-25`?!
 
-## 验证结论
+### 验证结论
 
 1. 当特定的`long double`进行格式化输出时, `glibc`会导致崩溃
 1. 该问题已于2007年修复, 但我们使用的版本是2012年发布的, 为什么还会Crash?
@@ -167,7 +167,7 @@ int main (void)
 1. **支线任务** 为什么会导致随机Crash(使用gdb运行不会Crash)
 1. **支线任务** glibc在哪次提交修复了该问题
 
-# 验证不同版本的`glibc`
+## 验证不同版本的`glibc`
 
 使用`docker`针对不同版本的`glibc`做实验:
 
@@ -182,7 +182,7 @@ int main (void)
 由此可知, [BZ #4586](https://sourceware.org/bugzilla/show_bug.cgi?id=4586) 并没有在2007年被修复, 是在2.19(发布于2014-02-08)-2.21(发布于2015-02-06)的某个版本被修复的, 
 `BZ #4586`有这样一行记录:[fweimer	2014-07-04 16:25:35 UTC	CC](https://sourceware.org/bugzilla/show_activity.cgi?id=4586)可以佐证这一假设.
 
-# 导致Crash的`long double`是有效的浮点数吗?
+## 导致Crash的`long double`是有效的浮点数吗?
 
 ```C
 union ieee854_long_double
@@ -203,11 +203,11 @@ union ieee854_long_double
 
 根据long double的数据结构, 对导致Crash的70多个数值进行分析, 发现其`exponent`为0, 则浮点数的指数E等于1-16383(十进制 6.909499226981e-310#DEN	double)，是一个非常小的浮点数, **是合法的**。
 
-# 总体结论
+## 总体结论
 
 由于错误使用了格式化字符串, 导致触发了`glibc`老版本存在的bug.
 
-# 支线任务
+## 支线任务
 
 且听下回分解.
 
