@@ -5,13 +5,11 @@ categories: [general]
 tags: []
 ---
 
-[TOC]
-
 ## 背景
 
 新版本正式服上线当天上午, 收到了DS Crash的报警, 因为DS没有开启生成Core文件,  所以只有Log中的堆栈信息:
 
-```C
+{% highlight c %}
 [2019.12.18-20.55.34:436][  1]LogLinux: === Critical error: ===
 Unhandled Exception: SIGSEGV: invalid attempt to read memory at address 0x0000000000000000
 
@@ -23,15 +21,15 @@ Unhandled Exception: SIGSEGV: invalid attempt to read memory at address 0x000000
 0x0000000003caeeb2 FStandardPlatformString::GetVarArgs(wchar_t*, unsigned long, int, wchar_t const*&, __va_list_tag*) 
 0x0000000003d5406d FMsg::Logf_Internal(char const*, int, FName const&, ELogVerbosity::Type, wchar_t const*, ...)
 0x00000000034087dd FXXXSetting::InitFromConfig(UXXXConfig const*)
-```   
+{% endhighlight %}
 
 查看对应的代码:
 
-```C
+{% highlight c %}
 double tf_ReadVal;
 // ...
 UE_LOG(LogXXX, Log, TEXT("Float set <%s>|%llf"), *PropertyName, tf_ReadVal);
-```     
+{% endhighlight %}   
 
 该段代码在体验服没有发生过变更, 且体验服没有发现与此相关的Crash.
 
@@ -59,7 +57,7 @@ UE_LOG(LogXXX, Log, TEXT("Float set <%s>|%llf"), *PropertyName, tf_ReadVal);
 
 对应在[__printf_fp](https://github.com/bminor/glibc/blob/release/2.17/master/stdio-common/printf_fp.c) 中的代码是:
 
-```C
+{% highlight c %}
 unsigned int
 __guess_grouping (unsigned int intdig_max, const char *grouping)
 {
@@ -70,7 +68,7 @@ __guess_grouping (unsigned int intdig_max, const char *grouping)
     if (*grouping == CHAR_MAX || *grouping <= 0)
         /* No grouping should be done.  */
         return 0;
-```
+{% endhighlight %} 
 
 由此可知是: `*grouping`操作导致了`read memory at address 0x0000000000000000`. 
 
@@ -121,7 +119,7 @@ __guess_grouping (unsigned int intdig_max, const char *grouping)
 
 **验证结果:** 成功找到一些数值, 可以将崩溃率从1.96‱提高到了30%, 以下为其中一个数值的演示代码:
 
-```C
+{% highlight c %}
 union long_double {
     long double d;
 
@@ -140,7 +138,7 @@ int main (void)
     printf("%Lf", value.d);
     return 0;
 }
-```
+{% endhighlight %}
 
 由此可以得出, glibc2.17存在bug, 在特定`long double`数值下, `printf`会导致程序Crash. 
 
@@ -184,7 +182,7 @@ int main (void)
 
 ## 导致Crash的`long double`是有效的浮点数吗?
 
-```C
+{% highlight c %}
 union ieee854_long_double
 {
     long double d;
@@ -199,15 +197,10 @@ union ieee854_long_double
         unsigned int negative : 1;
     } ieee;
 };
-```
+{% endhighlight %}
 
 根据long double的数据结构, 对导致Crash的70多个数值进行分析, 发现其`exponent`为0, 则浮点数的指数E等于1-16383(十进制 6.909499226981e-310#DEN	double)，是一个非常小的浮点数, **是合法的**。
 
 ## 总体结论
 
 由于错误使用了格式化字符串, 导致触发了`glibc`老版本存在的bug.
-
-## 支线任务
-
-且听下回分解.
-
