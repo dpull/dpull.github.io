@@ -7,7 +7,7 @@ tags: []
 
 ## 背景
 
-上周发现了一个问题, 在Linux下, 元组中空类型元素指针和最后一个元素的指针相同, Windows则不会, 指针各自不同, 下面的示例代码:
+上周发现了一个问题, 在Linux下, tuple(元组)中空类型元素指针和最后一个元素的指针相同, Windows则不会, 指针各自不同, 下面的示例代码:
 
 {% highlight c++ %}
 #include <cstdint>
@@ -77,9 +77,9 @@ int main()
 }
 {% endhighlight %}
 
-## MSVC 元组实现
+## MSVC tuple实现
 
-MSVC的元组实现, 是教科书的元组实现, 中规中矩. 以下代码选摘自MSVC的tuple文件:
+MSVC的tuple实现, 是教科书上讲述的实现, 以下代码选摘自MSVC的tuple文件:
 
 {% highlight c++ %}
 template <class _Ty>
@@ -118,11 +118,11 @@ C++11引入了变长模板参数, 上面代码中,
 
 ![](../resources/images/2020-10-31-cpp_tuple_empty_class_msvc_tuple.svg)
 
-按照这个实现, 很容易理解为何在MSVC下 `sizeof(exmaple)=12`, 以及元组的每一个元素都有不同的指针.
+按照这个实现, 很容易理解为何在MSVC下 `sizeof(exmaple)=12`, 以及tuple的每一个元素都有不同的指针.
 
-## GCC 元组实现
+## GCC tuple实现
 
-GCC的元组针对空数组, 又做了处理, 以下代码选摘自GCC的tuple文件, 太长了, 分成三部分来看:
+GCC的tuple针对空类型做了处理, 以下代码选摘自GCC的tuple文件, 太长了, 分成三部分来看:
 
 * 第一部分, `tuple`
 
