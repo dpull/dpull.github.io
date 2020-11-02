@@ -20,9 +20,9 @@ int main()
 {
     std::tuple<int32_t, empty, uint32_t> exmaple;
     printf("sizeof(exmaple)=%zu\n", sizeof(exmaple));
-    printf("0 ptr=0x%p offset=%td\n", &std::get<0>(exmaple), (char*)&std::get<0>(exmaple) - (char*)&exmaple);
-    printf("1 ptr=0x%p offset=%td\n", &std::get<1>(exmaple), (char*)&std::get<1>(exmaple) - (char*)&exmaple);
-    printf("2 ptr=0x%p offset=%td\n", &std::get<2>(exmaple), (char*)&std::get<2>(exmaple) - (char*)&exmaple);
+    printf("0 ptr=%p offset=%td\n", &std::get<0>(exmaple), (char*)&std::get<0>(exmaple) - (char*)&exmaple);
+    printf("1 ptr=%p offset=%td\n", &std::get<1>(exmaple), (char*)&std::get<1>(exmaple) - (char*)&exmaple);
+    printf("2 ptr=%p offset=%td\n", &std::get<2>(exmaple), (char*)&std::get<2>(exmaple) - (char*)&exmaple);
     return 0;
 }
 {% endhighlight %}
@@ -31,18 +31,18 @@ MSVC运行结果(VS2019):
 
 {% highlight c++ %}
 sizeof(exmaple)=12
-0 ptr=0x0000000F7E58F850 offset=8
-1 ptr=0x0000000F7E58F84C offset=4
-2 ptr=0x0000000F7E58F848 offset=0
+0 ptr=0000000F7E58F850 offset=8
+1 ptr=0000000F7E58F84C offset=4
+2 ptr=0000000F7E58F848 offset=0
 {% endhighlight %}
 
 GCC运行结果(GCC4.8/GCC9)
 
 {% highlight c++ %}
 sizeof(exmaple)=8
-0 ptr=0x0x7ffd6437c214 offset=4
-1 ptr=0x0x7ffd6437c210 offset=0
-2 ptr=0x0x7ffd6437c210 offset=0
+0 ptr=0x7ffd6437c214 offset=4
+1 ptr=0x7ffd6437c210 offset=0
+2 ptr=0x7ffd6437c210 offset=0
 {% endhighlight %}
 
 ## 背景知识
