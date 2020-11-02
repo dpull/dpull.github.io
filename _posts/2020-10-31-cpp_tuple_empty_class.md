@@ -115,7 +115,7 @@ C++11引入了变长模板参数,
 
 我们在示例中的`std::tuple<int32_t, empty, uint32_t>`, 在MSVC下, 会被解释成:
 
-![](../resources/images/2020-10-31-cpp_tuple_empty_class_msvc_tuple)
+![](../resources/images/2020-10-31-cpp_tuple_empty_class_msvc_tuple.svg)
 
 按照这个实现, 很容易理解为何在MSVC下 `sizeof(exmaple)=12`, 以及元组的每一个元素都有不同的指针.
 
@@ -174,7 +174,7 @@ GCC的元组针对空数组, 又做了处理, 以下代码选摘自GCC的tuple�
 
 我们在示例中的`std::tuple<int32_t, empty, uint32_t>`, 在GCC下, 会被解释成:
 
-![](../resources/images/2020-10-31-cpp_tuple_empty_class_gcc_tuple)
+![](../resources/images/2020-10-31-cpp_tuple_empty_class_gcc_tuple.svg)
 
 按照这个实现, 可以理解为何在GCC下 `sizeof(exmaple)=8`, 以及空类型元素的指针和最后一个元素的指针相同.
 
