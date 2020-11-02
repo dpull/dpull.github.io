@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 跨平台开发请注意：MSVC元组实现和GCC略有不同
+title: 探究C++11下tuple在VC和GCC的实现
 categories: [general]
 tags: []
 ---
