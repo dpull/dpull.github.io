@@ -124,7 +124,7 @@ C++11引入了变长模板参数, 上面代码中,
 
 GCC的元组针对空数组, 又做了处理, 以下代码选摘自GCC的tuple文件, 太长了, 分成三部分来看:
 
-* 第一部分, `tuple`实现
+* 第一部分, `tuple`
 
 {% highlight c++ %}
   /// Primary class template, tuple
@@ -134,9 +134,9 @@ GCC的元组针对空数组, 又做了处理, 以下代码选摘自GCC的tuple�
     }
 {% endhighlight %}
 
-以上代码说明tuple继承自_Tuple_impl. 
+以上代码说明, tuple继承自_Tuple_impl. 
 
-* 第二部分, `_Tuple_impl`实现
+* 第二部分, `_Tuple_impl`
 
 {% highlight c++ %}
   template<std::size_t _Idx, typename... _Elements>
@@ -155,11 +155,11 @@ GCC的元组针对空数组, 又做了处理, 以下代码选摘自GCC的tuple�
     };
 {% endhighlight %}
 
-以上代码是_Tuple_impl的声明和偏特化的实现, 它和MSVC实现的显著不同点是它使用了多重继承, 而非成员变量的方式.
+以上是_Tuple_impl的声明和偏特化的实现, 和MSVC实现的显著不同点是使用了多重继承, 而非成员变量的方式.
 
 `__empty_not_final`是一个traits , 当非final的empty类/结构时返回true, 否则flase.
 
-* 第三部分, `_Head_base`实现
+* 第三部分, `_Head_base`
 
 {% highlight c++ %}
   template<std::size_t _Idx, typename _Head, bool _IsEmptyNotFinal>
@@ -178,7 +178,7 @@ GCC的元组针对空数组, 又做了处理, 以下代码选摘自GCC的tuple�
     };
 {% endhighlight %}
 
-最后是_Head_base的实现, 它有两个偏特化, 当位true时(即 非final的empty类/结构)时, 采用继承的方式, 否则采用成员变量的方式.
+最后是_Head_base的实现, 有两个偏特化, 当位true时(即 非final的empty类/结构)时, 采用继承的方式, 否则采用成员变量的方式.
 
 我们在示例中的`std::tuple<int32_t, empty, uint32_t>`, 在GCC下, 会被解释成:
 
