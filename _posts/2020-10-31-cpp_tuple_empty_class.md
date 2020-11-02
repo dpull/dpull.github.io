@@ -9,36 +9,41 @@ tags: []
 
 上周查了一个bug, 在Linux下, 空结构元素指针等于元组最后一个元素的指针, Windows没有这个问题, 指针各自不同, 下面的示例代码:
 
-    #include <cstdint>
-    #include <cstdio>
-    #include <tuple>
+{% highlight c++ %}
+#include <cstdint>
+#include <cstdio>
+#include <tuple>
 
-    struct empty {};
+struct empty {};
 
-    int main()
-    {
-        std::tuple<int32_t, empty, uint32_t> exmaple;
-        printf("sizeof(exmaple)=%zu\n", sizeof(exmaple));
-        printf("0 ptr=0x%p offset=%td\n", &std::get<0>(exmaple), (char*)&std::get<0>(exmaple) - (char*)&exmaple);
-        printf("1 ptr=0x%p offset=%td\n", &std::get<1>(exmaple), (char*)&std::get<1>(exmaple) - (char*)&exmaple);
-        printf("2 ptr=0x%p offset=%td\n", &std::get<2>(exmaple), (char*)&std::get<2>(exmaple) - (char*)&exmaple);
-        return 0;
-    }
+int main()
+{
+    std::tuple<int32_t, empty, uint32_t> exmaple;
+    printf("sizeof(exmaple)=%zu\n", sizeof(exmaple));
+    printf("0 ptr=0x%p offset=%td\n", &std::get<0>(exmaple), (char*)&std::get<0>(exmaple) - (char*)&exmaple);
+    printf("1 ptr=0x%p offset=%td\n", &std::get<1>(exmaple), (char*)&std::get<1>(exmaple) - (char*)&exmaple);
+    printf("2 ptr=0x%p offset=%td\n", &std::get<2>(exmaple), (char*)&std::get<2>(exmaple) - (char*)&exmaple);
+    return 0;
+}
+{% endhighlight %}
 
 MSVC运行结果(VS2019):
 
-    sizeof(exmaple)=12
-    0 ptr=0x0000000F7E58F850 offset=8
-    1 ptr=0x0000000F7E58F84C offset=4
-    2 ptr=0x0000000F7E58F848 offset=0
+{% highlight c++ %}
+sizeof(exmaple)=12
+0 ptr=0x0000000F7E58F850 offset=8
+1 ptr=0x0000000F7E58F84C offset=4
+2 ptr=0x0000000F7E58F848 offset=0
+{% endhighlight %}
 
 GCC运行结果(GCC4.8/GCC9)
 
-    sizeof(exmaple)=8
-    0 ptr=0x0x7ffd6437c214 offset=4
-    1 ptr=0x0x7ffd6437c210 offset=0
-    2 ptr=0x0x7ffd6437c210 offset=0
-
+{% highlight c++ %}
+sizeof(exmaple)=8
+0 ptr=0x0x7ffd6437c214 offset=4
+1 ptr=0x0x7ffd6437c210 offset=0
+2 ptr=0x0x7ffd6437c210 offset=0
+{% endhighlight %}
 
 ## 背景知识
 
@@ -50,47 +55,51 @@ C++的设计者们不允许类的大小为0，其原因很多。比如由它们�
 
 我们用几行代码, 演示一下上面一段话:
 
-    #include <cstdio>
-    struct empty {};
-    struct non_empty
-    {
-        int i;
-    };
-    struct derived1 : public empty 
-    {
-        int i;
-    };
-    struct derived2 : public empty, non_empty{};
-    int main()
-    {
-        printf("sizeof(empty)=%zu\n", sizeof(empty)); // sizeof(empty)=1
-        printf("sizeof(non_empty)=%zu\n", sizeof(non_empty)); // sizeof(non_empty)=4
-        printf("sizeof(derived1)=%zu\n", sizeof(derived1)); // sizeof(derived1)=4
-        printf("sizeof(derived2)=%zu\n", sizeof(derived2)); // sizeof(derived2)=4
-        return 0;
-    }
+{% highlight c++ %}
+#include <cstdio>
+struct empty {};
+struct non_empty
+{
+    int i;
+};
+struct derived1 : public empty 
+{
+    int i;
+};
+struct derived2 : public empty, non_empty{};
+int main()
+{
+    printf("sizeof(empty)=%zu\n", sizeof(empty)); // sizeof(empty)=1
+    printf("sizeof(non_empty)=%zu\n", sizeof(non_empty)); // sizeof(non_empty)=4
+    printf("sizeof(derived1)=%zu\n", sizeof(derived1)); // sizeof(derived1)=4
+    printf("sizeof(derived2)=%zu\n", sizeof(derived2)); // sizeof(derived2)=4
+    return 0;
+}
+{% endhighlight %}
 
 ## MSVC 元组实现
 
 MSVC的元组实现, 是教科书的元组实现, 中规中矩. 以下代码选摘自MSVC的tuple文件:
 
-    template <class _Ty>
-    struct _Tuple_val { // stores each value in a tuple
-        _Ty _Val;
-    };
+{% highlight c++ %}
+template <class _Ty>
+struct _Tuple_val { // stores each value in a tuple
+    _Ty _Val;
+};
 
-    template <class... _Types>
-    class tuple;
+template <class... _Types>
+class tuple;
 
-    template <>
-    class tuple<> { // empty tuple
-    };
+template <>
+class tuple<> { // empty tuple
+};
 
-    template <class _This, class... _Rest>
-    class tuple<_This, _Rest...> : private tuple<_Rest...> { // recursive tuple definition
-    public:
-        _Tuple_val<_This> _Myfirst; // the stored element
-    };
+template <class _This, class... _Rest>
+class tuple<_This, _Rest...> : private tuple<_Rest...> { // recursive tuple definition
+public:
+    _Tuple_val<_This> _Myfirst; // the stored element
+};
+{% endhighlight %}
 
 C++11引入了变长模板参数, 
 `template <class... _Types>class tuple;`是变长类模板的声明, 
@@ -114,50 +123,52 @@ C++11引入了变长模板参数,
 
 GCC的元组针对空数组, 又做了处理, 以下代码选摘自GCC的tuple文件, 因为太长了, 分成三部分来看:
 
-    /// Primary class template, tuple
-    template<typename... _Elements> 
+{% highlight c++ %}
+  /// Primary class template, tuple
+  template<typename... _Elements> 
     class tuple : public _Tuple_impl<0, _Elements...>
     {
     }
+{% endhighlight %}
 
 以上代码说明tuple继承自_Tuple_impl. 
 
-    template<std::size_t _Idx, typename... _Elements>
+{% highlight c++ %}
+  template<std::size_t _Idx, typename... _Elements>
     struct _Tuple_impl; 
 
-    template<std::size_t _Idx>
+  template<std::size_t _Idx>
     struct _Tuple_impl<_Idx>
     {
     };
 
-    template<std::size_t _Idx, typename _Head, typename... _Tail>
+  template<std::size_t _Idx, typename _Head, typename... _Tail>
     struct _Tuple_impl<_Idx, _Head, _Tail...>
     : public _Tuple_impl<_Idx + 1, _Tail...>,
-        private _Head_base<_Idx, _Head, __empty_not_final<_Head>::value>
+      private _Head_base<_Idx, _Head, __empty_not_final<_Head>::value>
     {
-        template<std::size_t, typename...> friend class _Tuple_impl;
-
-        typedef _Tuple_impl<_Idx + 1, _Tail...> _Inherited;
-        typedef _Head_base<_Idx, _Head, __empty_not_final<_Head>::value> _Base;
     };
+{% endhighlight %}
 
 以上代码是_Tuple_impl的声明和偏特化的实现, 它和MSVC版本的限制不同时, 它使用了多重继承, 而非成员变量的实现方式.
 `__empty_not_final`是一个traits , 当非final的empty类/结构时返回true, 否则flase.
 
-    template<std::size_t _Idx, typename _Head, bool _IsEmptyNotFinal>
+{% highlight c++ %}
+  template<std::size_t _Idx, typename _Head, bool _IsEmptyNotFinal>
     struct _Head_base;
 
-    template<std::size_t _Idx, typename _Head>
+  template<std::size_t _Idx, typename _Head>
     struct _Head_base<_Idx, _Head, true>
     : public _Head
     {
     };
 
-    template<std::size_t _Idx, typename _Head>
+  template<std::size_t _Idx, typename _Head>
     struct _Head_base<_Idx, _Head, false>
     {
-        _Head _M_head_impl;
+      _Head _M_head_impl;
     };
+{% endhighlight %}
 
  最后是_Head_base的实现, 它有两个偏特化, 当位true时(即 非final的empty类/结构)时, 采用继承的方式, 否则采用成员变量的方式.
 
