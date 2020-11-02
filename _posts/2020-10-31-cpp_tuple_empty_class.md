@@ -178,7 +178,7 @@ GCC的元组针对空数组, 又做了处理, 以下代码选摘自GCC的tuple�
     };
 {% endhighlight %}
 
-最后是_Head_base的实现, 有两个偏特化, 当位true时(即 非final的empty类/结构)时, 采用继承的方式, 否则采用成员变量的方式.
+最后是_Head_base的实现, 有两个偏特化, 当`_IsEmptyNotFinal`为true时(即 非final的empty类/结构)时, 采用继承的方式, 否则采用成员变量的方式.
 
 我们在示例中的`std::tuple<int32_t, empty, uint32_t>`, 在GCC下, 会被解释成:
 
