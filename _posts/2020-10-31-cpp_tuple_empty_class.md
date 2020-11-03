@@ -27,15 +27,6 @@ int main()
 }
 {% endhighlight %}
 
-MSVC运行结果(VS2019):
-
-{% highlight c++ %}
-sizeof(exmaple)=12
-0 ptr=0000000F7E58F850 offset=8
-1 ptr=0000000F7E58F84C offset=4
-2 ptr=0000000F7E58F848 offset=0
-{% endhighlight %}
-
 GCC运行结果(GCC4.8/GCC9)
 
 {% highlight c++ %}
@@ -45,13 +36,23 @@ sizeof(exmaple)=8
 2 ptr=0x7ffd6437c210 offset=0
 {% endhighlight %}
 
+MSVC运行结果(VS2019):
+
+{% highlight c++ %}
+sizeof(exmaple)=12
+0 ptr=0000000F7E58F850 offset=8
+1 ptr=0000000F7E58F84C offset=4
+2 ptr=0000000F7E58F848 offset=0
+{% endhighlight %}
+
 ## 背景知识
 
 在分析这个问题之前, 需要先了解一些C++基础知识:
 
 * 和C不同, 在C++下, 空类的大小不会为0, 在很多平台上, 其大小为1。
 * C++的设计者们不允许类的大小为0，其原因很多。比如由它们构成的数组，其大小必然也是0，这会导致指针运算中普遍使用的性质失效。
-* 虽然不能存在“零大小”的类，但这扇门也没彻底关死。C++标准规定，当空类作为基类时，只要不会与同一类型的另一个对象或子对象分配在同一地址，就不需为其分配任何空间。
+* 虽然不能存在“零大小”的类，当空类作为基类时，只要不会与同一类型的另一个对象或子对象分配在同一地址，就不需为其分配任何空间。(翻译有点绕口, 下面是英文)
+* the C++ standard does specify that when an empty class is used as a base class, no space needs to be allocated for it provided that it does not cause it to be allocated to the same address as another object or subobject of the same type. 
 
 我们下面代码, 演示一下上面的描述:
 
@@ -76,6 +77,8 @@ int main()
     return 0;
 }
 {% endhighlight %}
+
+以上代码中, `derived1`和`derived2` 的大小都为4, 其基类`empty`没有占用空间.
 
 ## MSVC tuple实现
 
@@ -116,9 +119,13 @@ C++11引入了变长模板参数, 上面代码中,
 
 我们在示例中的`std::tuple<int32_t, empty, uint32_t>`, 在MSVC下, 会被解释成:
 
+`std::tuple<int32_t, ...>` 继承自 `std::tuple<empty, ...>` 继承自 `std::tuple<uint32_t, ...>` 继承自 `std::tuple<>` 的继承关系.
+
+出了空基类`std::tuple<>`外, 每一个类型都有成员变量` _Tuple_val<_This> _Myfirst`, 
+
 ![](../resources/images/2020-10-31-cpp_tuple_empty_class_msvc_tuple.svg)
 
-按照这个实现, 很容易理解为何在MSVC下 `sizeof(exmaple)=12`, 以及tuple的每一个元素都有不同的指针.
+每一个成员变量都会占用内存空间, 因为整个类非空, 所以空基类不占用空间, 算上字节对齐, 很容易理解为何在MSVC下 `sizeof(exmaple)=12`, 以及tuple的每一个元素都有不同的指针.
 
 ## GCC tuple实现
 
