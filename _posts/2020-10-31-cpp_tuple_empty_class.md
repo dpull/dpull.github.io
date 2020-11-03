@@ -104,13 +104,11 @@ public:
 };
 {% endhighlight %}
 
-C++11引入了变长模板参数, 上面代码中, 
+上面代码中, `template <class... _Types>class tuple;`是变长类模板的声明, 在标示符_Types之前的使用了省略号（三个“点”）来表示该参数是变长的。_Types被称作是一个“模板参数包”（template parameter pack）。
 
-`template <class... _Types>class tuple;`是变长类模板的声明, 在标示符_Types之前的使用了省略号（三个“点”）来表示该参数是变长的。_Types被称作是一个“模板参数包”（template parameter pack）。
+如何使用模板参数包呢? 思路是使用数学的归纳法，用递归的方式实现。
 
-如何使用模板参数包呢? 思路是使用数学的归纳法，转换为计算机能够实现的手段则是递归。
-
-通过定义递归的模板偏特化定义，我们可以使得模板参数包在实例化时能够层层展开，直到参数包中的参数逐渐耗尽或到达某个数量的边界为止。
+通过定义递归的模板偏特化定义，可以使得模板参数包在实例化时能够层层展开，直到参数包中的参数逐渐耗尽或到达某个数量的边界为止。
 
 用上文中的代码解释:
 
@@ -119,9 +117,9 @@ C++11引入了变长模板参数, 上面代码中,
 
 我们在示例中的`std::tuple<int32_t, empty, uint32_t>`, 在MSVC下, 会被解释成:
 
-`std::tuple<int32_t, ...>` 继承自 `std::tuple<empty, ...>` 继承自 `std::tuple<uint32_t, ...>` 继承自 `std::tuple<>` 的继承关系.
+`std::tuple<int32_t, ...>` 继承自 `std::tuple<empty, ...>` 继承自 `std::tuple<uint32_t, ...>` 继承自 `std::tuple<>`.
 
-出了空基类`std::tuple<>`外, 每一个类型都有成员变量` _Tuple_val<_This> _Myfirst`, 
+除了空基类`std::tuple<>`外, 每一个类型都有成员变量` _Tuple_val<_This> _Myfirst`, 
 
 ![](../resources/images/2020-10-31-cpp_tuple_empty_class_msvc_tuple.svg)
 
