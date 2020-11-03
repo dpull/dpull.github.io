@@ -78,7 +78,7 @@ int main()
 }
 {% endhighlight %}
 
-以上代码中, `derived1`和`derived2` 的大小都为4, 其基类`empty`没有占用空间.
+以上代码中, 类型`derived1`和`derived2`非空, 满足标准中的其他限制, 所以的大小都为4, 其基类`empty`没有占用空间.
 
 ## MSVC tuple实现
 
