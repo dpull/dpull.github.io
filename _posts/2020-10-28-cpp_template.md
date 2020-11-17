@@ -62,3 +62,7 @@ class 不能写为typename
 ### 如何看模版展开后的代码
 
 clang++ -Xclang -ast-print -fsyntax-only test.cpp
+
+### deprecated 标记
+
+ [[deprecated]]
