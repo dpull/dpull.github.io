@@ -66,3 +66,53 @@ clang++ -Xclang -ast-print -fsyntax-only test.cpp
 ### deprecated 标记
 
  [[deprecated]]
+
+ ### 待续
+
+    auto s2 = sizeof(unsigned int (Derived3::*)()); // 可以用于比较虚表指针数量(MSVC特性, GCC不支持)
+    boost::forward<Args>(get<IdxPack>(args_))... // 转发元组参数
+    
+### sfinae 重载
+
+    template<typename Target = Derived>
+    auto next(integral_constant<state::RUNNING>, Delta delta, void *data)
+    -> decltype(std::declval<Target>().update(delta, data), void()) {
+        static_cast<Target *>(this)->update(delta, data);
+    }
+
+    template<typename Target = Derived>
+    auto next(integral_constant<state::SUCCEEDED>)
+    -> decltype(std::declval<Target>().succeeded(), void()) {
+        static_cast<Target *>(this)->succeeded();
+    }
+
+    template<typename Target = Derived>
+    auto next(integral_constant<state::FAILED>)
+    -> decltype(std::declval<Target>().failed(), void()) {
+        static_cast<Target *>(this)->failed();
+    }
+
+    template<typename Target = Derived>
+    auto next(integral_constant<state::ABORTED>)
+    -> decltype(std::declval<Target>().aborted(), void()) {
+        static_cast<Target *>(this)->aborted();
+    }
+
+    void next(...) const ENTT_NOEXCEPT {}    
+    
+
+### 待研究
+
+
+### 待研究
+
+std::add_lvalue_reference_t
+std::in_place_type
+std::is_invocable_v
+std::tuple_element_t
+std::is_nothrow_move_constructible_v
+
+member function的 const , const& 和 const&&
+
+
+
