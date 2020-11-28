@@ -99,6 +99,17 @@ clang++ -Xclang -ast-print -fsyntax-only test.cpp
     }
 
     void next(...) const ENTT_NOEXCEPT {}    
+
+
+### sfinae
+
+    补充一下基于std::void_t的, 以及 
+
+    template <class T>
+    struct Void
+    {
+        typedef void Type;
+    }; 
     
 
 ### 待研究
