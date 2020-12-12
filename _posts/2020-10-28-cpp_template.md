@@ -112,7 +112,15 @@ clang++ -Xclang -ast-print -fsyntax-only test.cpp
     }; 
     
 
-### 待研究
+### Out-of-Line Virtual Method
+类要是有虚表的话, 要在cpp里面实现一个虚函数, 不要仅写在头文件里面, 否则会增加编译时间
+
+[provide-a-virtual-method-anchor-for-classes-in-headers](https://llvm.org/docs/CodingStandards.html#provide-a-virtual-method-anchor-for-classes-in-headers)
+
+[Out-of-Line Virtual Method](https://stackoverflow.com/questions/16801222/out-of-line-virtual-method)
+
+The compiler must emit a vtable for classes with virtual methods. This contains the pointers to these methods. If all the virtual methods are inline (defined in the header), then the compiler doesn't know which translation unit (.cpp file) to emit the vtable within, so it emits a copy in all of them and the linker gets to deal with it. This makes extra work and bloat in the object files. If, on the other hand, a virtual function is defined out-of-line (in a .cpp), the vtable can be emitted there and thus only one copy will be emitted. The same applies to the RTTI.
+
 
 
 ### 待研究
