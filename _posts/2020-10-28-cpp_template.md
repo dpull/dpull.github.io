@@ -113,7 +113,7 @@ clang++ -Xclang -ast-print -fsyntax-only test.cpp
     
 
 ### Out-of-Line Virtual Method
-类要是有虚表的话, 要在cpp里面实现一个虚函数, 不要仅写在头文件里面, 否则会增加编译时间
+类要是有虚表的话, 要在cpp里面实现一个虚函数, 不要仅写在头文件里面, 以便强制在统一在一个地方生成虚函数表，减少存储开销，加快链接速度
 
 [provide-a-virtual-method-anchor-for-classes-in-headers](https://llvm.org/docs/CodingStandards.html#provide-a-virtual-method-anchor-for-classes-in-headers)
 
