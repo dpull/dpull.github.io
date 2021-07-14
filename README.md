@@ -1,6 +1,6 @@
 # 欢迎
 
-这儿是 网站[dpull.com](http://www.dpull.com) 的后台。
+这儿是 网站[dpull.com](http://blog.dpull.com) 的后台。
 
 当前版本构建结果：[![Build Status](https://travis-ci.org/dpull/dpull.github.io.svg?branch=master)](https://travis-ci.org/dpull/dpull.github.io)
 

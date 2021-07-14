@@ -50,7 +50,7 @@ void                                    | System.Void
  
 {% highlight c++ %}
 List^ result = gcnew List();
-result->Add("www.dpull.com");   
+result->Add("blog.dpull.com");   
 {% endhighlight %}
 
 ## 引用运算符 ##
