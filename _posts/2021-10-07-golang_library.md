@@ -7,7 +7,7 @@ tags: []
 
 参考 [go1.17.1](https://dl.google.com/go/go1.17.1.src.tar.gz)
 
-# strings
+## strings
 * `strings.Builder`
 
 {% highlight go %}
@@ -15,8 +15,9 @@ type Builder struct {
     addr *Builder // of receiver, to detect copies by value
     buf  []byte
 }
-// 通过`b.addr = b`和`if b.addr != b { panic("") }`来检查是否被复制 
 {% endhighlight %}
+
+// 通过`b.addr = b`和`if b.addr != b { panic("") }`来检查是否被复制 
 
 * `strings.Compare` 这函数是类似于C的strcmp, 但文档中一直在提到不要用它, 应当用更加简明的运算符比较
 * `strings.Reader` 字符串的Reader interface, 里面用了utf8的判断rune的函数:
@@ -95,6 +96,7 @@ func (*noCopy) Unlock() {}
 {% endhighlight %}
 
 * `sync.atomic.Value` 
+
 1. 把interface{}进行原子Load/Save,首先将其转化为`ifaceWords`, 然后对两个指针分别进行Load/Save
 
 {% highlight go %}
