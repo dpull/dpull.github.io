@@ -5,6 +5,51 @@ categories: [general]
 tags: []
 ---
 
+编译相关的分析命令, [在线反汇编](https://go.godbolt.org/):
+
+{% highlight bash %}
+# -N 禁止优化
+# -l 禁止内联
+# -S 打印汇编
+# -m 打印编译优化策略（包括逃逸情况和函数是否内联，以及变量分配在堆或栈）
+# -m=1 -m后面指定的数字越大越详细
+
+go tool compile -m -l main.go
+
+go tool compile -N -l -S main.go
+go tool compile -S main.go
+
+go tool compile -N -l main.go && go tool objdump main.o 
+go tool compile main.go && go tool objdump main.o
+{% endhighlight %}
+
+## string
+
+在部分内置调用上, []byte可以无损的转化为string, 而无需调用`runtime.slicebytetostring`
+
+目前已知的调用有:
+* map查找(备注, map赋值不可以)
+
+{% highlight go %}
+var b []byte
+var m map[string]string
+s := m[string(b)]
+{% endhighlight %}
+
+* 字符串拼接
+
+{% highlight go %}
+var b []byte
+s := "ABC" + string(b)
+{% endhighlight %}
+
+* 字符串比较
+
+{% highlight go %}
+var b []byte
+bs := "ABC" == string(b)
+{% endhighlight %}
+
 ## map
 
 {% highlight go %}
@@ -13,13 +58,14 @@ for k := range m {
 }
 {% endhighlight %}
 
-1. 可以一边遍历一边删除
-1. 据说会被优化为 `mapclear`, 可以汇编确认下`go tool compile -S xxx.go`
+* range map 可以一边遍历一边删除
+* 以上代码会被优化为`runtime.mapclear`
 
-## range
+## range 
 
-**TODO**
-* `cmd/compile/internal/walk/range.go`
+源码: `cmd/compile/internal/walk/range.go`
+
+range会再编译器通过插入代码的方式实现.
 
 ## interface{}
 
@@ -57,11 +103,33 @@ if b == nil {
 {% endhighlight %}
 
 ## 逃逸分析
+{% highlight go %}
+func print0(v interface{})  {
+    // v does not escape
+}
 
-**TODO**
-**TODO interface的逃逸分析**
+func print1(v interface{}) int {
+    // v does not escape
+    i := len(v.(string))
+    return i
+}
 
-* cmd/compile/internal/escape/escape.go
-* `go run -gcflags "-m -l" internal/test1/main.go`
-* go build -gcflags '-m=1 -l' -l是禁止内联，-m是打印优化决定，后面指定的数字越大越详细。 重点关注 escapes to heap 和 moved to heap 附近的打印。
-* https://segment.com/blog/allocation-efficiency-in-high-performance-go-services/
+func print3(v interface{}) reflect.Type {
+    // leaking param: v
+    rv := reflect.ValueOf(v)
+    return rv.Type()
+}
+
+func print()  {
+    s1 := ""
+    s2 := ""
+    s3 := ""
+    s4 := ""
+    print0(s1) // s1 does not escape
+    print1(s2) // s2 does not escape
+    print1(s3) // s3 does not escape
+    fmt.Println(s4) // s4 escapes to heap
+}
+{% endhighlight %}
+
+`reflect.ValueOf` 会造成`leaking param`, 可以参考[一些golang的知识点](./2021-10-07-golang_library)中的反射部分.
