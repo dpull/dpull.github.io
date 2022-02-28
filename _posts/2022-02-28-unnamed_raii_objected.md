@@ -54,3 +54,7 @@ test_obj constructor:test_named
 test_named
 test_obj destructor
 {% endhighlight %}
+
+## 避免方法
+
+VS下会提示[C26444](https://docs.microsoft.com/en-us/cpp/code-quality/c26444)的警告
