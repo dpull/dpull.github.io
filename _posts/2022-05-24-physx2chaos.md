@@ -15,14 +15,23 @@ tags: []
 [示例代码]() 
 -->
 
-## 基础概念
+## 基础概念对照
 
  ****           | **Physx**             | **Chaos**                                                      | **备注**                        
 :---------------:|:---------------------:|:--------------------------------------------------------------:|:-----------------------------:
  可视化调试器   | PVD                   | CVD                                                            | CVD(ChaosVisualDebugger)不知如何用 
  物理场景       | PxScene               | FPhysicsSolver                                                 |                               
  刚体对象       | PxRigidActor          | FSingleParticlePhysicsProxy                                    |                               
+ 刚体形状       | PxShape               | Chaos::FPerShapeData                                           |                               
  物理模拟函数   | PxScene::simulate     | FPhysicsSolverBase::AdvanceAndDispatch_External                |                               
  物理结果函数   | PxScene::fetchResults | FPhysicsSolverBase::PullPhysicsStateForEachDirtyProxy_External |                               
 
+
+## 最小流程
+
+1. 新建物理场景
+1. 创建刚体对象
+1. 创建刚体形状到刚体对象
+1. 将刚体对象添加到物理场景
+1. 循环(物理模拟/物理结果)
 
