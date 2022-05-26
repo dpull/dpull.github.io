@@ -1,17 +1,17 @@
 <section class="pagination">
     {% if paginator.previous_page %}
         {% if paginator.previous_page == 1 %}
-            <a href="/" class="previous"><i class="fa-solid fa-chevron-left"></i></a>
+            <a href="/" class="previous"><i class="fa fa-chevron-left"></i></a>
         {% else %}
-            <a href="/page/{{paginator.previous_page}}" class="previous"><i class="fa-solid fa-chevron-left"></i></a>
+            <a href="/page/{{paginator.previous_page}}" class="previous"><i class="fa fa-chevron-left"></i></a>
         {% endif %}
     {% else %}
-        <span class="previous disabled"><i class="fa-solid fa-chevron-left"></i></span>
+        <span class="previous disabled"><i class="fa fa-chevron-left"></i></span>
     {% endif %}
 
     {% if paginator.next_page %}
-        <a href="/page/{{paginator.next_page}}" class="next"><i class="fa-solid fa-chevron-right"></i></a>
+        <a href="/page/{{paginator.next_page}}" class="next"><i class="fa fa-chevron-right"></i></a>
     {% else %}
-        <span class="next disabled"><i class="fa-solid fa-chevron-right"></i></span>
+        <span class="next disabled"><i class="fa fa-chevron-right"></i></span>
     {% endif %}
 </section>
