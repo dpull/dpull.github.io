@@ -1,6 +1,6 @@
 ---
 layout: post
-title: linux 动态库依赖相关
+title: linux 动态库依赖问题定位和解决
 categories: [general]
 tags: []
 ---
@@ -16,5 +16,10 @@ nm -D xxx.so
 
 大`T`标识说明加入了全局符号表
 
+### 对于默认隐藏符号的工程
+
+`#define XXX_API __attribute__((visibility("default")))`
+
 ## 找不到so问题
+
 使用`ldd`查看
