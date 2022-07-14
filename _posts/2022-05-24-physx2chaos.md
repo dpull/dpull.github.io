@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 通过`PhysX API`理解`Chaos API` 
+title: 通过PhysX API理解Chaos API
 categories: [general]
 tags: []
 ---
@@ -19,7 +19,7 @@ tags: []
 
  ****           | **Physx**             | **Chaos**                                                      | **备注**                        
 :---------------:|:---------------------:|:--------------------------------------------------------------:|:-----------------------------:
- 可视化调试器   | PVD                   | CVD                                                            | CVD(ChaosVisualDebugger)不知如何用 
+ 可视化调试器   | PVD                   | CVD                                                            | CVD 尚不可用
  物理场景       | PxScene               | FPhysicsSolver                                                 |                               
  刚体对象       | PxRigidActor          | FSingleParticlePhysicsProxy                                    |                               
  刚体形状       | PxShape               | Chaos::FPerShapeData                                           |                               
