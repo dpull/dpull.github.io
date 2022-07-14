@@ -9,13 +9,14 @@ tags: []
 `Chaos`是`UnrealEngine`在4.26版本起公开的物理引擎, 在UE5中已经成了默认物理引擎.
 
 `PhysX`提供完整的[开发文档](https://docs.nvidia.com/gameworks/content/gameworkslibrary/physx/guide/Manual/Index.html), 
-`Chaos`开发文档缺乏, 通过看`UnrealEngine`的代码, 对标以前对`PhysX`的理解, 来学习`Chaos API`的使用.
+`Chaos`开发文档缺乏, `UE5`提供了统一的封装接口`PhysicsCore`, 可以对照接口来理解.
 
 <!-- 
 [示例代码]() 
 -->
 
 ## 基础概念对照
+
 
  ****           | **Physx**             | **Chaos**                                                      | **备注**                        
 :---------------:|:---------------------:|:--------------------------------------------------------------:|:-----------------------------:
