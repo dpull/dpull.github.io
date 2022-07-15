@@ -65,7 +65,9 @@ clang++ -Xclang -ast-print -fsyntax-only test.cpp
 
 ### deprecated 标记
 
+```
  [[deprecated]]
+```
 
  ### 待续
 
