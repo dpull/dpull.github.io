@@ -5,8 +5,6 @@ categories: [general]
 tags: []
 ---
 
-参考 [go1.17.1](https://dl.google.com/go/go1.17.1.src.tar.gz)
-
 ## strings
 * `strings.Builder`
 
