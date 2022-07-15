@@ -1,6 +1,6 @@
 ---
 # layout: post
-title: XXXXXX
+title: C++模板笔记
 categories: [general]
 tags: []
 ---
