@@ -23,9 +23,7 @@ asan为了检测`use-after-free`错误, 会区别于正常内存另外开辟一�
 
 1. 局部开启asan:只给C++代码较重的服务开启asan(如果可执行文件非asan, 动态库是asan的, 需要`LD_PRELOAD=./libasan.so.0`)
 1. 设置`ASAN_OPTIONS`中的`quarantine_size`选项(注意:高版本是`quarantine_size_mb`), 限制隔离区大小
-1. 我们用的选项为 `ASAN_OPTIONS=help=disable_core=0:unmap_shadow_on_exit=1:abort_on_error=1:quarantine_size=167772168:log_path=./log/asan.log`(注意:高版本的选项和这个不同)
-    * 开启core是为了和现有的监控系统结合起来, 以及比较方便的定位问题
-    * 开启log是因为程序后台运行, 无法查看stderr, core中只有堆栈, 没有为什么crash掉, 两者结合会更容定位问题
+
 
 ## 附录
 * 安装asan
@@ -39,3 +37,12 @@ yum install libasan-static -y (如果选择静态链接asan, -static-libasan)
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address")
 set(CMAKE_LINKER_FLAGS_DEBUG "${CMAKE_LINKER_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address")
 {% endhighlight %}
+
+* 项目用的选项
+{% highlight bash %}
+ASAN_OPTIONS=help=disable_core=0:unmap_shadow_on_exit=1:abort_on_error=1:quarantine_size=67108864:log_path=./log/asan.log
+{% endhighlight %}
+    1. 高版本的选项和这个不同
+    1. 开启core是为了和现有的监控系统结合起来, 以及比较方便的定位问题
+    1. 开启log是因为程序后台运行, 无法查看stderr, core中只有堆栈, 没有为什么crash掉, 两者结合会更容定位问题
+    1. 开启了64M内存
