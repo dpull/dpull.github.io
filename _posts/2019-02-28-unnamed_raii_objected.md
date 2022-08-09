@@ -19,23 +19,23 @@ tags: []
 
 {% highlight cpp %}
 struct test_obj {
-        test_obj(const char *s) {
-                printf("test_obj constructor:%s\n", s);
-        }
+    test_obj(const char *s) {
+            printf("test_obj constructor:%s\n", s);
+    }
 
-        ~test_obj() {
-                printf("test_obj destructor\n");
-        }
+    ~test_obj() {
+            printf("test_obj destructor\n");
+    }
 };
 
 void test_unnamed() {
-        test_obj("test_unnamed");
-        printf("test_unnamed\n");
+    test_obj("test_unnamed");
+    printf("test_unnamed\n");
 }
 
 void test_named() {
-        test_obj o("test_named");
-        printf("test_named\n");
+    test_obj o("test_named");
+    printf("test_named\n");
 }
 {% endhighlight %}
 

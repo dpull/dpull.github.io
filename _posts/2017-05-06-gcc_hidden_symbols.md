@@ -11,20 +11,12 @@ GCC 默认是将所有符号导出的,如果想隐藏符号,通常有两种做�
 
 export_symbols 内容
 
-    VERSION {
-        LINUX_2.6 {
+    {
         global:
-            clock_gettime;
-            __vdso_clock_gettime;
-            gettimeofday;
-            __vdso_gettimeofday;
-            getcpu;
-            __vdso_getcpu;
-            time;
-            __vdso_time;
+            SceneModule*;
+            CreatePhysWorld;
         local: *;
-        };
-    }
+    };
 
 Cmake增加 
 
