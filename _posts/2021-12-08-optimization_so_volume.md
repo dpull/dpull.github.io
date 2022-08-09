@@ -5,7 +5,7 @@ categories: [general]
 tags: []
 ---
 
-在给予UE的Program做一些扩展, 会引入大量的无用代码, 导致so非常大.
+在使用UE的Program做一些扩展, 会引入大量的无用代码, 导致so非常大.
 
 ## 精简动态符号表
 
