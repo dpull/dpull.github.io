@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 常用字符集编码详解
+title: 常用字符集编码详解(charset)
 categories: [general, note]
 tags: []
 ---
