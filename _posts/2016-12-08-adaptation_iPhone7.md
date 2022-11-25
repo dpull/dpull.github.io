@@ -2,7 +2,7 @@
 layout: post
 title: 适配iPhone7时的两个小问题
 categories: [general]
-tags: []
+tags: [summary]
 ---
 
 一直用iPad pro开发，也是用的iOS10系统，心想应当和iPhone没啥区别，但实际上还是有些问题。

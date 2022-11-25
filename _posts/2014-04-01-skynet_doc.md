@@ -2,7 +2,7 @@
 layout: post
 title: skynet 初探
 categories: [general]
-tags: []
+tags: [summary]
 ---
 
 公司立了个新项目，让我设计下服务器端，趁机尝试一下skynet。

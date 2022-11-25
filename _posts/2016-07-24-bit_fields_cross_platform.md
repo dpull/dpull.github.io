@@ -2,7 +2,7 @@
 layout: post
 title: 位域(Bit-fields)跨平台的问题
 categories: [general]
-tags: []
+tags: [summary]
 ---
 
 常见的`Bit-fields`有两种，一种是微软的(`MSVC`)，一种是非微软的(`GCC`, `Clang`)，它们大多数情况下相同，当声明的类型和使用的位数不一致时可能不同。

@@ -1,8 +1,8 @@
 ---
 layout: post
 title: 轻松入门VC++.Net
-categories: [general, dotnet]
-tags: [c]
+categories: [general]
+tags: [C/C++]
 ---
 
 网络上关于VC++.Net介绍的资料很少，经过一段时间的摸索，

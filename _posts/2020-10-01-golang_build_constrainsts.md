@@ -2,7 +2,7 @@
 layout: post
 title: golang 编译约束
 categories: [general]
-tags: []
+tags: [Golang]
 ---
 
 [Build constraints](https://pkg.go.dev/cmd/go#hdr-Build_constraints)

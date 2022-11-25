@@ -2,7 +2,7 @@
 layout: post
 title: linux 动态库依赖问题定位和解决
 categories: [general]
-tags: []
+tags: [Linux]
 ---
 
 近两天解决了动态库依赖的问题, 都是之前用过的工具, 记录下来, 备忘.

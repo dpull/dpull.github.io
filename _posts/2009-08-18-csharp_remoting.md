@@ -1,8 +1,8 @@
 ---
 layout: post
 title: .NET用Remoting实现进程间通信
-categories: [general, dotnet]
-tags: [csharp, remoting]
+categories: [general]
+tags: [C#]
 ---
 
 工具项目的服务器端(exe)控制端(web)都是用.net写的，原本两者的通信想用Socket，

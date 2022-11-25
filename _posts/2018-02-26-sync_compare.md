@@ -2,7 +2,7 @@
 layout: post
 title: 同步机制的性能对比
 categories: [general]
-tags: []
+tags: [summary]
 ---
 
 C++11起增加了`std::atomic`、`std::mutex`、`std::shared_mutex(C++17)`等同步机制，

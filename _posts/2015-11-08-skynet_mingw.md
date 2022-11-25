@@ -2,7 +2,7 @@
 layout: post
 title: Skynet Windows版本
 categories: [general]
-tags: []
+tags: [summary]
 ---
 
 我们项目策划的工作机是windows，他们有修改配置表后自测的需求，以前的做法是通过docker启动linux版本

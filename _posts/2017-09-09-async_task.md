@@ -2,7 +2,7 @@
 layout: post
 title: 使用异步任务系统进行多线程优化
 categories: [general]
-tags: []
+tags: [C/C++]
 ---
 
 随着CPU主频提升缓慢，核心数越来越多，充分利用多核来提升程序性能成为了必不可少的手段。

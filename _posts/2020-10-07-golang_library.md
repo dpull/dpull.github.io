@@ -2,7 +2,7 @@
 layout: post
 title: 一些golang的知识点
 categories: [general]
-tags: []
+tags: [Golang]
 ---
 
 ## strings

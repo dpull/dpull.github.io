@@ -2,7 +2,7 @@
 layout: post
 title: 完美程序员的10种品质
 categories: [general, note]
-tags: []
+tags: [note]
 ---
 
 谁是完美程序员？著名博客作家Alex

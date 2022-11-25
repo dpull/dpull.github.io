@@ -2,7 +2,7 @@
 layout: post
 title: 使用C＋＋11实现lock free的知识点
 categories: [general]
-tags: []
+tags: [C/C++]
 ---
 
 C++11提供了两种CAS(Compare & Set)函数：

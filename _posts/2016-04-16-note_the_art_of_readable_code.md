@@ -2,7 +2,7 @@
 layout: post
 title: 《编写可读代码的艺术》
 categories: [general, note]
-tags: []
+tags: [note]
 ---
 
 在去上海参加`Unite2016`的来回飞机上，读了这本《编写可读代码的艺术》，学到了不少经验。

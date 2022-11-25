@@ -2,7 +2,7 @@
 layout: post
 title: 计算机科学箴言集
 categories: [general, note]
-tags: []
+tags: [note]
 ---
 
 > 摘自《编程珠玑（续）》More Programming Pearls: Confessions of a Coder 第六章

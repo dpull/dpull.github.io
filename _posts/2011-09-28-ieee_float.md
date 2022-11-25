@@ -2,7 +2,7 @@
 layout: post
 title: 浮点型 float double
 categories: [general]
-tags: [float]
+tags: [note]
 ---
 
 float 是单精度浮点类型；double 是双精度浮点类型。

@@ -2,7 +2,7 @@
 layout: post
 title: JNI入门
 categories: [general]
-tags: []
+tags: [JNI, C/C++]
 ---
 
 JNI全称Java Native Interface，用于Java和C/C++交互。这里主要记录一下Android使用JNI的一些注意点。

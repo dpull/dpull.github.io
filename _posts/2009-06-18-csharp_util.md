@@ -1,8 +1,8 @@
 ---
 layout: post
 title: C#小工具
-categories: [general, dotnet, kit]
-tags: [csharp]
+categories: [general]
+tags: [C#]
 ---
 
 备忘，备忘。

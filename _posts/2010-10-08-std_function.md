@@ -2,7 +2,7 @@
 layout: post
 title: 栈和函数调用
 categories: [general, note]
-tags: []
+tags: [C/C++, note]
 ---
 
 栈和函数调用

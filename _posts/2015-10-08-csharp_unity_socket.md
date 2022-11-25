@@ -2,7 +2,7 @@
 layout: post
 title: 简单的客户端Socket封装
 categories: [general, dotnet]
-tags: [csharp, socket]
+tags: [C#, Socket]
 ---
 
 上个项目虽然用Unity开发，但是客户端的网络库却是以前项目用C写的一套，新项目不想客户端使用lua了，主要原因是：

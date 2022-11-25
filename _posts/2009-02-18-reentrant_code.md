@@ -1,8 +1,8 @@
 ---
 layout: post
 title: 使用可重入函数进行更安全的信号处理
-categories: [general]
-tags: []
+categories: [general, note]
+tags: [note]
 ---
 
 [原文](https://www.ibm.com/developerworks/cn/linux/l-reent.html)

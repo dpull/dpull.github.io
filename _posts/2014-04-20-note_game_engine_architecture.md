@@ -2,7 +2,7 @@
 layout: post
 title: 《游戏引擎架构》
 categories: [general, note]
-tags: []
+tags: [note]
 ---
 
 该书的第一遍读完了，跳过了4、10、11、12章，这几章的内容工作中很少用到，

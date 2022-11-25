@@ -2,7 +2,7 @@
 layout: post
 title: 《深入理解C指针》
 categories: [general, note]
-tags: []
+tags: [note]
 ---
 
 端午假期读了这本《深入理解C指针》。

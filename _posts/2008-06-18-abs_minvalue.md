@@ -1,8 +1,8 @@
 ---
 layout: post
 title: 求有符号数最小值的正数
-categories: [general, dotnet]
-tags: [c]
+categories: [general]
+tags: [C/C++]
 ---
 
 《编程精粹》中有一个例子，求有符号数取正数，若运行在二进制补码机器上,当为最小的负数(例如,16 位机器的-32768) 时就会出现问题。原因在于表达式i= -i 中的-i 上;即上溢超出了有符号类型的范围，解决办法是i= -i 后，将i强转为无符号数。

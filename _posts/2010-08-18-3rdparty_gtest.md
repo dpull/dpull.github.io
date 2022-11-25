@@ -1,8 +1,8 @@
 ---
 layout: post
 title: Gtest and GMock
-categories: [general, 3rdparty]
-tags: [gtest]
+categories: [general]
+tags: [gtest, C/C++]
 ---
 
 > 在系统测试阶段找出并修正错误，要比开发者自己完成这一工作多付出 2 倍的努力。而当系统已经交付使用之后找出并修正一个错误，要比系统测试阶段多付出 9 倍的努力。因此，请坚持让开发者进行单元测试吧。    

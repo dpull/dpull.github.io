@@ -2,7 +2,7 @@
 layout: post
 title: udp 能不能bind INADDR_ANY 
 categories: [general]
-tags: []
+tags: [summary]
 ---
 
 tcp 可以 bind INADDR_ANY(0.0.0.0) 用来绑定所有网卡的某个端口, udp 能不能这样呢?

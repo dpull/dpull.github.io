@@ -2,7 +2,7 @@
 layout: post
 title: Hero开发笔记-客户端资源更新
 categories: [general]
-tags: []
+tags: [summary]
 ---
 
 unity使用`AssetBundle`进行资源更新，分成三个步骤：

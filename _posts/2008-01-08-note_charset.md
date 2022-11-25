@@ -2,7 +2,7 @@
 layout: post
 title: 常用字符集编码详解(charset)
 categories: [general, note]
-tags: []
+tags: [note]
 ---
 
 ## ASCII ##

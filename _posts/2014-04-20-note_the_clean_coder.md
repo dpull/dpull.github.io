@@ -2,7 +2,7 @@
 layout: post
 title: 《程序员的职业素养》
 categories: [general, note]
-tags: []
+tags: [note]
 ---
 
 这是一本老程序员的经验之谈，有很多让我深有同感的例子。

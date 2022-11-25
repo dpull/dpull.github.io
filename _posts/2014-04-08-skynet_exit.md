@@ -2,7 +2,7 @@
 layout: post
 title: 如何安全退出skynet
 categories: [general]
-tags: []
+tags: [summary]
 ---
 
 云风有一篇blog讲述了这个问题：[如何安全的退出 skynet](http://blog.codingnow.com/2013/08/exit_skynet.html) 。

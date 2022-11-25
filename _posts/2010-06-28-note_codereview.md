@@ -2,7 +2,7 @@
 layout: post
 title: 代码审查，权利和责任
 categories: [general, note]
-tags: []
+tags: [note]
 ---
 
 代码审查是保证项目健康发展的一个重要方面。它可以在缺陷进入产品之前就发现并改正它们，

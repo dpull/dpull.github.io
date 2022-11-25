@@ -2,7 +2,7 @@
 layout: post
 title: Skynet交流
 categories: [general, hero]
-tags: []
+tags: [summary]
 ---
 
 参加了云风组织的Skynet线下交流，记录了一下几点。

@@ -2,7 +2,7 @@
 layout: post
 title: 算法导论 红黑树
 categories: [general, note]
-tags: []
+tags: [note]
 ---
 
 组内培训，讲红黑树，找出 **《算法导论》**

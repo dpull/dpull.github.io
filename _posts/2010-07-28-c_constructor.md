@@ -2,7 +2,7 @@
 layout: post
 title: YY构造函数
 categories: [general, note]
-tags: [c]
+tags: [C/C++, note]
 ---
 
 摘自 **《C++语言的设计和演化》** **《Effective C++》**

@@ -2,7 +2,7 @@
 layout: post
 title: 早日实现退休理想——你需要眼光和资格
 categories: [general, note]
-tags: []
+tags: [note]
 ---
 
 > 这是和biubiu夜谈时, 他推荐我的一篇文章, mark一下.

@@ -1,8 +1,8 @@
 ---
 layout: post
 title: Linux kernel coding style
-categories: [general]
-tags: []
+categories: [general, note]
+tags: [note]
 ---
 
 最近一年来看开源代码比较多，如lua，git，skynet，它们部分采用了[Linux下的编码风格](https://www.kernel.org/doc/Documentation/CodingStyle)。

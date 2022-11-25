@@ -2,7 +2,7 @@
 layout: post
 title: 《深入理解C#》
 categories: [general, note]
-tags: []
+tags: [note]
 ---
 
 我是从大一下学期开始自学C#的，当时觉得用C、C++写Window GUI程序挺累人，偶然间看到一本C#的教程，发现它解决这个问题，于是自学起来。

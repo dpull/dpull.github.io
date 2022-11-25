@@ -2,7 +2,7 @@
 layout: post
 title: 优化so大小
 categories: [general]
-tags: []
+tags: [C/C++, Linux]
 ---
 
 在使用UE的Program做一些扩展, 会引入大量的无用代码, 导致so非常大.

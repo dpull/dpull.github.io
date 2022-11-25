@@ -2,7 +2,7 @@
 layout: post
 title: 《Head First设计模式》
 categories: [general, note]
-tags: []
+tags: [note]
 ---
 
 09年读过《Head First设计模式》，因为经验不足，并没有太大共鸣。

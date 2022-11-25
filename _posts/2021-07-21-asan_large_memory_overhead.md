@@ -2,7 +2,7 @@
 layout: post
 title: 限制asan内存占用(asan)
 categories: [general]
-tags: []
+tags: [C/C++, ASAN]
 ---
 
 基于`gcc4.8.5`

@@ -2,7 +2,7 @@
 layout: post
 title: 剑三重制版CPU优化总结
 categories: [general]
-tags: []
+tags: [perf]
 ---
 
 最近这半年的工作内容是优化客户端性能，其中主要是进行CPU优化，趁着春节假期，把做过的事情沉淀一下。

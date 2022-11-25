@@ -2,7 +2,7 @@
 layout: post
 title: 网络库相关
 categories: [general]
-tags: [socket, epoll]
+tags: [Socket]
 ---
 
 随着虚拟主机和移动互联网的兴起，原本端游的服务端网络库需要运行在更为复杂的环境中了。

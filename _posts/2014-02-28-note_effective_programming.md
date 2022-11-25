@@ -2,7 +2,7 @@
 layout: post
 title: 《高效能程序员的修炼》
 categories: [general, note]
-tags: [c]
+tags: [note]
 ---
 
 前几周买了本《高效能程序员的修炼》，花了几个周末的时间读完了

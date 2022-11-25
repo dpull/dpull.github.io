@@ -2,7 +2,7 @@
 layout: post
 title: 《逍遥江湖》服务端移动校正
 categories: [general]
-tags: [c]
+tags: [summary]
 ---
 
 游戏里面移动同步是一个重要的基础模块，通常游戏中的移动以服务端为主，当发现客户端的位置和服务端的位置不同时，强行将客户端修正为服务端坐标，

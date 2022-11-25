@@ -2,7 +2,7 @@
 layout: post
 title: 《逍遥江湖》ZoneCenter宕机问题
 categories: [general]
-tags: []
+tags: [summary]
 ---
 
 这一段再折腾跨服流程的一些潜规则的需求，顺便解决了一个跨进程跨服的bug，现象有四个:

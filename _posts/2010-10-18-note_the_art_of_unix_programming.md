@@ -2,7 +2,7 @@
 layout: post
 title: 无根的根：无名师的 Unix 心传
 categories: [general, note]
-tags: []
+tags: [note]
 ---
 
 摘自：《Unix编程艺术》

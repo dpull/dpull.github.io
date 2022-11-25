@@ -2,7 +2,7 @@
 layout: post
 title: 使用Simpleperf进行Unity Android性能分析
 categories: [general]
-tags: []
+tags: [perf]
 ---
 
 `Unity`内置的`Profiler`是基于标签统计实现的，存在统计不全的问题。

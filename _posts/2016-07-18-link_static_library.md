@@ -2,7 +2,7 @@
 layout: post
 title: 链接静态库
 categories: [general]
-tags: []
+tags: [summary]
 ---
 ## 禁止链接器优化掉未引用的函数和数据
 

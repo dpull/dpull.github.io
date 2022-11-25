@@ -2,7 +2,7 @@
 layout: post
 title: 编译器差异
 categories: [general]
-tags: []
+tags: [note]
 ---
 
 和纯峰一起开始研究手游，本文记录一些编译器差异，主要是针对的一些我们用到的非标准的内容。
