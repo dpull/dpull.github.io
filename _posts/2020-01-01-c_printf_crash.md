@@ -2,7 +2,7 @@
 layout: post
 title: 一个glibc引发的crash
 categories: [general]
-tags: [C/C++, Linux]
+tags: [c++, linux]
 ---
 
 ## 背景

@@ -2,7 +2,7 @@
 layout: post
 title: GCC隐藏ELF符号
 categories: [general]
-tags: [C/C++, Linux]
+tags: [c++, linux]
 ---
 
 GCC 默认是将所有符号导出的,如果想隐藏符号,通常有两种做法:

@@ -2,7 +2,7 @@
 layout: post
 title: 整型溢出检查被GCC优化掉的问题
 categories: [general]
-tags: [C/C++, Linux]
+tags: [c++, linux]
 ---
 ## 问题
 skynet最近有一个issue [cluster中session溢出问题](https://github.com/cloudwu/skynet/issues/773)，用简单代码模拟一下：（以下代码运行在：`gcc version 5.4.0 20160609 (Ubuntu 5.4.0-6ubuntu1~16.04.4)`）

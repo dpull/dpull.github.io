@@ -2,7 +2,7 @@
 layout: post
 title: std::condition_variable 简单验证小结
 categories: [general]
-tags: [C/C++]
+tags: [c++]
 ---
 
 ## Condition Variable（条件变量）

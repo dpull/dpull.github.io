@@ -2,7 +2,7 @@
 layout: post
 title: likely(x) 与 unlikely(x)
 categories: [general]
-tags: [C/C++]
+tags: [c++]
 ---
 
 [原文](https://kernelnewbies.org/FAQ/LikelyUnlikely) 

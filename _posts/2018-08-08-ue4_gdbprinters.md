@@ -2,7 +2,7 @@
 layout: post
 title: 如何动态加载 UE4 GDBPrinters.py
 categories: [general]
-tags: [Unreal]
+tags: [unreal]
 ---
 
 UE4提供了[GDBPrinters.py](https://github.com/EpicGames/UnrealEngine/blob/release/Engine/Extras/GDBPrinters/UE4Printers.py) 用以显示UE4的自定义容器, 

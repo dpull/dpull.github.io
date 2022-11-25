@@ -2,7 +2,7 @@
 layout: post
 title: 未命名对象的析构时机
 categories: [general]
-tags: [C/C++]
+tags: [c++]
 ---
 
 这两天查到了一个RAII用错的bug, 记录一下. 错误代码如下:

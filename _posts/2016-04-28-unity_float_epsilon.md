@@ -2,7 +2,7 @@
 layout: post
 title: Unity浮点数的Epsilon
 categories: [general]
-tags: [Unity, C#]
+tags: [unity, c#]
 ---
 
 今天项目出了一个问题，iOS版本的表现和其他版本不同，调试后发现问题出在了浮点数比较上，

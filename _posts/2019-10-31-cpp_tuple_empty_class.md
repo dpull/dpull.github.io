@@ -2,7 +2,7 @@
 layout: post
 title: 探究C++11下tuple在VC和GCC的实现
 categories: [general]
-tags: [C/C++]
+tags: [c++]
 ---
 
 ## 背景

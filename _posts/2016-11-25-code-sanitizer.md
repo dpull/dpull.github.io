@@ -2,7 +2,7 @@
 layout: post
 title: 使用Clang/GCC的Sanitizer提升程序质量
 categories: [general]
-tags: [C/C++, ASAN]
+tags: [c++, asan]
 ---
 
 在Clang的[Controlling Code Generation](http://clang.llvm.org/docs/UsersManual.html#controlling-code-generation) 或 GCC的[Program Instrumentation Options](https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html)中提供了一系列的参数，可以帮程序解决一些常见的内存问题。

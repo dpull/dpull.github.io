@@ -2,7 +2,7 @@
 layout: post
 title: Dumper开发总结
 categories: [general]
-tags: [Windows]
+tags: [windows]
 ---
 
 ## Dumper是什么？ ##

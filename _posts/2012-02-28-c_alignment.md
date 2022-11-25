@@ -2,7 +2,7 @@
 layout: post
 title: 字节对齐
 categories: [general]
-tags: [C/C++]
+tags: [c++]
 ---
 
 ## 字节对齐 ##

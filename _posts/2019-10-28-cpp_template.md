@@ -2,7 +2,7 @@
 # layout: post
 title: C++模板笔记
 categories: [general]
-tags: [C/C++]
+tags: [c++]
 ---
 
 ### const和constexpr区别

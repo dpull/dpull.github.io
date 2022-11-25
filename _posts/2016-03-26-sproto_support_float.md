@@ -2,7 +2,7 @@
 layout: post
 title: Sproto增加浮点数支持
 categories: [general]
-tags: [C/C++]
+tags: [c++]
 ---
 
 [Sproto](https://github.com/cloudwu/skynet/wiki/Sproto) 默认不支持浮点数，

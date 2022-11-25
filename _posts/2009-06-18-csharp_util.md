@@ -2,7 +2,7 @@
 layout: post
 title: C#小工具
 categories: [general]
-tags: [C#]
+tags: [c#]
 ---
 
 备忘，备忘。

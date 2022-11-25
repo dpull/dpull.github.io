@@ -2,7 +2,7 @@
 layout: post
 title: 变量声明
 categories: [general]
-tags: [C/C++]
+tags: [c++]
 ---
 
 有一道思科的面试题

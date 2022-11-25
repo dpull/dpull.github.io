@@ -2,7 +2,7 @@
 layout: post
 title: UE4 Dedicated Server 为何不产生core文件(DS)
 categories: [general]
-tags: [Unreal]
+tags: [unreal]
 ---
 
 当UE4 Dedicated Server crash时, 会被本进程捕获到输出堆栈到日志中, 但没有产生core文件, 但有的时候又会产生core文件.

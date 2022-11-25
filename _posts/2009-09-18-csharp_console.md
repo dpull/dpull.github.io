@@ -2,7 +2,7 @@
 layout: post
 title: Console.Write写大量字符串异常
 categories: [general]
-tags: [C#]
+tags: [c#]
 ---
 
 Console.Write 大约写2G字符后就会抛出：

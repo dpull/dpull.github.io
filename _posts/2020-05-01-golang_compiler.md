@@ -2,7 +2,7 @@
 layout: post
 title: golang 编译相关
 categories: [general]
-tags: [Golang]
+tags: [golang]
 ---
 
 编译相关的分析命令, [在线反汇编](https://go.godbolt.org/):
