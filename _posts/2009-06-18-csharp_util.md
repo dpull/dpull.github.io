@@ -1,7 +1,7 @@
 ---
 layout: post
-title: 「kit」C#小工具
-categories: [general, dotnet]
+title: C#小工具
+categories: [general, dotnet, kit]
 tags: [csharp]
 ---
 
