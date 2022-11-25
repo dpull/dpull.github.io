@@ -28,18 +28,19 @@ exclude:
 encoding:     "utf-8"
 markdown_ext: "md"
 
-# Tabs in header. There are 'Blog', 'About', 'Archive', 'Tags'
-# and URL Link(e.g. 'Theme' tab below) tabs. If you don't need one, just delete
-# it from the list(Delete '- name: ' and 'url: ', too!)
 navigation:
   - name: 首页
     url: /
+    icon: "fa fa-home"
   - name: 关于
     url: /about
+    icon: "fa fa-info-circle"
   - name: 归档
     url: /archive
+    icon: "fa fa-suitcase"
   - name: 标签
     url: /tags
+    icon: "fa fa-tags"
 
 # 内容过滤
 #show_drafts: null

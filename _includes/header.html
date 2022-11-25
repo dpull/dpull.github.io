@@ -10,6 +10,15 @@
 
     <nav class="site-nav">
         <ul>
+            {% for nav in site.navigation %}
+            <li><i class="{{ nav.icon }}""></i>
+            {% if nav.url contains 'http://' or nav.url contains 'https://' %}
+            <a href="{{ nav.url }}">{{ nav.name }}</a>
+            {% else %}
+            <a href="{{ site.baseurl }}{{ nav.url }}">{{ nav.name }}</a>
+            {% endif %}
+            {% endfor %}
+
             <li><i class="fa fa-home"></i> <a href="/">主页</a></li>
             <li><i class="fa fa-suitcase"></i> <a href="/about">简介</a></li>
             <li class="search">
