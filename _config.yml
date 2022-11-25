@@ -20,7 +20,10 @@ paginate: 10 # pagination based on number of posts
 # 阅读处理
 #safe:         false
 include:      ["_static"]
-exclude:      ["README.md"]
+exclude:      
+  - Gemfile
+  - README.md
+  - CNAME
 #keep_files:   [".git", ".svn"]
 encoding:     "utf-8"
 markdown_ext: "md"
@@ -49,6 +52,9 @@ navigation:
 gems:
   - jekyll-coffeescript
   - jekyll-paginate
+  - jekyll-sitemap # Create a sitemap using the official Jekyll sitemap gem
+  - jekyll-feed # Create an Atom feed using the official Jekyll feed gem
+  - jekyll-paginate  
 
 # 转换
 markdown:    kramdown
