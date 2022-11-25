@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 算法导论 红黑树
+title: [note]算法导论 红黑树
 categories: [general]
 tags: []
 ---

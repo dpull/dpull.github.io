@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 代码审查，权利和责任
+title: [note]代码审查，权利和责任
 categories: [general, note]
 tags: []
 ---

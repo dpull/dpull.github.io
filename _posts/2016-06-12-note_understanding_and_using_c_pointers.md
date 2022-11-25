@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 《深入理解C指针》
+title: [note]《深入理解C指针》
 categories: [general]
 tags: []
 ---
