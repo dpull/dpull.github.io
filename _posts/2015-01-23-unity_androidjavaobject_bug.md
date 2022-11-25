@@ -2,7 +2,7 @@
 layout: post
 title: Unity函数 AndroidJavaObject.Call 的缺陷
 categories: [general]
-tags: [c#, unity]
+tags: [csharp, unity]
 ---
 
 Android的包内资源，安装后依然是在APK包内的，可以用 `UnityEngine.WWW` 读取，但其接口直接返回byte[]，对于大文件这是不可接受的，

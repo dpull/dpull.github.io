@@ -2,7 +2,7 @@
 layout: post
 title: UnityEngine.Object 生命周期
 categories: [general]
-tags: [c#, unity]
+tags: [csharp, unity]
 ---
 
 `UnityEngine.Object` 并不是真正的C#对象，并非引用后就可以一直使用了，如果有外部释放的可能性，需要在使用前判空。

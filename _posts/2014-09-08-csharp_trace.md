@@ -2,7 +2,7 @@
 layout: post
 title: C#打印当前行号和函数名和Unity log
 categories: [general]
-tags: [c#]
+tags: [csharp]
 ---
 
 昨天杨教授在群里面问我一个问题，如何用C#打印当前行号和函数名，类似于C中的 `__FILE__`, `__LINE__`, `__THIS_FUNCTION__` 关键字。

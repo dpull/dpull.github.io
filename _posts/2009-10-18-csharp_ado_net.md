@@ -2,7 +2,7 @@
 layout: post
 title: ADO.NET 总结
 categories: [general]
-tags: [c#]
+tags: [csharp]
 ---
 
 ## 使用DbConnection要记得手工关闭 ##

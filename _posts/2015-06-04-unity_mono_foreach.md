@@ -2,7 +2,7 @@
 layout: post
 title: Unity foreach 造成额外的GC开销
 categories: [general]
-tags: [c#, unity]
+tags: [csharp, unity]
 ---
 
 Unity的foreach会造成额外的GC开销，但一直没有细究，今早看了[作为Unity3D的脚本而言，c#中for是否真的比foreach效率更高？ - 回答作者：王剑飞](https://www.zhihu.com/question/30334270/answer/49858731)明白了其产生的原因，于是做此笔记。
