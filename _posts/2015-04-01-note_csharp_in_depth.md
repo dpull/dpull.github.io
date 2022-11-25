@@ -1,6 +1,6 @@
 ---
 layout: post
-title: [note]《深入理解C#》
+title: 《深入理解C#》
 categories: [general, note]
 tags: []
 ---

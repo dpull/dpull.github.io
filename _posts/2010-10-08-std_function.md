@@ -1,6 +1,6 @@
 ---
 layout: post
-title: [note]栈和函数调用
+title: 栈和函数调用
 categories: [general]
 tags: []
 ---

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: [note]《Head First设计模式》
+title: 《Head First设计模式》
 categories: [general]
 tags: []
 ---
