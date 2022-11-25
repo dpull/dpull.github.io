@@ -3,11 +3,6 @@ layout: main
 title: Tags
 permalink: /tags/
 ---
-
-{% if site.posts.size == 0 %}
-  <h2>No post found</h2>
-{% endif %}
-
 {% capture site_tags %}
 {% for tag in site.tags %}
 {{ tag | first }}
@@ -18,40 +13,42 @@ permalink: /tags/
 {% endcapture %}
 {% assign tag_words = site_tags | split:',' | sort %}
 
-<h1>Tags</h1>
-<ul class="tags">
-    <!--  cycles through tag list and creates header row of all tags used in site with accompanying per-tag counts...-->
+<section class="blog-tags">
+    <h1>Tags</h1>
+    <ul class="tags">
+        <!--  cycles through tag list and creates header row of all tags used in site with accompanying per-tag counts...-->
+        {% for this_word in tag_words %}
+        <li>
+            {% assign tagName = this_word | strip %}
+            <a class="tag" href="#{{ tagName | escape }}">
+                {{ tagName }}
+                <span>({{ site.tags[tagName].size}})</span>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+    <!--cycles through tag list and creates subheader for each tag name...-->
     {% for this_word in tag_words %}
-    <li>
-        {% assign tagName = this_word | strip %}
-        <a class="tag" href="#{{ tagName | escape }}">
-            {{ tagName }}
-            <span>({{ site.tags[tagName].size}})</span>
-        </a>
-    </li>
-    {% endfor %}
-</ul>
-<!--cycles through tag list and creates subheader for each tag name...-->
-{% for this_word in tag_words %}
-{% assign tagName = this_word | strip %}
-<div id="{{ tagName | escape }}" class="tag-list-div" style="display: none;">
-    <h2>{{ tagName | upcase }}</h2>
-    <!--  lists all posts corresponding to specific tag...-->
-    {% for post in site.tags[tagName] %}
-    {% if post.title != null %}
-    <div class="tag-list">
-        <span>
-            <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
-        </span>
-        <small>
-            <span>|
-                {{ post.date | date_to_string }}</span>
-        </small>
+    {% assign tagName = this_word | strip %}
+    <div id="{{ tagName | escape }}" class="tag-list-div" style="display: none;">
+        <h2>{{ tagName | upcase }}</h2>
+        <!--  lists all posts corresponding to specific tag...-->
+        {% for post in site.tags[tagName] %}
+        {% if post.title != null %}
+        <div class="tag-list">
+            <span>
+                <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+            </span>
+            <small>
+                <span>|
+                    {{ post.date | date_to_string }}</span>
+            </small>
+        </div>
+        {% endif %}
+        {% endfor %}
     </div>
-    {% endif %}
     {% endfor %}
-</div>
-{% endfor %}
+</section>
 
 <script>
     window.onload = function () {
