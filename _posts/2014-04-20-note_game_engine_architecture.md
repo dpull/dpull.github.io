@@ -1,6 +1,6 @@
 ---
 layout: post
-title: [note]《游戏引擎架构》
+title: 「note」《游戏引擎架构》
 categories: [general, note]
 tags: []
 ---

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: [note]《编写可读代码的艺术》
+title: 「note」《编写可读代码的艺术》
 categories: [general]
 tags: []
 ---

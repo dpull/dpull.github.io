@@ -1,6 +1,6 @@
 ---
 layout: post
-title: [note]无根的根：无名师的 Unix 心传
+title: 「note」无根的根：无名师的 Unix 心传
 categories: [general, note]
 tags: []
 ---

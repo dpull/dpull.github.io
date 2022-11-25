@@ -1,6 +1,6 @@
 ---
 layout: post
-title: [note]《高效能程序员的修炼》
+title: 「note」《高效能程序员的修炼》
 categories: [general]
 tags: [c]
 ---

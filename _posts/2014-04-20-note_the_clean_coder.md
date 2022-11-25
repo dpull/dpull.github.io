@@ -1,6 +1,6 @@
 ---
 layout: post
-title: [note]《程序员的职业素养》
+title: 「note」《程序员的职业素养》
 categories: [general, note]
 tags: []
 ---

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: [note]YY构造函数
+title: 「note」YY构造函数
 categories: [general]
 tags: [c]
 ---
