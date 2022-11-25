@@ -1,7 +1,7 @@
 ---
 layout: post
-title: 「note」早日实现退休理想——你需要眼光和资格
-categories: [general]
+title: 早日实现退休理想——你需要眼光和资格
+categories: [general, note]
 tags: []
 ---
 

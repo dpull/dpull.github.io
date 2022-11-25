@@ -1,7 +1,7 @@
 ---
 layout: post
-title: 「note」《编程精粹：编写高质量C语言代码》讨论会
-categories: [general]
+title: 《编程精粹：编写高质量C语言代码》讨论会
+categories: [general, note]
 tags: []
 ---
 

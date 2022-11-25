@@ -1,7 +1,7 @@
 ---
 layout: post
-title: 「note」《Head First设计模式》
-categories: [general]
+title: 《Head First设计模式》
+categories: [general, note]
 tags: []
 ---
 

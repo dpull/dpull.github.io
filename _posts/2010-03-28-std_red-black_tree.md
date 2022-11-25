@@ -1,7 +1,7 @@
 ---
 layout: post
-title: 「note」算法导论 红黑树
-categories: [general]
+title: 算法导论 红黑树
+categories: [general, note]
 tags: []
 ---
 

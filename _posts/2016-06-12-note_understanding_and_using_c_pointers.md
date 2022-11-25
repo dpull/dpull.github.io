@@ -1,7 +1,7 @@
 ---
 layout: post
-title: 「note」《深入理解C指针》
-categories: [general]
+title: 《深入理解C指针》
+categories: [general, note]
 tags: []
 ---
 
