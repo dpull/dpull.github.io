@@ -83,9 +83,9 @@ sequenceDiagram
 
 ```mermaid
 classDiagram
+    UDPHeader <|-- RestartResponseDiagnosticsPacket
     UDPHeader <|-- HandshakePacket
     HandshakePacket <|-- RestartResponsePacket
-    UDPHeader <|-- RestartResponseDiagnosticsPacket
 
     class UDPHeader{
       +bit MagicHeader[]
