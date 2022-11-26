@@ -168,7 +168,7 @@ UDP是不可靠协议, 存在丢包问题.
 
 ## 安全性
 
-服务器会每隔一段时间切换`SecretKey`(默认15秒左右, 会再随机一个数字浮动), 并且将服务器上当前的的`SecretId`进行0, 1切换, 
+服务器会每隔一段时间切换`SecretKey`(默认最小15秒, 会再随机一个数字浮动), 并且将服务器上当前的的`SecretId`进行0, 1切换, 
 当客户端上行的`SecretId`不等于服务器当前的`SecretId`时, 同时检查`Timestamp`是否小于上一次切换`SecretKey`的时间(`LastSecretUpdateTimestamp`),
 如果是, 则使用上一次的`SecretKey`计算`Cookie`.
 
