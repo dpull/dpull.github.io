@@ -105,5 +105,6 @@ classDiagram
     }
 ```
 
-`RestartResponsePacket`比`HandshakePacket`多了`OrigCookie`, 服务端通过`OrigCookie`寻找之前的连接, 将地址与之前的连接进行关联.
+`RestartResponsePacket`比`HandshakePacket`多了`OrigCookie`, 
+当服务器`SendChallengeAck`后, 通过`OrigCookie`寻找之前的连接, 将地址与之前的连接进行关联.
 客户端收到SendChallengeAck后, 恢复为连接状态.
