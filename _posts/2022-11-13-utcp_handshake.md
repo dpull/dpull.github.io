@@ -23,8 +23,7 @@ sequenceDiagram
 ```
 
 1. 客户端调用connect函数, 发送SYN
-1. 服务器发送SYN-ACK
-1. 客户端connect函数返回, 客户端连接创建成功
+1. 服务器发送SYN-ACK, 客户端收到后connect函数返回, 客户端连接创建成功
 1. 服务器accept函数返回, 服务端连接创建成功
 
 Tcp的三次握手的问题是可能存在`SYN Flood 攻击`漏洞, 因为服务端接收到`SYN`后, 有的TCP实现会分配资源, 被DDOS攻击时, 出现服务器性能下降.
@@ -42,7 +41,7 @@ sequenceDiagram
 1. 客户端调用connect函数
 1. 服务器发送状态Cookie
 1. 客户端发送状态Cookie, 服务器接收后accept函数返回, 服务端连接创建成功
-1. 客户端connect函数返回, 客户端连接创建成功
+1. 客户端收到后connect函数返回, 客户端连接创建成功
 
 ## Unreal传输层协议建立连接
 
@@ -113,6 +112,7 @@ Cookie=HMAC(SecretId, Timestamp, IP:Port)
 ## 迁移连接
 
 服务器收到来自未知地址的UDP数据, 但不是握手包(`UDPHeader.bHandshakePacket==0`), 则触发再次握手的请求.
+客户端收到**RestartResponsePacket**后切换状态为`未连接状态`, 并重新发起握手(NotifyHandshakeBegin).
 
 ```mermaid
 sequenceDiagram
@@ -149,16 +149,19 @@ classDiagram
     }
 ```
 
-和建立连接不同点是, 当SendChallengeResponse时, 发送的数据包类型为**RestartResponsePacket**, 
-客户端收到**RestartResponsePacket**后切换状态为断线状态, 并重新发起握手(NotifyHandshakeBegin).
+和建立连接不同是, 当SendChallengeResponse时(*序号5*), 发送的数据包类型为**RestartResponsePacket**, 
+`RestartResponsePacket`比`HandshakePacket`多了`OrigCookie`, 存放的上次连接的`Cookie`.
 
-`RestartResponsePacket`比`HandshakePacket`多了`OrigCookie`, 
-当服务器`SendChallengeAck`后, 通过`OrigCookie`寻找之前的连接, 将地址与之前的连接进行关联.
-客户端收到SendChallengeAck后, 恢复为连接状态.
+当服务器`SendChallengeAck`后(*序号6*), 通过`OrigCookie`寻找之前的连接, 将客户端地址与之前的连接进行关联.
+客户端收到`SendChallengeAck`后, 恢复为`已连接状态`.
 
 ## 网络异常处理
 
-UDP是不可靠协议, 存在丢包问题, 客户端存在状态机, 根据当前状态已经上次发包时间, 周期性的重发当前的握手包, 
+UDP是不可靠协议, 存在丢包问题. 
+
+在握手阶段, 客户端存在状态机, 根据当前状态已经上次发包时间, 周期性的重发当前的握手包.
+
 服务器创建连接之前, 是无状态模块处理的, 所以乱序/重复收到某个握手包是不会影响的, 
 在创建连接后, 服务器只会回复第三次握手的数据包, 即`SendChallengeAck`给客户端.
-客户端会根据当前状态丢弃非本状态需要的握手请求. 
+
+客户端会根据当前状态丢弃非本状态需要的握手包. 
