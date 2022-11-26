@@ -31,7 +31,7 @@ permalink: /tags/
     {% for this_word in tag_words %}
     {% assign tagName = this_word | strip %}
     <div id="{{ tagName | escape }}" class="tag-list-div" style="display: none;">
-        <h2>{{ tagName | upcase }}</h2>
+        <h2 class="module">{{ tagName | upcase }}</h2>
         <!--  lists all posts corresponding to specific tag...-->
         {% for post in site.tags[tagName] %}
         {% if post.title != null %}
