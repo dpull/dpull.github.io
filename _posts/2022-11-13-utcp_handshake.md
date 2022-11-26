@@ -5,22 +5,56 @@ categories: [general]
 tags: [unreal, socket]
 ---
 
+## 背景
+
 建立连接需要进行握手, 常见的方案有如下几种:
 * TCP三次握手
 * STCP四次握手
-* QUIC 握手
+* QUIC 1RTT握手(这个需要篇幅较大, 建议自查资料)
 
+### TCP三次握手
 
-## 建立连接
+```mermaid
+sequenceDiagram
+    autonumber
+    Client->>Server: SYN | SEQ.C
+    Server->>Client: SYN-ACK | SEQ.C+1 | SEQ.S
+    Client->>Server: ACK | SEQ.S+1 | SEQ.C+1
+```
+
+1. 客户端调用connect函数
+1. 服务器下
+1. 客户端connect函数返回, 客户端连接创建成功
+1. 服务器accept函数返回, 服务端连接创建成功
+
+Tcp的三次握手的问题是可能存在`SYN Flood 攻击`漏洞, 因为服务端接收到`SYN`后, 有的TCP实现会分配资源, 从而造成服务器性能下降.
+
+### STCP四次握手
+
+```mermaid
+sequenceDiagram
+    autonumber
+    Client->>Server: INIT(Ta,J)
+    Server->>Client: Ta:INIT ACK(Tz,K,Cookie C)
+    Client->>Server: Tz:COOKIE ECHO C
+    Server->>Client: Ta:COOKIE ACK
+```
+1. 客户端调用connect函数
+1. 服务器下行状态Cookie, 
+1. 客户端发送状态Cookie, 服务器接收后accept函数返回, 服务端连接创建成功
+1. 客户端connect函数返回, 客户端连接创建成功
+
+## Unreal传输层协议建立连接
 
 Unreal传输层协议采用了类似STCP四次握手的方案.
 
 ```mermaid
 sequenceDiagram
-    Client->>+Server: NotifyHandshakeBegin(HandshakePacket)
-    Server->>+Client: SendConnectChallenge(HandshakePacket)
-    Client->>+Server: SendChallengeResponse(HandshakePacket)
-    Server->>+Client: SendChallengeAck(HandshakePacket)
+    autonumber
+    Client->>Server: NotifyHandshakeBegin(HandshakePacket)
+    Server->>Client: SendConnectChallenge(HandshakePacket)
+    Client->>Server: SendChallengeResponse(HandshakePacket)
+    Server->>Client: SendChallengeAck(HandshakePacket)
 ```
 
 握手包数据结构如下
@@ -52,19 +86,20 @@ Cookie=HMAC(SecretId, Timestamp, IP:Port)
 stateDiagram-v2
     state Timestamp <<choice>>
     [*] --> Timestamp
-    Timestamp --> 开始连接: if == 0
-    Timestamp --> 邀请连接 : if > 0
-    Timestamp --> 确认连接 : if == -1
+    Timestamp --> 一次握手: if == 0
+    Timestamp --> 二/三次握手 : if > 0
+    Timestamp --> 四次握手 : if == -1
 ```
 
 回到时序图, 状态如下:
 
 ```mermaid
 sequenceDiagram
-    Client->>+Server: NotifyHandshakeBegin(HandshakePacke{Timestamp=0})
-    Server->>+Client: SendConnectChallenge(HandshakePacket{Timestamp>0})
-    Client->>+Server: SendChallengeResponse(HandshakePacket{Timestamp>0})
-    Server->>+Client: SendChallengeAck(HandshakePacket{Timestamp=-1})
+    autonumber
+    Client->>Server: NotifyHandshakeBegin(HandshakePacke{Timestamp=0})
+    Server->>Client: SendConnectChallenge(HandshakePacket{Timestamp>0})
+    Client->>Server: SendChallengeResponse(HandshakePacket{Timestamp>0})
+    Server->>Client: SendChallengeAck(HandshakePacket{Timestamp=-1})
 ```
 
 当服务器发送SendChallengeAck时, 会同时在服务器创建连接, 当客户端收到ChallengeAck时, 认为连接成功.
@@ -76,12 +111,13 @@ sequenceDiagram
 
 ```mermaid
 sequenceDiagram
-    Client-->>+Server: 非握手包
-    Server->>+Client: SendRestartHandshakeRequest(RestartResponseDiagnosticsPacket)
-    Client->>+Server: NotifyHandshakeBegin(HandshakePacket)
-    Server->>+Client: SendConnectChallenge(HandshakePacket)
-    Client->>+Server: SendChallengeResponse(RestartResponsePacket)
-    Server->>+Client: SendChallengeAck(HandshakePacket)
+    Client-->>Server: 非握手包
+    autonumber
+    Server->>Client: SendRestartHandshakeRequest(RestartResponseDiagnosticsPacket)
+    Client->>Server: NotifyHandshakeBegin(HandshakePacket)
+    Server->>Client: SendConnectChallenge(HandshakePacket)
+    Client->>Server: SendChallengeResponse(RestartResponsePacket)
+    Server->>Client: SendChallengeAck(HandshakePacket)
 ```
 
 和建立连接不同点是, 当SendChallengeResponse时, 发送的数据包类型为**RestartResponsePacket**, 
