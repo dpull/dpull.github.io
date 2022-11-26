@@ -21,14 +21,10 @@ permalink: /archive/
     {% endunless %}
 
     <li>
-      {% if post.link %}
-      <a href="{{ post.link }}">
-      {% else %}
-      <a href="{{ site.baseurl }}{{ post.url }}">
-      {% endif %}
-        {{ post.title }}
-      </a>
-      <time>{{ post.date | date: "%Y-%m-%d" }}</time>
+      {{ post.date | date: "%Y/%m/%d" }} &raquo; <a href="{{ post.url }}">{{ post.title }}</a>
     </li>
   {% endfor %}
 </ul>
+
+<li>
+    
