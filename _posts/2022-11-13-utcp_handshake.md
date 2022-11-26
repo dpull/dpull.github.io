@@ -78,7 +78,8 @@ sequenceDiagram
     Server->>+Client: SendChallengeAck(HandshakePacket)
 ```
 
-和建立连接不同点是, 当SendChallengeResponse时, 发送的数据包类型为**RestartResponsePacket**
+和建立连接不同点是, 当SendChallengeResponse时, 发送的数据包类型为**RestartResponsePacket**, 
+客户端收到**RestartResponsePacket**后切换状态为断线状态, 并重新发起握手.
 
 ```mermaid
 classDiagram
@@ -104,4 +105,5 @@ classDiagram
     }
 ```
 
-`RestartResponsePacket`比`HandshakePacket`多了`OrigCookie`, 服务端通过`OrigCookie`寻找之前的连接, 将地址与之前的链接进行关联.
+`RestartResponsePacket`比`HandshakePacket`多了`OrigCookie`, 服务端通过`OrigCookie`寻找之前的连接, 将地址与之前的连接进行关联.
+客户端收到SendChallengeAck后, 恢复为连接状态.
