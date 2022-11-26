@@ -36,13 +36,9 @@ permalink: /tags/
         {% for post in site.tags[tagName] %}
         {% if post.title != null %}
         <div class="tag-list">
-            <span>
-                <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
-            </span>
-            <small>
-                <span>|
-                    {{ post.date | date_to_string }}</span>
-            </small>
+            <li>
+                {{ post.date | date: "%Y/%m/%d" }} &raquo; <a href="{{ post.url }}">{{ post.title }}</a>
+            </li>
         </div>
         {% endif %}
         {% endfor %}
