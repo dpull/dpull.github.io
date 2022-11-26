@@ -20,8 +20,6 @@ sequenceDiagram
 ```mermaid
 classDiagram
     UDPHeader <|-- HandshakePacket
-    HandshakePacket <|-- RestartResponsePacket
-    UDPHeader <|-- RestartResponseDiagnosticsPacket
 
     class UDPHeader{
       +bit MagicHeader[]
@@ -36,17 +34,19 @@ classDiagram
 ```
 
 服务端实现了无状态的握手处理模块, 
-通过[HMAC算法](https://en.wikipedia.org/wiki/HMAC)来校验`Cookie`是否正确(`Cookie=HMAC(SecretId, Timestamp, IP:Port)`).
+通过[HMAC算法](https://en.wikipedia.org/wiki/HMAC)来校验`Cookie`是否正确.
+```
+Cookie=HMAC(SecretId, Timestamp, IP:Port)
+```
 通过`Timestamp`的不同数值, 表示握手的三个状态.
 
 ```mermaid
 stateDiagram-v2
-    state if_state <<choice>>
+    state Timestamp <<choice>>
     [*] --> Timestamp
-    Timestamp --> if_state
-    if_state --> 第一次握手: if == 0
-    if_state --> 第二次握手 : if > 0
-    if_state --> 第三次握手 : if == -1
+    Timestamp --> 第一次握手: if == 0
+    Timestamp --> 第二次握手 : if > 0
+    Timestamp --> 第三次握手 : if == -1
 ```
 
 
