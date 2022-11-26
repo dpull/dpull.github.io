@@ -5,9 +5,15 @@ categories: [general]
 tags: [unreal, socket]
 ---
 
+建立连接需要进行握手, 常见的方案有如下几种:
+* TCP三次握手
+* STCP四次握手
+* QUIC 握手
+
+
 ## 建立连接
 
-UDP是无连接的协议, 可靠传输的前提是要建立连接, 所以在应用程序上模拟三次握手, 建立连接.
+Unreal传输层协议采用了类似STCP四次握手的方案.
 
 ```mermaid
 sequenceDiagram
@@ -46,9 +52,9 @@ Cookie=HMAC(SecretId, Timestamp, IP:Port)
 stateDiagram-v2
     state Timestamp <<choice>>
     [*] --> Timestamp
-    Timestamp --> 第一次握手: if == 0
-    Timestamp --> 第二次握手 : if > 0
-    Timestamp --> 第三次握手 : if == -1
+    Timestamp --> 开始连接: if == 0
+    Timestamp --> 邀请连接 : if > 0
+    Timestamp --> 确认连接 : if == -1
 ```
 
 回到时序图, 状态如下:
