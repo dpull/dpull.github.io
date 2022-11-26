@@ -165,3 +165,11 @@ UDP是不可靠协议, 存在丢包问题.
 在创建连接后, 服务器只会回复第三次握手的数据包, 即`SendChallengeAck`给客户端.
 
 客户端会根据当前状态丢弃非本状态需要的握手包. 
+
+## 安全性
+
+服务器会每隔一段时间切换`SecretKey`(默认15秒左右, 会随机一个数字上下浮动), 并且将服务器上当前的的`SecretId`进行0, 1切换, 
+当客户端上行的`SecretId`不等于服务器当前的`SecretId`时, 同时检查`Timestamp`是否小于上一次切换`SecretKey`的时间(`LastSecretUpdateTimestamp`),
+如果是, 则使用上一次的`SecretKey`计算`Cookie`.
+
+因为`SecretKey`的切换, 客户端如果15秒没有收到`ChallengeAck`, 则丢弃掉缓存的`Cookie`, 重发`NotifyHandshakeBegin`.
