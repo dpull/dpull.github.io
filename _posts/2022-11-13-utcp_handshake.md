@@ -27,7 +27,7 @@ sequenceDiagram
 1. 客户端connect函数返回, 客户端连接创建成功
 1. 服务器accept函数返回, 服务端连接创建成功
 
-Tcp的三次握手的问题是可能存在`SYN Flood 攻击`漏洞, 因为服务端接收到`SYN`后, 有的TCP实现会分配资源, 从而造成服务器性能下降.
+Tcp的三次握手的问题是可能存在`SYN Flood 攻击`漏洞, 因为服务端接收到`SYN`后, 有的TCP实现会分配资源, 被DDOS攻击时, 出现服务器性能下降.
 
 ### STCP四次握手
 
@@ -80,7 +80,7 @@ classDiagram
 1. 客户端通过SendChallengeResponse返回`Cookie`, 服务器收到后建立连接
 1. 服务器发送`SendChallengeAck`, 客户端收到后建立连接
 
-为了防止DDOS攻击, 服务器实现了无状态的处理握手模块, 
+为了防止类似`SYN Flood 攻击`, 服务器实现了无状态的处理握手模块, 
 通过`HandshakePacket.Timestamp`的不同数值, 标识握手的三个状态.
 
 ```mermaid
@@ -112,7 +112,7 @@ Cookie=HMAC(SecretId, Timestamp, IP:Port)
 
 ## 迁移连接
 
-服务器收到来自未知地址的UDP数据, 但不是握手包(`bHandshakePacket==0`), 则触发再次握手的请求.
+服务器收到来自未知地址的UDP数据, 但不是握手包(`UDPHeader.bHandshakePacket==0`), 则触发再次握手的请求.
 
 ```mermaid
 sequenceDiagram
@@ -124,9 +124,6 @@ sequenceDiagram
     Client->>Server: SendChallengeResponse(RestartResponsePacket)
     Server->>Client: SendChallengeAck(HandshakePacket)
 ```
-
-和建立连接不同点是, 当SendChallengeResponse时, 发送的数据包类型为**RestartResponsePacket**, 
-客户端收到**RestartResponsePacket**后切换状态为断线状态, 并重新发起握手.
 
 ```mermaid
 classDiagram
@@ -152,8 +149,13 @@ classDiagram
     }
 ```
 
+和建立连接不同点是, 当SendChallengeResponse时, 发送的数据包类型为**RestartResponsePacket**, 
+客户端收到**RestartResponsePacket**后切换状态为断线状态, 并重新发起握手(NotifyHandshakeBegin).
+
 `RestartResponsePacket`比`HandshakePacket`多了`OrigCookie`, 
 当服务器`SendChallengeAck`后, 通过`OrigCookie`寻找之前的连接, 将地址与之前的连接进行关联.
 客户端收到SendChallengeAck后, 恢复为连接状态.
 
 ## 丢包处理
+
+TODO...
