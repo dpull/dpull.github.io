@@ -9,7 +9,7 @@ tags: [unreal, socket]
 
 建立连接需要进行握手, 常见的方案有如下几种:
 * TCP三次握手
-* STCP四次握手
+* SCTP四次握手
 * QUIC 1RTT握手(这个需要篇幅较大, 有兴趣自查资料)
 
 ### TCP三次握手
@@ -28,7 +28,7 @@ sequenceDiagram
 
 Tcp的三次握手的问题是可能存在`SYN Flood 攻击`漏洞, 因为服务端接收到`SYN`后, 有的TCP实现会分配资源, 被DDOS攻击时, 出现服务器性能下降.
 
-### STCP四次握手
+### SCTP四次握手
 
 ```mermaid
 sequenceDiagram
@@ -45,7 +45,7 @@ sequenceDiagram
 
 ## Unreal传输层协议建立连接
 
-Unreal传输层协议采用了类似STCP四次握手的方案.
+Unreal传输层协议采用了类似SCTP四次握手的方案.
 
 ```mermaid
 sequenceDiagram
