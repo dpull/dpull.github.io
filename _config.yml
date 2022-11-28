@@ -67,7 +67,7 @@ lsi:         false
 #detach:  false
 #port:    4000
 #host:    127.0.0.1
-baseurl: "https:://blog.dpull.com" # does not include hostname
+baseurl: "https://blog.dpull.com" # does not include hostname
 
 # 输出
 permalink:     "/post/:year-:month-:day-:title"
