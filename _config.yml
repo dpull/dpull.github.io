@@ -5,7 +5,7 @@
 name: dpull
 title: dpull的流水账
 description: 面包屑小道.
-url: http://blog.dpull.com
+url: https://blog.dpull.com
 paginate: 10 # pagination based on number of posts
 
 
