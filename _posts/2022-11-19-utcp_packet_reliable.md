@@ -5,16 +5,22 @@ categories: [general]
 tags: [unreal, socket]
 ---
 
-Unreal传输层是支持多路复用的, 每一条通路称为一个Channel, Channel之间数据不互相堵塞.
+Unreal传输层抽象了几个名词:
 
-建立连接后, 服务器和客户端通过Cookie的前四个字节, 转化为服务器和客户端的序号(Seq).
+* UNetConnection: 代表客户端和服务器的一条连接, 建立连接后, 客户端/服务器都会有对应的UNetConnection的对象
+* UChannel: UNetConnection中有多个UChannel, UChannel之间数据不互相堵塞, 以此实现多路复用.
+* Bunch: UChannel 接收和发送的数据类型, 由BunchHeader和Data组成, UChannel可以有自己的的编码协议(即Data的编解码由Channel决定)
+* Packet: UNetConnection发送和接收的数据, 由PacketHeader和多个Bunch组成
+
+当建立连接后, 服务器和客户端通过Cookie的前四个字节, 转化为服务器和客户端的序号(Seq), 收到和发送的Packet的序列号将以此开始.
 
 ```
 int16_t* CurSequence = (int16_t*)Cookie;
 int32_t LastServerSequence = *CurSequence & (MAX_PACKETID - 1);
 int32_t LastClientSequence = *(CurSequence + 1) & (MAX_PACKETID - 1);
 ```
-以此来判断是不是有数据包丢失, 当收到数据包时, 
+
+## Packet收包流程
 
 ```mermaid
 classDiagram
@@ -36,13 +42,29 @@ classDiagram
     }
 ```
 
-会根据Seq是收包的序号, 通过和之前的收到的序号(`FNetPacketNotify::InSeq`)计算差值(注意要考虑溢出问题), 有三种情况:
+当接收到一个Packet包时, PacketHeader中的Seq是包的序号, 和UNetConnection之前的收到的序号(`FNetPacketNotify::InSeq`)计算差值PacketSequenceDelta(*注意要考虑溢出问题*):
 
-* 小于1: 该Packet属于重复收包或者已经处理过后续包了, 直接丢弃
-* 等于1: 当前需要处理的数据包
-* 大于1: 先缓存, 待下一个包处理后, 再次检查是否等于1, 缓存一段时间后如果依旧不连续, 则将这一段时间缓存的包, 按照Seq的排序后进行执行
+```mermaid
+graph TD
+    PacketSequenceDelta{PacketSequenceDelta}
+    bFlushingPacketOrderCache{bFlushingPacketOrderCache}
+    ProcBunches[ProcBunches]
+    End[End]
+    PacketSequenceDelta -->|>1| bFlushingPacketOrderCache
+    PacketSequenceDelta -->|=1| ProcBunches
+    bFlushingPacketOrderCache -->|true| ProcBunches
+    bFlushingPacketOrderCache -->|false| PacketOrderCache[PacketOrderCache]  --> End
+    PacketSequenceDelta -->|<1| End
+```
 
-数据包由多个Bunch组成,
+1. 当`PacketSequenceDelta=1`, 进入Bunches处理阶段
+1. 当`PacketSequenceDelta<1`, 已经处理过该包或者更新的包, 直接丢弃
+1. 当`PacketSequenceDelta>1`, 存在丢包, 此时分为两种情况:
+    * 如果在收包阶段, 把包加入包有序缓存队列`PacketOrderCache`
+    * 如果是清空有序缓存队列阶段(`bFlushingPacketOrderCache == true`), 进入Bunches处理阶段
+
+## Bunch收包流程
+
 
 ```mermaid
 classDiagram
