@@ -20,7 +20,7 @@ perf script > out.perf
 ./flamegraph.pl out.folded > out.svg
 {% endhighlight %}
 
-## vtune相关
+## vtune相关(2022)
 
 {% highlight bash %}
 cd /opt/intel/oneapi/vtune/latest/bin64
