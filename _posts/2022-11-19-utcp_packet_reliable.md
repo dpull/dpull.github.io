@@ -5,6 +5,41 @@ categories: [general]
 tags: [unreal, socket]
 ---
 
+完成握手环节后, 成功建立了连接, 传输Packet(数据包)进行数据通信, Packet由三部分数据组成:
+
+* 当前PacketId
+* 接收到的PacketId
+* 应用层的数据: Bunch
+
+PacketId是自增的数字, 即便重传应用层数据(Bunch), PacketId也会变大, 
+当处理一个Packet后, 会保证小于等于该PacketId的Packet都丢弃掉.
+所以可以由收到的`接收到的PacketID`推测出哪些Packet丢了, 从而重发Bunch.
+
+## 当前PacketId
+
+当前的PacketId, 在Packet中是一个14位的`uint`.
+为了避免溢出问题, 需要根据上次接收到的PacketId, 得到完整的PacketId.
+
+在`UE4.18`中, 收到一个`Packet`会立即处理.
+在后续的版本中, 会把不连续的`Packet`做缓存, 在PostTick阶段, 清空缓存.
+这个改动会减少当帧乱序收包问题.
+
+// TODO 补充流程图 
+
+## 接收到的PacketId
+
+在`UE4.18`的版本, 会以`Ack标记+PacketId`的方式序列化, 
+一个Packet中会有序的存放多个`AckPacketId`, 这样存储可能会占用大量的存储空间
+
+// TODO 补充类图
+
+在后续的版本中, 采用了位图的方式来进行优化.
+
+## 应用层的数据: Bunch
+
+Bunch的主要难点主要是分块的Bunch如何拼包的问题
+
+
 doing
 
 Unreal传输层抽象了几个名词:
