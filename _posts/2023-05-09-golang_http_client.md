@@ -29,6 +29,6 @@ tags: [golang, socket]
 
 `http.Transport.MaxIdleConnsPerHost`用于控制最大空闲（保持活动）连接以保持每个主机。如果为非零值，则使用该值；如果为零，则使用DefaultMaxIdleConnsPerHost（默认值为2）。
 
-由于tcp的connect函数耗时较久，减少创建新连接可以提升性能。
+由于tcp的connect函数耗时较久，减少创建新连接可以提升性能; 如果不多路复用的话会产生大量`TIME_WAIT`状态的tcp连接。
 * 针对方案1，可以根据数据量放大MaxConnsPerHost的值，以提高并发性能。
 * 针对方案2，可以修改消费协程的数目。
