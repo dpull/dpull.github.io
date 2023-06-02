@@ -85,7 +85,7 @@ int main(int argc, char** argv)
 	test.field3 = 3;
 	test.field4 = 4;
 
-    printf("size=%d\n", (int)sizeof(test));
+	printf("size=%d\n", (int)sizeof(test));
 
 	printf("b=%d, %d, %d, %d\n", (int)test.b[0], (int)test.b[1], (int)test.b[2], (int)test.b[3]);
 
@@ -93,7 +93,7 @@ int main(int argc, char** argv)
 	for (int i = 0; i < 32; i++)
 	{
 		uint32_t mask = 1 << i;
-        printf(test.i & mask ? "1" : "0");
+		printf(test.i & mask ? "1" : "0");
 	}
 	printf("\n");
 
