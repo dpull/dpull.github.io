@@ -14,14 +14,9 @@ tags: [golang, socket]
 
 最近因为`...` 参数的问题被坑了两次，由于网上对应的文档较少，我也没有时间去做更多的分析，所以仅简单的记录：
 
-## `go test ./...` 编译失败时提示不完整
+## `go test ./...` 编译失败时提示不明显
 
-由于测试代码不会被 `go build` 编译，当使用`go test ./...`时，如果其中某个模块编译失败，进程会返回-2，并不会提示编译失败的细节，导致问题难以定位。因此，
-
-
-{% highlight bash %}
-find . -type d -exec bash -c "cd '{}' && ls *.go &>/dev/null && go test" \;
-{% endhighlight %}
+当使用`go test ./...`时，其中某个模块编译失败，进程会返回-2，编译错误信息在stderr, 如果有`-v`就更不明显了, 尽量要分离stderr和stdout
 
 ## `go build -buildvcs=false ./cmd/...` 不传递参数
 
