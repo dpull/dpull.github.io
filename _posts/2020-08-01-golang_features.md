@@ -1,6 +1,6 @@
 ---
 layout: post
-title: golang 编译相关
+title: 一些 golang 特性
 categories: [general]
 tags: [golang]
 ---
@@ -69,7 +69,16 @@ range会再编译器通过插入代码的方式实现.
 
 ## interface{}
 
-* `interface{}`不是指针, 如果赋值是元素, 则会进行复制.
+{% highlight go %}
+type eface struct {
+    _type *_type
+    data  unsafe.Pointer
+}
+{% endhighlight %}
+
+* `interface{}` 是一个结构体, 由类型和指针组成
+* 如果赋值的元素是结构体(不是结构体指针), 则会进行复制结构体, 并将复制的结构体的指针赋值给`data`
+
 如下面的例子, 修改a和c都不会影响b
 
 {% highlight go %}
@@ -83,7 +92,7 @@ c.name = "ccc"
 fmt.Println(b.(item).name)
 {% endhighlight %}
 
-* `interface{}`包含类型和值, 当interface不是nil的时候, 存在类型不为nil, 值为nil的情况,
+* `interface{}`包含类型和值, 当interface不是nil的时候, **存在类型不为nil, 值为nil的情况**,
 尤其在error返回的时候要注意, error一定要返回nil, 而不要返回某个类型的nil.
 如下面的例子, 输出为 "a is nil" "b is not nil"
 
@@ -133,3 +142,22 @@ func print()  {
 {% endhighlight %}
 
 `reflect.ValueOf` 会造成`leaking param`, 可以参考[一些golang的知识点](./2021-10-07-golang_library)中的反射部分.
+
+## defer函数修改return的值, 需要使用具名return
+
+{% highlight go %}
+func f1() (i int) { // return 2
+    i = 1
+    defer func() { 
+        i = 2
+    }()
+    return i 
+}
+func f2 () int { // return 1
+    i := 1
+    defer func() { 
+        i = 2
+    }()
+    return i 
+}
+{% endhighlight %}
