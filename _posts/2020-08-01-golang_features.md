@@ -161,3 +161,31 @@ func f2 () int { // return 1
     return i 
 }
 {% endhighlight %}
+
+简单说一下这个的原理, 可以理解为函数堆栈上有一个返回值变量的空间,
+当该变量匿名时, 执行return N时, 会给该变量赋值,
+当defer执行后, 会将该变量再赋值给eax(eax是第一个返回值)
+
+简单来说，这个原理可以理解为函数堆栈上有一个用于存储返回值的变量空间。
+当该变量未命名时，执行return N语句时，会将该变量赋值为N。
+紧接着执行defer语句后，该变量的值会被再次赋值给eax（eax是第一个返回值）。
+
+{% highlight asm %}
+000000000045f220 <main.f1>:
+	return i                                                                ; 因为返回的是具名的返回值变量, 所以不需要赋值给返回值变量
+  45f28b:	e8 b0 2b fd ff       	callq  431e40 <runtime.deferreturn>
+  45f290:	48 8b 44 24 08       	mov    0x8(%rsp),%rax                   ; 将具名的返回值变量赋值给%rax
+  45f295:	48 8b 6c 24 70       	mov    0x70(%rsp),%rbp
+  45f29a:	48 83 c4 78          	add    $0x78,%rsp
+  45f29e:	c3                   	retq 
+
+000000000045f300 <main.f2>:
+	return i
+  45f36b:	48 8b 44 24 10       	mov    0x10(%rsp),%rax          
+  45f370:	48 89 44 24 08       	mov    %rax,0x8(%rsp)                   ; 赋值给匿名的返回值变量
+  45f375:	e8 c6 2a fd ff       	callq  431e40 <runtime.deferreturn>
+  45f37a:	48 8b 44 24 08       	mov    0x8(%rsp),%rax                   ; 将匿名的返回值变量赋值给%rax
+  45f37f:	48 8b 6c 24 78       	mov    0x78(%rsp),%rbp
+  45f384:	48 83 ec 80          	sub    $0xffffffffffffff80,%rsp
+  45f388:	c3                   	retq   
+{% endhighlight %}
