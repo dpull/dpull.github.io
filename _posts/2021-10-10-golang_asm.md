@@ -1,8 +1,8 @@
 ---
 layout: post
-title: Go函数参数和返回值的反汇编分析
+title: golang函数参数和返回值的反汇编分析
 categories: [general]
-tags: [go, linux]
+tags: [golang, linux]
 ---
 
 ## 参数和返回值
