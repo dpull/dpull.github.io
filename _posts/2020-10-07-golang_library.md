@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 一些golang的知识点
+title: golang的一些库实现笔记
 categories: [general]
 tags: [golang]
 ---

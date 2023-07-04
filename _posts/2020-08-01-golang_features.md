@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 一些 golang 特性
+title: golang的一些特性分析笔记
 categories: [general]
 tags: [golang]
 ---
