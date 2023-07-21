@@ -12,6 +12,8 @@ tags: [golang, socket]
 1. 执行`os.Exit`可以被回调
 1. 当出现不可恢复的panic时, 不会被回调
 
+目前来看, 用途不是特别大~~
+
 测试代码:
 
 {% highlight go %}
