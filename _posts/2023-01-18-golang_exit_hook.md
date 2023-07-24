@@ -10,6 +10,7 @@ tags: [golang, socket]
 经过验证：
 
 1. 当调用 `os.Exit` 时，函数可以被回调。
+1. 当调用 `panic` 时，函数不会被回调。
 1. 当出现不可恢复的 `panic` 时，函数不会被回调。
 
 目前来看，该函数的用途不是特别大。
@@ -36,6 +37,7 @@ func main() {
 
 	go func() {
 		// os.Exit(2)
+		// panic("err!!")
 		test()
 	}()
 
