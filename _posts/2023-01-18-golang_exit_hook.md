@@ -2,7 +2,7 @@
 layout: post
 title: golang Exit Hook试用
 categories: [general]
-tags: [golang, socket]
+tags: [golang]
 ---
 
 在 [runtime/exithook.go](https://github.com/golang/go/blob/master/src/runtime/exithook.go)  中实现了 `addExitHook` 函数，可以在调用 `os.Exit` 时进行回调。该函数是在 `Sep 27, 2022` 添加的，旧版本的 Go 中没有这个函数。
