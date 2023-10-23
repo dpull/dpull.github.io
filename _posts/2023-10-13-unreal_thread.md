@@ -55,3 +55,24 @@ public:
 - FMessageBus
 - FReserveScheduler
 - FOnlineSubsystemNull
+- ...
+
+## 多线程池实现
+
+* FQueuedThreadPool 
+* FQueuedThreadPoolBase : FQueuedThreadPool
+    * `class FQueuedThread : public FRunnable` 它不具备单线程执行的能力
+* FQueuedLowLevelThreadPool : FQueuedThreadPool
+    * 使用了`LowLevelTasks::FScheduler::Get()`来做线程管理
+    * `FScheduler`是task系统的核心组件, 在下一节
+
+## 多线程池总结
+
+extern CORE_API FQueuedThreadPool* GThreadPool;
+extern CORE_API FQueuedThreadPool* GIOThreadPool;
+extern CORE_API FQueuedThreadPool* GBackgroundPriorityThreadPool;
+
+
+## Task Graph 实现
+
+## Task Graph 总结
