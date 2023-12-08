@@ -2,7 +2,7 @@
 layout: post
 title: C++ 用户定义字面量 
 categories: [general]
-tags: [note]
+tags: [c++]
 ---
 
 参考: https://zh.cppreference.com/w/cpp/language/user_literal
